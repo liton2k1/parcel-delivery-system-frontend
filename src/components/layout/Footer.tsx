@@ -196,7 +196,7 @@ export default function Footer() {
           </div>
         </div>
         <p className="text-sm text-muted-foreground text-center font-medium dark:text-muted-foreground">
-          &copy; 2025 NextLevel Parcel. All rights reserved.
+          &copy; 2025 Parcel.Com || All rights reserved.
         </p>
       </div>
     </footer>
