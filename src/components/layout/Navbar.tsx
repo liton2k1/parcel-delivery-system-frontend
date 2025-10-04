@@ -1,5 +1,4 @@
-
-import { HouseIcon, InboxIcon, ZapIcon } from "lucide-react";
+import Logo from "@/assets/icons/Logo";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -12,23 +11,55 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import Logo from "@/assets/icons/Logo";
+// import { authApi, useLogoutMutation } from "@/redux/features/auth/authApi";
+// import { useGetMeQuery } from "@/redux/features/user/userApi";
+// import { useAppDispatch } from "@/redux/hooks";
+import {
+  ADMIN_DEFAULT_ROUTE,
+  RECEIVER_DEFAULT_ROUTE,
+  SENDER_DEFAULT_ROUTE,
+} from "@/routes/constants";
+// import { Role } from "@/types/user-type";
+import { Link, useNavigate } from "react-router";
+import { Fragment } from "react/jsx-runtime";
 import { ModeToggle } from "./ModeToggle";
+import { useGetMeQuery } from "@/redux/api/features/user/userApi";
+import { authApi, useLogoutMutation } from "@/redux/api/features/auth/authApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { Role } from "@/types/user";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "#", label: "Home", icon: HouseIcon, active: true },
-  { href: "#", label: "Inbox", icon: InboxIcon },
-  { href: "#", label: "Insights", icon: ZapIcon },
+  { href: "/", label: "Home", role: "PUBLIC" },
+  { href: "/features", label: "Features", role: "PUBLIC" },
+  { href: "/testimonials", label: "Testimonials", role: "PUBLIC" },
+  { href: "/trackparcel", label: "Track Parcel", role: "PUBLIC" },
+  { href: "/faq", label: "FAQ", role: "PUBLIC" },
+  { href: "/about", label: "About", role: "PUBLIC" },
+  { href: "/contact", label: "Contact", role: "PUBLIC" },
+  { href: ADMIN_DEFAULT_ROUTE, label: "Dashboard", role: Role.ADMIN },
+  { href: ADMIN_DEFAULT_ROUTE, label: "Dashboard", role: Role.SUPER_ADMIN },
+  { href: SENDER_DEFAULT_ROUTE, label: "Dashboard", role: Role.SENDER },
+  { href: RECEIVER_DEFAULT_ROUTE, label: "Dashboard", role: Role.RECEIVER },
 ];
 
-export default function Component() {
+export default function Navbar() {
+  const navigate = useNavigate();
+  const { data } = useGetMeQuery(undefined);
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = async () => {
+    await logout(undefined);
+    dispatch(authApi.util.resetApiState());
+    navigate("/");
+  };
 
   return (
-    <header className="border-b px-4 md:px-6">
-      <div className="flex h-16 items-center justify-between gap-4">
+    <header className="border-b">
+      <div className="container mx-auto px-4 flex h-16 items-center justify-between gap-4">
         {/* Left side */}
-        <div className="flex flex-1 items-center gap-2">
+        <div className="flex items-center gap-2">
           {/* Mobile menu trigger */}
           <Popover>
             <PopoverTrigger asChild>
@@ -67,68 +98,81 @@ export default function Component() {
             <PopoverContent align="start" className="w-36 p-1 md:hidden">
               <NavigationMenu className="max-w-none *:w-full">
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-                  {navigationLinks.map((link, index) => {
-                    const Icon = link.icon;
-                    return (
-                      <NavigationMenuItem key={index} className="w-full">
-                        <NavigationMenuLink
-                          href={link.href}
-                          className="flex-row items-center gap-2 py-1.5"
-                          active={link.active}
-                        >
-                          <Icon
-                            size={16}
-                            className="text-muted-foreground/80"
-                            aria-hidden="true"
-                          />
-                          <span>{link.label}</span>
-                        </NavigationMenuLink>
-                      </NavigationMenuItem>
-                    );
-                  })}
+                  {navigationLinks.map((link, index) => (
+                    <Fragment key={index}>
+                      {link.role === "PUBLIC" && (
+                        <NavigationMenuItem className="w-full">
+                          <NavigationMenuLink asChild className="py-1.5">
+                            <Link to={link.href}>{link.label}</Link>
+                          </NavigationMenuLink>
+                        </NavigationMenuItem>
+                      )}
+                      {link.role === data?.data?.role && (
+                        <NavigationMenuItem className="w-full">
+                          <NavigationMenuLink asChild className="py-1.5">
+                            <Link to={link.href}>{link.label}</Link>
+                          </NavigationMenuLink>
+                        </NavigationMenuItem>
+                      )}
+                    </Fragment>
+                  ))}
                 </NavigationMenuList>
               </NavigationMenu>
             </PopoverContent>
           </Popover>
-          {/* Logo */}
-          <div className="flex items-center">
-            <a href="#" className="text-primary hover:text-primary/90">
+          {/* Main nav */}
+          <div className="flex items-center gap-3">
+            <Link to="/" className="text-primary hover:text-primary/90">
               <Logo />
-            </a>
+            </Link>
+            {/* Navigation menu */}
+            <NavigationMenu className="max-md:hidden">
+              <NavigationMenuList className="gap-2">
+                {navigationLinks.map((link, index) => (
+                  <Fragment key={index}>
+                    {link.role === "PUBLIC" && (
+                      <NavigationMenuItem>
+                        <NavigationMenuLink
+                          asChild
+                          className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                        >
+                          <Link to={link.href}>{link.label}</Link>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    )}
+                    {link.role === data?.data?.role && (
+                      <NavigationMenuItem>
+                        <NavigationMenuLink
+                          asChild
+                          className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                        >
+                          <Link to={link.href}>{link.label}</Link>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    )}
+                  </Fragment>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
         </div>
-        {/* Middle area */}
-        <NavigationMenu className="max-md:hidden">
-          <NavigationMenuList className="gap-2">
-            {navigationLinks.map((link, index) => {
-              const Icon = link.icon;
-              return (
-                <NavigationMenuItem key={index}>
-                  <NavigationMenuLink
-                    active={link.active}
-                    href={link.href}
-                    className="text-foreground hover:text-primary flex-row items-center gap-2 py-1.5 font-medium"
-                  >
-                    <Icon
-                      size={16}
-                      className="text-muted-foreground/80"
-                      aria-hidden="true"
-                    />
-                    <span>{link.label}</span>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              );
-            })}
-          </NavigationMenuList>
-        </NavigationMenu>
         {/* Right side */}
-        <div className="flex flex-1 items-center justify-end gap-2">
-          <div className="flex items-center gap-2">
-            <ModeToggle />
-            <Button asChild size="sm" className="text-sm">
-              <a href="#">Sign In</a>
+        <div className="flex items-center gap-2">
+          <ModeToggle />
+          {data?.data?.email && (
+            <Button
+              onClick={handleLogout}
+              variant="outline"
+              className="text-sm"
+            >
+              Logout
             </Button>
-          </div>
+          )}
+          {!data?.data?.email && (
+            <Button asChild className="text-sm">
+              <Link to="/login">Login</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>
