@@ -14,8 +14,8 @@ import {
 import { Link, useNavigate } from "react-router";
 import { Fragment } from "react/jsx-runtime";
 import { ModeToggle } from "./ModeToggle";
-import { useGetMeQuery } from "@/redux/api/features/user/userApi";
-import { authApi, useLogoutMutation } from "@/redux/api/features/auth/authApi";
+import { useGetMeQuery } from "@/redux/features/user/userApi";
+import { authApi, useLogoutMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { Role } from "@/types/user";
 

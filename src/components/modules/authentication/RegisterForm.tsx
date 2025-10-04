@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { useRegisterMutation } from "@/redux/api/features/user/userApi";
+import { useRegisterMutation } from "@/redux/features/user/userApi";
 import { Role } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

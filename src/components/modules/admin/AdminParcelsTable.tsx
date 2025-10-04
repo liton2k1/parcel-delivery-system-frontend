@@ -30,13 +30,18 @@ import {
   Columns3Icon,
   EllipsisIcon,
   FilterIcon,
+  Package,
   PlusIcon,
+  Scale,
   SearchIcon,
+  Truck,
   XIcon,
 } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
+
 import Error from "@/components/Error";
+import Information from "@/components/Information";
 import Loading from "@/components/Loading";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -58,6 +63,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -88,32 +94,43 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { IUser } from "@/types";
+import {
+  useBlockParcelMutation,
+  useGetAllParcelsQuery,
+  useUpdateStatusAndPersonnelMutation,
+} from "@/redux/features/parcel/parcelApi";
+import { IParcel } from "@/types";
+import { ParcelStatus, ParcelType, ShippingType } from "@/types/sender";
 import { getNameInitials } from "@/utils/getNameInitials";
+import { getStatusColor } from "@/utils/getStatusColor";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
 import { format } from "date-fns";
+import { Link } from "react-router";
 import { toast } from "sonner";
 import z from "zod";
-import { IsActive, Role } from "@/types/user";
-import {
-  useBlockUserByIdMutation,
-  useGetAllUsersQuery,
-} from "@/redux/features/user/userApi";
-import { getUserIsActiveStatusColor } from "@/utils/getStatusColor";
-import { CreateStuffDialog } from "@/pages/admin/CreateStuff";
-import Information from "./Information";
+import { AdminCreateParcelDialog } from "./AdminParcelModal";
+// import { AdminCreateParcelDialog } from "./AdminParcelModal";
 
-// schema for isActive
-const isActiveSchema = z.object({
-  isActive: z.literal([IsActive.ACTIVE, IsActive.INACTIVE, IsActive.BLOCKED]),
+const updateStatusPersonnelSchema = z.object({
+  currentStatus: z.enum(Object.values(ParcelStatus) as [string]).optional(),
+  currentLocation: z.string().nullable().optional(),
+  deliveryPersonnelId: z.string().optional(),
 });
 
-const columns: ColumnDef<IUser>[] = [
+const updateBlockedStatusSchema = z.object({
+  isBlocked: z.string({
+    error: "Blocked / unblocked status is required",
+  }),
+  reason: z.string().optional(),
+});
+
+const columns: ColumnDef<IParcel>[] = [
   {
-    header: "Name",
-    accessorKey: "name",
+    header: "Sender",
+    accessorKey: "sender",
     cell: ({ row }) => {
-      const name = row.original?.name;
+      const name = row.original?.sender?.name;
       const initials = getNameInitials(name);
 
       return (
@@ -123,7 +140,190 @@ const columns: ColumnDef<IUser>[] = [
           </Avatar>
           <div className="space-y-1">
             <div className="font-medium">{name}</div>
+            <div className="text-sm text-muted-foreground">
+              {row.original?.pickupAddress}
+            </div>
+            <div className="text-sm text-muted-foreground">
+              {row.original?.sender?.email}
+            </div>
+            <div className="text-sm text-muted-foreground">
+              {row.original?.sender?.phone}
+            </div>
           </div>
+        </div>
+      );
+    },
+    size: 210,
+    enableHiding: true,
+    enableSorting: false,
+  },
+  {
+    header: "Receiver",
+    accessorKey: "receiver",
+    cell: ({ row }) => {
+      const name = row.original?.receiver?.name;
+      const initials = getNameInitials(name);
+      return (
+        <div className="flex items-start gap-3">
+          <Avatar className="h-8 w-8 rounded-lg grayscale">
+            <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
+          </Avatar>
+          <div className="space-y-1">
+            <div className="font-medium">{row.original?.receiver?.name}</div>
+            <div className="text-sm text-muted-foreground">
+              {row.original?.deliveryAddress}
+            </div>
+            <div className="text-sm text-muted-foreground">
+              {row.original?.receiver?.email}
+            </div>
+            <div className="text-sm text-muted-foreground">
+              {row.original?.receiver?.phone}
+            </div>
+          </div>
+        </div>
+      );
+    },
+    size: 210,
+    enableHiding: true,
+    enableSorting: false,
+  },
+  {
+    header: "Estimated Delivery",
+    accessorKey: "estimatedDelivery",
+    cell: ({ row }) => (
+      <div>{format(row.getValue("estimatedDelivery"), "PPP")}</div>
+    ),
+    size: 165,
+    enableHiding: true,
+    enableSorting: true,
+  },
+  {
+    header: "Delivered At",
+    accessorKey: "deliveredAt",
+    cell: ({ row }) => {
+      const deliveredAt = row.getValue("deliveredAt");
+      return (
+        <div>{deliveredAt ? format(deliveredAt as Date, "PPP") : "-"}</div>
+      );
+    },
+    size: 165,
+    enableHiding: true,
+    enableSorting: true,
+  },
+  {
+    header: "Cancelled At",
+    accessorKey: "cancelledAt",
+    cell: ({ row }) => {
+      const cancelledAt = row.getValue("cancelledAt");
+      return (
+        <div>{cancelledAt ? format(cancelledAt as Date, "PPP") : "-"}</div>
+      );
+    },
+    size: 165,
+    enableHiding: true,
+    enableSorting: true,
+  },
+
+  {
+    header: "Parcel Info",
+    accessorKey: "weight",
+    cell: ({ row }) => {
+      const packageType = `${row.original?.type
+        .charAt(0)
+        .toUpperCase()}${row.original?.type.slice(1)}`;
+      const shippingType = `${row.original?.shippingType
+        .charAt(0)
+        .toUpperCase()}${row.original?.shippingType.slice(1)}`;
+      return (
+        <div className="space-y-1">
+          <div className="font-medium flex items-center gap-2">
+            <Scale className="h-4 w-4" />
+            {row.original?.weight} {row.original?.weightUnit}
+          </div>
+          <div className="text-sm text-muted-foreground flex items-center gap-2">
+            <Package className="h-4 w-4" />
+            {packageType}
+          </div>
+          <div className="text-sm text-muted-foreground flex items-center gap-2">
+            <Truck className="h-4 w-4" />
+            {shippingType}
+          </div>
+        </div>
+      );
+    },
+    size: 130,
+    enableHiding: true,
+    enableSorting: true,
+  },
+  {
+    header: "Cost",
+    accessorKey: "fee",
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("fee"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "BDT",
+        minimumFractionDigits: 0,
+      }).format(amount);
+      return (
+        <div className="space-y-1">
+          <div>{formatted.slice(4)}</div>
+          <div className="text-sm text-muted-foreground">BDT</div>
+        </div>
+      );
+    },
+    size: 130,
+    enableHiding: true,
+    enableSorting: true,
+  },
+  {
+    header: "Paid",
+    accessorKey: "isPaid",
+    cell: ({ row }) => {
+      return <div>{row.original?.isPaid ? "Yes" : "No"}</div>;
+    },
+    size: 100,
+    enableHiding: true,
+    enableSorting: true,
+  },
+  {
+    header: "Blocked",
+    accessorKey: "isBlocked",
+    cell: ({ row }) => {
+      const isBlocked = row.getValue("isBlocked");
+      return (
+        <Badge
+          className={cn(
+            { "bg-green-100 text-green-800": !isBlocked },
+            { "bg-red-100 text-red-800": isBlocked }
+          )}
+        >
+          {isBlocked ? "Yes" : "No"}
+        </Badge>
+      );
+    },
+    size: 100,
+    enableHiding: true,
+    enableSorting: true,
+  },
+  {
+    header: "Current Location",
+    accessorKey: "currentLocation",
+    cell: ({ row }) => {
+      const currentLocation = row.getValue("currentLocation");
+      return <div>{currentLocation ? (currentLocation as string) : "-"}</div>;
+    },
+    size: 160,
+    enableHiding: true,
+    enableSorting: true,
+  },
+  {
+    header: "Coupon",
+    accessorKey: "coupon",
+    cell: ({ row }) => {
+      return (
+        <div className="text-left">
+          {row.getValue("coupon") ? row.getValue("coupon") : "-"}
         </div>
       );
     },
@@ -132,85 +332,35 @@ const columns: ColumnDef<IUser>[] = [
     enableSorting: true,
   },
   {
-    header: "Email",
-    accessorKey: "email",
-    cell: ({ row }) => <div>{row.getValue("email")}</div>,
-    size: 165,
-    enableHiding: true,
-    enableSorting: true,
-  },
-  {
-    header: "Address",
-    accessorKey: "defaultAddress",
-    cell: ({ row }) => {
-      const defaultAddress = row.getValue("defaultAddress");
-      return <div>{`${defaultAddress ? defaultAddress : "-"}`}</div>;
-    },
-    size: 165,
-    enableHiding: true,
-    enableSorting: true,
-  },
-  {
-    header: "Phone",
-    accessorKey: "phone",
-    cell: ({ row }) => {
-      const phone = row.getValue("phone");
-      return <div>{`${phone ? phone : "-"}`}</div>;
-    },
-    size: 165,
-    enableHiding: true,
-    enableSorting: true,
-  },
-  {
-    header: "Role",
-    accessorKey: "role",
-    cell: ({ row }) => {
-      return <div>{row.getValue("role")}</div>;
-    },
-    size: 165,
+    header: "Tracking ID",
+    accessorKey: "trackingId",
+    cell: ({ row }) => (
+      <div className="text-left">{row.getValue("trackingId")}</div>
+    ),
+    size: 210,
     enableHiding: true,
     enableSorting: true,
   },
 
   {
-    header: "Is Verified",
-    accessorKey: "isVerified",
+    header: "Delivery Personnel",
+    accessorKey: "deliveryPersonnel",
     cell: ({ row }) => {
-      return <div>{row.original?.isVerified ? "Yes" : "No"}</div>;
-    },
-    size: 100,
-    enableHiding: true,
-    enableSorting: true,
-  },
-  {
-    header: "Is Active",
-    accessorKey: "isActive",
-    cell: ({ row }) => (
-      <Badge className={getUserIsActiveStatusColor(row.getValue("isActive"))}>
-        {row.getValue("isActive")}
-      </Badge>
-    ),
-    size: 100,
-    enableHiding: true,
-    enableSorting: true,
-  },
-  {
-    header: "Is Deleted",
-    accessorKey: "isDeleted",
-    cell: ({ row }) => {
+      const deliveryPersonnel = row.getValue("deliveryPersonnel");
+      const personnelArray = Array.isArray(deliveryPersonnel)
+        ? deliveryPersonnel
+        : [];
       return (
         <>
-          {row.getValue("isDeleted") ? (
-            <Badge className="bg-red-100 text-red-800">
-              {row.getValue("isDeleted")}
-            </Badge>
-          ) : (
-            "-"
-          )}
+          {personnelArray.length > 0
+            ? personnelArray.map((personnel: any) => (
+                <div key={personnel.id}>{personnel.name}</div>
+              ))
+            : "-"}
         </>
       );
     },
-    size: 100,
+    size: 180,
     enableHiding: true,
     enableSorting: true,
   },
@@ -224,6 +374,20 @@ const columns: ColumnDef<IUser>[] = [
     enableHiding: true,
     enableSorting: true,
   },
+
+  {
+    header: "Status",
+    accessorKey: "currentStatus",
+    cell: ({ row }) => (
+      <Badge className={getStatusColor(row.getValue("currentStatus"))}>
+        {row.getValue("currentStatus")}
+      </Badge>
+    ),
+    size: 100,
+    enableHiding: true,
+    enableSorting: true,
+  },
+
   {
     id: "actions",
     header: () => <span className="sr-only">Actions</span>,
@@ -233,17 +397,25 @@ const columns: ColumnDef<IUser>[] = [
   },
 ];
 
-export default function UsersTable() {
+export default function AdminParcelsTable() {
   const id = useId();
   const [open, setOpen] = useState(false);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [roleFilter, setRoleFilter] = useState<Role[]>([]);
-  const [verifiedFilter, setVerifiedFilter] = useState<boolean | undefined>(
-    undefined
+  const [typeFilter, setTypeFilter] = useState<ParcelType[]>([]);
+  const [shippingTypeFilter, setShippingTypeFilter] = useState<ShippingType[]>(
+    []
   );
-  const [statusFilter, setStatusFilter] = useState<IsActive[]>([]);
+  const [blockedParcelFilter, setBlockedParcelFilter] = useState<
+    boolean | undefined
+  >(undefined);
+  const [statusFilter, setStatusFilter] = useState<string[]>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-    createdAt: false,
+    currentLocation: false,
+    trackingId: false,
+    cancelledAt: false,
+    coupon: false,
+    isPaid: false,
+    // deliveryPersonnel: false,
   });
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -261,16 +433,21 @@ export default function UsersTable() {
     page: pagination.pageIndex + 1,
     limit: pagination.pageSize,
     sort: sorting.length > 0 ? sorting[0].id : "-createdAt",
-    role: roleFilter.length > 0 ? [...roleFilter] : undefined,
-    isActive: statusFilter.length > 0 ? [...statusFilter] : undefined,
-    isVerified: verifiedFilter !== undefined ? verifiedFilter : undefined,
+    currentStatus: statusFilter.length > 0 ? [...statusFilter] : undefined,
+    type: typeFilter.length > 0 ? [...typeFilter] : undefined,
+    shippingType:
+      shippingTypeFilter.length > 0 ? [...shippingTypeFilter] : undefined,
+    isBlocked:
+      blockedParcelFilter !== undefined ? blockedParcelFilter : undefined,
   };
 
   const {
-    data: usersData,
-    isLoading: isLoadingUsers,
-    isError: isErrorUsers,
-  } = useGetAllUsersQuery({ ...currentQuery });
+    data: parcelsData,
+    isLoading: isLoadingParcels,
+    isError: isErrorParcels,
+  } = useGetAllParcelsQuery({
+    ...currentQuery,
+  });
 
   // Search handlers
   const handleSearch = () => {
@@ -284,20 +461,8 @@ export default function UsersTable() {
     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
   };
 
-  // handleRoleChange function
-  const handleRoleChange = (checked: boolean, value: Role) => {
-    setRoleFilter((prev) => {
-      if (checked) {
-        return [...prev, value];
-      } else {
-        return prev.filter((role) => role !== value);
-      }
-    });
-    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-  };
-
   // handleStatusChange function
-  const handleStatusChange = (checked: boolean, value: IsActive) => {
+  const handleStatusChange = (checked: boolean, value: ParcelStatus) => {
     setStatusFilter((prev) => {
       if (checked) {
         return [...prev, value];
@@ -308,20 +473,40 @@ export default function UsersTable() {
     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
   };
 
-  // handleIsVerifiedChange function
-  const handleIsVerifiedChange = (checked: boolean, value: boolean) => {
-    const newValue = value ? true : false;
-    setVerifiedFilter(checked ? newValue : undefined);
+  const handleTypeChange = (checked: boolean, value: ParcelType) => {
+    setTypeFilter((prev) => {
+      if (checked) {
+        return [...prev, value];
+      } else {
+        return prev.filter((type) => type !== value);
+      }
+    });
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+  };
+
+  const handleShippingTypeChange = (checked: boolean, value: ShippingType) => {
+    setShippingTypeFilter((prev) => {
+      if (checked) {
+        return [...prev, value];
+      } else {
+        return prev.filter((type) => type !== value);
+      }
+    });
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+  };
+
+  const handleBlockedParcelChange = (checked: boolean, value: boolean) => {
+    setBlockedParcelFilter(checked ? value : undefined);
     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
   };
 
   const table = useReactTable({
-    data: usersData?.data || [],
+    data: parcelsData?.data || [],
     columns,
     // Server-side pagination configuration
     manualPagination: true,
-    pageCount: usersData?.meta?.totalPage,
-    rowCount: usersData?.meta?.total,
+    pageCount: parcelsData?.meta?.totalPage,
+    rowCount: parcelsData?.meta?.total,
 
     // Server-side sorting configuration
     manualSorting: true,
@@ -356,18 +541,18 @@ export default function UsersTable() {
     },
   });
 
-  if (isLoadingUsers) {
-    return <Loading message="Loading users data..." />;
+  if (isLoadingParcels) {
+    return <Loading message="Loading parcels data..." />;
   }
 
-  if (!isLoadingUsers && isErrorUsers) {
+  if (!isLoadingParcels && isErrorParcels) {
     return <Error />;
   }
 
   const content = (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div className="flex items-center gap-3">
-        {/* search */}
+        {/* Filter by tracking id */}
         <div className="relative">
           <Input
             // id={id}
@@ -406,51 +591,6 @@ export default function UsersTable() {
           }
         </div>
 
-        {/* Filter by Role */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline">
-              <FilterIcon
-                className="-ms-1 opacity-60"
-                size={16}
-                aria-hidden="true"
-              />
-              Role
-              {statusFilter.length > 0 && (
-                <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-                  {statusFilter.length}
-                </span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto min-w-36 p-3" align="start">
-            <div className="space-y-3">
-              <div className="text-muted-foreground text-xs font-medium">
-                Filters
-              </div>
-              <div className="space-y-3">
-                {Object.values(Role).map((value, i) => (
-                  <div key={value} className="flex items-center gap-2">
-                    <Checkbox
-                      id={`role-${i}`}
-                      checked={roleFilter.includes(value)}
-                      onCheckedChange={(checked: boolean) =>
-                        handleRoleChange(checked, value)
-                      }
-                    />
-                    <Label
-                      htmlFor={`role-${i}`}
-                      className="flex grow justify-between gap-2 font-normal"
-                    >
-                      {value}
-                    </Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </PopoverContent>
-        </Popover>
-
         {/* Filter by status */}
         <Popover>
           <PopoverTrigger asChild>
@@ -460,7 +600,7 @@ export default function UsersTable() {
                 size={16}
                 aria-hidden="true"
               />
-              Active Status
+              Status
               {statusFilter.length > 0 && (
                 <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
                   {statusFilter.length}
@@ -474,7 +614,7 @@ export default function UsersTable() {
                 Filters
               </div>
               <div className="space-y-3">
-                {Object.values(IsActive).map((value, i) => (
+                {Object.values(ParcelStatus).map((value, i) => (
                   <div key={value} className="flex items-center gap-2">
                     <Checkbox
                       id={`status-${i}`}
@@ -495,8 +635,7 @@ export default function UsersTable() {
             </div>
           </PopoverContent>
         </Popover>
-
-        {/* Filter by isVerified */}
+        {/* Filter by parcel type */}
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline">
@@ -505,10 +644,98 @@ export default function UsersTable() {
                 size={16}
                 aria-hidden="true"
               />
-              Verified Status
-              {verifiedFilter !== undefined && (
+              Parcel Type
+              {typeFilter.length > 0 && (
                 <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-                  {verifiedFilter ? "Yes" : "No"}
+                  {typeFilter.length}
+                </span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto min-w-36 p-3" align="start">
+            <div className="space-y-3">
+              <div className="text-muted-foreground text-xs font-medium">
+                Filters
+              </div>
+              <div className="space-y-3">
+                {Object.values(ParcelType).map((value, i) => (
+                  <div key={value} className="flex items-center gap-2">
+                    <Checkbox
+                      id={`type-${i}`}
+                      checked={typeFilter.includes(value)}
+                      onCheckedChange={(checked: boolean) =>
+                        handleTypeChange(checked, value)
+                      }
+                    />
+                    <Label
+                      htmlFor={`type-${i}`}
+                      className="flex grow justify-between gap-2 font-normal"
+                    >
+                      {value.charAt(0).toUpperCase() + value.slice(1)}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+        {/* Filter by shipping type */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline">
+              <FilterIcon
+                className="-ms-1 opacity-60"
+                size={16}
+                aria-hidden="true"
+              />
+              Shipping Type
+              {shippingTypeFilter.length > 0 && (
+                <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
+                  {shippingTypeFilter.length}
+                </span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto min-w-36 p-3" align="start">
+            <div className="space-y-3">
+              <div className="text-muted-foreground text-xs font-medium">
+                Filters
+              </div>
+              <div className="space-y-3">
+                {Object.values(ShippingType).map((value, i) => (
+                  <div key={value} className="flex items-center gap-2">
+                    <Checkbox
+                      id={`shippingType-${i}`}
+                      checked={shippingTypeFilter.includes(value)}
+                      onCheckedChange={(checked: boolean) =>
+                        handleShippingTypeChange(checked, value)
+                      }
+                    />
+                    <Label
+                      htmlFor={`shippingType-${i}`}
+                      className="flex grow justify-between gap-2 font-normal"
+                    >
+                      {value.charAt(0).toUpperCase() + value.slice(1)}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+        {/* Filter by blocked parcels */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline">
+              <FilterIcon
+                className="-ms-1 opacity-60"
+                size={16}
+                aria-hidden="true"
+              />
+              Blocked
+              {blockedParcelFilter !== undefined && (
+                <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
+                  {blockedParcelFilter ? "Yes" : "No"}
                 </span>
               )}
             </Button>
@@ -522,14 +749,14 @@ export default function UsersTable() {
                 {["Yes", "No"].map((value, i) => (
                   <div key={value} className="flex items-center gap-2">
                     <Checkbox
-                      id={`isVerified-${i}`}
-                      checked={verifiedFilter === (value === "Yes")}
+                      id={`blocking-${i}`}
+                      checked={blockedParcelFilter === (value === "Yes")}
                       onCheckedChange={(checked: boolean) =>
-                        handleIsVerifiedChange(checked, value === "Yes")
+                        handleBlockedParcelChange(checked, value === "Yes")
                       }
                     />
                     <Label
-                      htmlFor={`isVerified-${i}`}
+                      htmlFor={`blocking-${i}`}
                       className="flex grow justify-between gap-2 font-normal"
                     >
                       {value}
@@ -575,32 +802,33 @@ export default function UsersTable() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-
       <div className="flex items-center gap-3">
-        {/* Create button */}
+        {/* Send parcel button */}
         <Button
           onClick={() => setOpen(true)}
           className="ml-auto"
           variant="outline"
         >
           <PlusIcon className="-ms-1 opacity-60" size={16} aria-hidden="true" />
-          Create Stuff
+          Create Parcel
         </Button>
-        <CreateStuffDialog open={open} onOpenChange={setOpen} />
+        <AdminCreateParcelDialog open={open} onOpenChange={setOpen} />
       </div>
     </div>
   );
 
   if (
-    !isLoadingUsers &&
-    !isErrorUsers &&
-    usersData &&
-    usersData?.data.length === 0
+    !isLoadingParcels &&
+    !isErrorParcels &&
+    parcelsData &&
+    parcelsData?.data.length === 0
   ) {
     return (
       <>
         {content}
-        <Information message="No user data available" />
+        <div className="text-center">
+          <Information message="No parcel data available" />
+        </div>
       </>
     );
   }
@@ -823,38 +1051,96 @@ export default function UsersTable() {
   );
 }
 
-function RowActions({ row }: { row: Row<IUser> }) {
+function RowActions({ row }: { row: Row<IParcel> }) {
   const [open, setOpen] = useState(false);
-  const form = useForm<z.infer<typeof isActiveSchema>>({
-    resolver: zodResolver(isActiveSchema),
-    defaultValues: { isActive: IsActive.ACTIVE },
+  const [openBlock, setOpenBlock] = useState(false);
+  const form = useForm<z.infer<typeof updateStatusPersonnelSchema>>({
+    resolver: zodResolver(updateStatusPersonnelSchema),
+    defaultValues: {
+      currentStatus: undefined,
+      currentLocation: undefined,
+      deliveryPersonnelId: undefined,
+    },
   });
-  const [blockUser, { isLoading, isError, error }] = useBlockUserByIdMutation();
+  const [updateStatusAndPersonnel, { isLoading, isError, error }] =
+    useUpdateStatusAndPersonnelMutation();
 
-  // Block User
-  const handleBlock = async (data: z.infer<typeof isActiveSchema>) => {
+  // Cancel Parcel
+  const handleChangeStatus = async (
+    data: z.infer<typeof updateStatusPersonnelSchema>
+  ) => {
     try {
-      const res = await blockUser({
+      console.log("Updating parcel status", data);
+      await updateStatusAndPersonnel({
         id: row.original?._id,
-        data,
+        data: {
+          ...data,
+          currentStatus: data.currentStatus as ParcelStatus | undefined,
+          currentLocation: data.currentLocation
+            ? data.currentLocation
+            : undefined,
+          deliveryPersonnelId: data.deliveryPersonnelId
+            ? data.deliveryPersonnelId
+            : undefined,
+        },
       }).unwrap();
 
-      if (res.success) {
-        setOpen(false);
-        toast.success("User blocked successfully");
-      }
+      setOpen(false);
+      toast.success("Parcel status updated successfully");
     } catch (error) {
-      console.error("Failed to change status", error);
+      console.error("Failed to update parcel status", error);
     }
   };
 
   useEffect(() => {
     if (isError) {
-      toast.error("Failed to change status", {
+      toast.error("Failed to update parcel status", {
         description: (error as any)?.data?.message,
       });
     }
   }, [isError, error]);
+
+  // Block/Unblock Parcel
+  const formBlock = useForm<z.infer<typeof updateBlockedStatusSchema>>({
+    resolver: zodResolver(updateBlockedStatusSchema),
+    defaultValues: {
+      isBlocked: undefined,
+      reason: undefined,
+    },
+  });
+
+  const [
+    blockParcel,
+    { isLoading: isBlocking, isError: isBlockingError, error: blockingError },
+  ] = useBlockParcelMutation();
+  const handleBlockUnblock = async (
+    data: z.infer<typeof updateBlockedStatusSchema>
+  ) => {
+    const { isBlocked, reason } = data;
+    try {
+      await blockParcel({
+        id: row.original?._id,
+        data: { isBlocked: isBlocked === "blocked", reason },
+      }).unwrap();
+
+      setOpenBlock(false);
+      toast.success(
+        `Parcel ${
+          isBlocked === "blocked" ? "blocked" : "unblocked"
+        } successfully`
+      );
+    } catch (error) {
+      console.error("Failed to update parcel status", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isBlockingError) {
+      toast.error("Failed to update parcel status", {
+        description: (blockingError as any)?.data?.message,
+      });
+    }
+  }, [isBlockingError, blockingError]);
 
   return (
     <DropdownMenu>
@@ -871,29 +1157,37 @@ function RowActions({ row }: { row: Row<IUser> }) {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <Link to={`/admin/${row.original?._id}/details`}>
+              <span>View Details</span>
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                <span>Active Status</span>
+                <span>Change Status</span>
               </DropdownMenuItem>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Change Active Status</DialogTitle>
+                <DialogTitle>Change Status</DialogTitle>
                 <DialogDescription>
-                  Are you sure you want to change the active status of user{" "}
-                  {row.original?.name}?
+                  Are you sure you want to change the status of parcel{" "}
+                  {row.original?.trackingId}?
                 </DialogDescription>
               </DialogHeader>
               <Form {...form}>
                 <form
-                  onSubmit={form.handleSubmit(handleBlock)}
+                  onSubmit={form.handleSubmit(handleChangeStatus)}
                   className="space-y-4"
                 >
                   <FormField
                     control={form.control}
-                    name="isActive"
+                    name="currentStatus"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Select a status</FormLabel>
@@ -907,11 +1201,47 @@ function RowActions({ row }: { row: Row<IUser> }) {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="ACTIVE">Active</SelectItem>
-                            <SelectItem value="INACTIVE">Inactive</SelectItem>
-                            <SelectItem value="BLOCKED">Blocked</SelectItem>
+                            {Object.values(ParcelStatus).map((status) => (
+                              <SelectItem key={status} value={status}>
+                                {status}
+                              </SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="currentLocation"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Current Location</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter current location"
+                            {...field}
+                            value={field.value ?? ""}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="deliveryPersonnelId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Assign Delivery Personnel</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter delivery personnel ID"
+                            {...field}
+                          />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -924,6 +1254,82 @@ function RowActions({ row }: { row: Row<IUser> }) {
                     </DialogClose>
                     <Button type="submit" disabled={isLoading}>
                       {isLoading ? "Updating..." : "Update Status"}
+                    </Button>
+                  </DialogFooter>
+                </form>
+              </Form>
+            </DialogContent>
+          </Dialog>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Dialog open={openBlock} onOpenChange={setOpenBlock}>
+            <DialogTrigger asChild>
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <span>Block / Unblock</span>
+              </DropdownMenuItem>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Change Block Status</DialogTitle>
+                <DialogDescription>
+                  Are you sure you want to block/unblock parcel?
+                </DialogDescription>
+              </DialogHeader>
+              <Form {...formBlock}>
+                <form
+                  onSubmit={formBlock.handleSubmit(handleBlockUnblock)}
+                  className="space-y-4"
+                >
+                  <FormField
+                    control={formBlock.control}
+                    name="isBlocked"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Select a status</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl className="w-full">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a status" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="unblock">Unblock</SelectItem>
+                            <SelectItem value="blocked">Blocked</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={formBlock.control}
+                    name="reason"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Reason (if blocking)</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter reason"
+                            {...field}
+                            value={field.value ?? ""}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button variant="outline" type="button">
+                        Cancel
+                      </Button>
+                    </DialogClose>
+                    <Button type="submit" disabled={isLoading}>
+                      {isBlocking ? "Updating..." : "Update"}
                     </Button>
                   </DialogFooter>
                 </form>

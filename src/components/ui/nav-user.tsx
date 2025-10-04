@@ -20,7 +20,7 @@ import { useAppDispatch } from "@/redux/hooks";
 // import { getNameInitials } from "@/utils/getNameInitials";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import { authApi, useLogoutMutation } from "@/redux/api/features/auth/authApi";
+import { authApi, useLogoutMutation } from "@/redux/features/auth/authApi";
 import { getNameInitials } from "@/utils/getNameInitials";
 
 export function NavUser({

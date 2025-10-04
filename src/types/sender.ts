@@ -28,6 +28,7 @@ export enum ShippingType {
 
 export interface IParcel {
   _id: string;
+  reason: string;
   trackingId: string;
   type: ParcelType;
   shippingType: ShippingType;

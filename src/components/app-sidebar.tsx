@@ -16,7 +16,7 @@ import * as React from "react";
 import { Link } from "react-router";
 import Error from "./Error";
 import Loading from "./Loading";
-import { useGetMeQuery } from "@/redux/api/features/user/userApi";
+import { useGetMeQuery } from "@/redux/features/user/userApi";
 import { getSidebarItems } from "@/utils/getSidebarItems";
 import { NavUser } from "./ui/nav-user";
 

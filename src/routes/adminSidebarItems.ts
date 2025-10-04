@@ -2,6 +2,7 @@
 
 import Analytics from "@/pages/admin/Analytics";
 import Users from "@/pages/admin/Users";
+import ViewParcels from "@/pages/admin/ViewParcels";
 import type { ISidebarItem } from "@/types";
 // import { lazy } from "react";
 
@@ -19,11 +20,11 @@ export const adminSidebarItems: ISidebarItem[] = [
         url: "analytics",
         component: Analytics,
       },
-      // {
-      //   title: "Manage Parcels",
-      //   url: "parcels",
-      //   component: ViewParcels,
-      // },
+      {
+        title: "Manage Parcels",
+        url: "parcels",
+        component: ViewParcels,
+      },
     ],
   },
   {

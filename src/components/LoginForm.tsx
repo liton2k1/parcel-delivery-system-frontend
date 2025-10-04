@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useLoginMutation } from "@/redux/api/features/auth/authApi";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
 import {
   ADMIN_DEFAULT_ROUTE,
   RECEIVER_DEFAULT_ROUTE,

@@ -1,5 +1,5 @@
 import Loading from "@/components/Loading";
-import { useGetMeQuery } from "@/redux/api/features/user/userApi";
+import { useGetMeQuery } from "@/redux/features/user/userApi";
 import type { TRole } from "@/types";
 import type { ComponentType } from "react";
 import { Navigate } from "react-router";

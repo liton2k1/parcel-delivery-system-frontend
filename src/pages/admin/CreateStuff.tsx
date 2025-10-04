@@ -38,7 +38,7 @@ import { Role } from "@/types/user";
 import {
   useCreateAdminMutation,
   useCreateDeliveryPersonnelMutation,
-} from "@/redux/api/features/user/userApi";
+} from "@/redux/features/user/userApi";
 
 const createStuffZodSchema = registerSchema.extend({
   role: z.literal([Role.ADMIN, Role.DELIVERY_PERSONNEL]),
