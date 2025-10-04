@@ -11,15 +11,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-// import { authApi, useLogoutMutation } from "@/redux/features/auth/authApi";
-// import { useGetMeQuery } from "@/redux/features/user/userApi";
-// import { useAppDispatch } from "@/redux/hooks";
-import {
-  ADMIN_DEFAULT_ROUTE,
-  RECEIVER_DEFAULT_ROUTE,
-  SENDER_DEFAULT_ROUTE,
-} from "@/routes/constants";
-// import { Role } from "@/types/user-type";
 import { Link, useNavigate } from "react-router";
 import { Fragment } from "react/jsx-runtime";
 import { ModeToggle } from "./ModeToggle";
@@ -37,10 +28,10 @@ const navigationLinks = [
   { href: "/faq", label: "FAQ", role: "PUBLIC" },
   { href: "/about", label: "About", role: "PUBLIC" },
   { href: "/contact", label: "Contact", role: "PUBLIC" },
-  { href: ADMIN_DEFAULT_ROUTE, label: "Dashboard", role: Role.ADMIN },
-  { href: ADMIN_DEFAULT_ROUTE, label: "Dashboard", role: Role.SUPER_ADMIN },
-  { href: SENDER_DEFAULT_ROUTE, label: "Dashboard", role: Role.SENDER },
-  { href: RECEIVER_DEFAULT_ROUTE, label: "Dashboard", role: Role.RECEIVER },
+  { href: "/admin", label: "Dashboard", role: Role.ADMIN },
+  { href: "/super-admin", label: "Dashboard", role: Role.SUPER_ADMIN },
+  { href: "/sender", label: "Dashboard", role: Role.SENDER },
+  { href: "/receiver", label: "Dashboard", role: Role.RECEIVER },
 ];
 
 export default function Navbar() {

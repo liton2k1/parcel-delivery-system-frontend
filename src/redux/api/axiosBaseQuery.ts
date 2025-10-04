@@ -23,6 +23,7 @@ const axiosBaseQuery =
           data,
           params,
           headers,
+          // qs handles array serialization as repeated query params
           paramsSerializer: (params) =>
             qs.stringify(params, { arrayFormat: "repeat" }),
         });
