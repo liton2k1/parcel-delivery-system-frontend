@@ -20,6 +20,7 @@ import { senderSidebarItems } from "./senderSidebarItems";
 import { withAuth } from "@/utils/withAuth";
 import { generateRoutes } from "./generateRoutes";
 import { superAdminSidebarItems } from "./superAdminSidebarItems";
+import ParcelStatus from "@/pages/sender/ParcelStatus";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to={SENDER_DEFAULT_ROUTE} /> },
       ...generateRoutes(senderSidebarItems),
+      { Component: ParcelStatus, path: ":id/status" },
     ],
   },
   {
