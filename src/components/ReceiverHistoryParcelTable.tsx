@@ -1,12 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -14,7 +5,6 @@ import {
   getCoreRowModel,
   getFacetedUniqueValues,
   PaginationState,
-  Row,
   SortingState,
   useReactTable,
   VisibilityState,
@@ -28,44 +18,25 @@ import {
   ChevronRightIcon,
   ChevronUpIcon,
   Columns3Icon,
-  EllipsisIcon,
-  FilterIcon,
+  InfoIcon,
   Package,
-  PlusIcon,
-  Scale,
   SearchIcon,
   Truck,
   XIcon,
 } from "lucide-react";
-import { useEffect, useId, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useId, useState } from "react";
 
-// import DeleteConfirmation from "@/components/DeleteConformation";
 import Error from "@/components/Error";
 import Information from "@/components/Information";
 import Loading from "@/components/Loading";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -75,11 +46,6 @@ import {
   PaginationContent,
   PaginationItem,
 } from "@/components/ui/pagination";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -95,41 +61,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
 import {
-  useCancelParcelMutation,
-  useDeleteParcelMutation,
-  useGetSenderParcelsQuery,
-} from "@/redux/features/parcel/parcelApi";
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import { useGetReceiverParcelHistoryQuery } from "@/redux/features/parcel/parcelApi";
 import { IParcel } from "@/types";
-// import { ParcelStatus } from "@/types/sender-parcel-type";
 import { getNameInitials } from "@/utils/getNameInitials";
 import { getStatusColor } from "@/utils/getStatusColor";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { Link } from "react-router";
-import { toast } from "sonner";
-import z from "zod";
-import { ParcelStatus } from "@/types/sender";
-import { CreateParcelDialog } from "@/components/CreateParcelDialog";
-import DeleteConfirmation from "@/components/DeleteConformation";
-// import { CreateParcelDialog } from "./SendParcelModal";
-
-// schema for cancel note
-const cancelNoteSchema = z.object({
-  note: z
-    .string()
-    .min(5, { message: "Reason too short" })
-    .max(200, { message: "Reason too long" })
-    .trim(),
-});
 
 const columns: ColumnDef<IParcel>[] = [
   {
     header: "Sender",
     accessorKey: "sender",
     cell: ({ row }) => {
-      const name = row.original?.sender?.name;
+      const name = row?.original?.sender?.name;
       const initials = getNameInitials(name);
 
       return (
@@ -197,7 +146,7 @@ const columns: ColumnDef<IParcel>[] = [
     enableSorting: true,
   },
   {
-    header: "Delivered At",
+    header: "Deliver At",
     accessorKey: "deliveredAt",
     cell: ({ row }) => {
       const deliveredAt = row.getValue("deliveredAt");
@@ -225,7 +174,7 @@ const columns: ColumnDef<IParcel>[] = [
 
   {
     header: "Parcel Info",
-    accessorKey: "weight",
+    accessorKey: "packageType",
     cell: ({ row }) => {
       const packageType = `${row.original?.type
         .charAt(0)
@@ -235,10 +184,6 @@ const columns: ColumnDef<IParcel>[] = [
         .toUpperCase()}${row.original?.shippingType.slice(1)}`;
       return (
         <div className="space-y-1">
-          <div className="font-medium flex items-center gap-2">
-            <Scale className="h-4 w-4" />
-            {row.original?.weight} {row.original?.weightUnit}
-          </div>
           <div className="text-sm text-muted-foreground flex items-center gap-2">
             <Package className="h-4 w-4" />
             {packageType}
@@ -247,27 +192,6 @@ const columns: ColumnDef<IParcel>[] = [
             <Truck className="h-4 w-4" />
             {shippingType}
           </div>
-        </div>
-      );
-    },
-    size: 130,
-    enableHiding: true,
-    enableSorting: true,
-  },
-  {
-    header: "Cost",
-    accessorKey: "fee",
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("fee"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "BDT",
-        minimumFractionDigits: 0,
-      }).format(amount);
-      return (
-        <div className="space-y-1">
-          <div>{formatted.slice(4)}</div>
-          <div className="text-sm text-muted-foreground">BDT</div>
         </div>
       );
     },
@@ -329,25 +253,16 @@ const columns: ColumnDef<IParcel>[] = [
     enableHiding: true,
     enableSorting: true,
   },
-  {
-    id: "actions",
-    header: () => <span className="sr-only">Actions</span>,
-    cell: ({ row }) => <RowActions row={row} />,
-    size: 60,
-    enableHiding: false,
-  },
 ];
 
-export default function SenderParcelTable() {
+export default function ReceiverHistoryParcelTable() {
   const id = useId();
-  const [open, setOpen] = useState(false);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [statusFilter, setStatusFilter] = useState<string[]>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-    sender: false,
-    currentLocation: false,
+    receiver: false,
     createdAt: false,
     cancelledAt: false,
+    isPaid: false,
   });
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -365,14 +280,13 @@ export default function SenderParcelTable() {
     page: pagination.pageIndex + 1,
     limit: pagination.pageSize,
     sort: sorting.length > 0 ? sorting[0].id : "-createdAt",
-    currentStatus: statusFilter.length > 0 ? [...statusFilter] : undefined,
   };
 
   const {
-    data: senderParcels,
-    isLoading: isLoadingSenderParcels,
-    isError: isErrorSenderParcels,
-  } = useGetSenderParcelsQuery({
+    data: historyParcels,
+    isLoading: isLoadingHistoryParcels,
+    isError: isErrorHistoryParcels,
+  } = useGetReceiverParcelHistoryQuery({
     ...currentQuery,
   });
 
@@ -388,25 +302,13 @@ export default function SenderParcelTable() {
     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
   };
 
-  // handleStatusChange function
-  const handleStatusChange = (checked: boolean, value: ParcelStatus) => {
-    setStatusFilter((prev) => {
-      if (checked) {
-        return [...prev, value];
-      } else {
-        return prev.filter((status) => status !== value);
-      }
-    });
-    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-  };
-
   const table = useReactTable({
-    data: senderParcels?.data || [],
+    data: historyParcels?.data || [],
     columns,
     // Server-side pagination configuration
     manualPagination: true,
-    pageCount: senderParcels?.meta?.totalPage,
-    rowCount: senderParcels?.meta?.total,
+    pageCount: historyParcels?.meta?.totalPage,
+    rowCount: historyParcels?.meta?.total,
 
     // Server-side sorting configuration
     manualSorting: true,
@@ -414,7 +316,7 @@ export default function SenderParcelTable() {
     enableMultiSort: false,
 
     // manual filtering
-    manualFiltering: true,
+    // manualFiltering: true,
 
     getCoreRowModel: getCoreRowModel(),
     // getSortedRowModel: getSortedRowModel(),
@@ -441,170 +343,117 @@ export default function SenderParcelTable() {
     },
   });
 
-  if (isLoadingSenderParcels) {
+  if (isLoadingHistoryParcels) {
     return <Loading message="Loading parcels data..." />;
   }
 
-  if (!isLoadingSenderParcels && isErrorSenderParcels) {
+  if (!isLoadingHistoryParcels && isErrorHistoryParcels) {
     return <Error />;
   }
 
-  const content = (
-    <div className="flex flex-wrap items-center justify-between gap-3">
-      <div className="flex items-center gap-3">
-        {/* Filter by tracking id */}
-        <div className="relative">
-          <Input
-            // id={id}
-            className="peer ps-9 pe-9"
-            placeholder="Search..."
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearch();
-              }
-            }}
-          />
-          <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
-            <SearchIcon size={16} />
-          </div>
-          {searchTerm && (
-            <button
-              className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-5 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Clear input"
-              onClick={handleClearSearch}
-            >
-              <XIcon size={16} aria-hidden="true" />
-            </button>
-          )}
-          {
-            <button
-              onClick={handleSearch}
-              className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Submit search"
-              type="submit"
-            >
-              <ArrowRightIcon size={16} aria-hidden="true" />
-            </button>
-          }
-        </div>
-
-        {/* Filter by status */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline">
-              <FilterIcon
-                className="-ms-1 opacity-60"
-                size={16}
-                aria-hidden="true"
-              />
-              Status
-              {statusFilter.length > 0 && (
-                <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-                  {statusFilter.length}
-                </span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto min-w-36 p-3" align="start">
-            <div className="space-y-3">
-              <div className="text-muted-foreground text-xs font-medium">
-                Filters
-              </div>
-              <div className="space-y-3">
-                {Object.values(ParcelStatus).map((value, i) => (
-                  <div key={value} className="flex items-center gap-2">
-                    <Checkbox
-                      id={`status-${i}`}
-                      checked={statusFilter.includes(value)}
-                      onCheckedChange={(checked: boolean) =>
-                        handleStatusChange(checked, value)
-                      }
-                    />
-                    <Label
-                      htmlFor={`status-${i}`}
-                      className="flex grow justify-between gap-2 font-normal"
-                    >
-                      {value}
-                    </Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </PopoverContent>
-        </Popover>
-        {/* Toggle columns visibility */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">
-              <Columns3Icon
-                className="-ms-1 opacity-60"
-                size={16}
-                aria-hidden="true"
-              />
-              View
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                    onSelect={(event) => event.preventDefault()}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-      <div className="flex items-center gap-3">
-        {/* Send parcel button */}
-        <Button
-          onClick={() => setOpen(true)}
-          className="ml-auto"
-          variant="outline"
-        >
-          <PlusIcon className="-ms-1 opacity-60" size={16} aria-hidden="true" />
-          Send Parcel
-        </Button>
-        <CreateParcelDialog open={open} onOpenChange={setOpen} />
-      </div>
-    </div>
-  );
-
   if (
-    !isLoadingSenderParcels &&
-    !isErrorSenderParcels &&
-    senderParcels &&
-    senderParcels?.data.length === 0
+    !isLoadingHistoryParcels &&
+    !isErrorHistoryParcels &&
+    historyParcels &&
+    historyParcels?.data.length === 0
   ) {
     return (
-      <>
-        {content}
-        <div className="text-center">
-          <Information message="No parcel data available" />
-        </div>
-      </>
+      <div className="text-center">
+        <Information message="No parcel data available" />
+      </div>
     );
   }
 
   return (
     <div className="space-y-4">
       {/* Filters */}
-      {content}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          {/* Filter by tracking id / address */}
+          <div className="relative">
+            <Input
+              // id={id}
+              className="peer ps-9 pe-9"
+              placeholder="Search..."
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
+            />
+            <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
+              <SearchIcon size={16} />
+            </div>
+            {searchTerm && (
+              <button
+                className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-5 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                aria-label="Clear input"
+                onClick={handleClearSearch}
+              >
+                <XIcon size={16} aria-hidden="true" />
+              </button>
+            )}
+            {
+              <button
+                onClick={handleSearch}
+                className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                aria-label="Submit search"
+                type="submit"
+              >
+                <ArrowRightIcon size={16} aria-hidden="true" />
+              </button>
+            }
+            <div className="absolute -inset-y-4 -start-2 text-muted-foreground/80">
+              <Tooltip>
+                <TooltipTrigger>
+                  <InfoIcon size={14} />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Search by tracking ID or address</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
+
+          {/* Toggle columns visibility */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                <Columns3Icon
+                  className="-ms-1 opacity-60"
+                  size={16}
+                  aria-hidden="true"
+                />
+                View
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                      onSelect={(event) => event.preventDefault()}
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
 
       {/* Table */}
       <div className="bg-background rounded-md border overflow-auto">
@@ -816,154 +665,5 @@ export default function SenderParcelTable() {
         </div>
       </div>
     </div>
-  );
-}
-
-function RowActions({ row }: { row: Row<IParcel> }) {
-  const [open, setOpen] = useState(false);
-  const form = useForm<z.infer<typeof cancelNoteSchema>>({
-    resolver: zodResolver(cancelNoteSchema),
-    defaultValues: { note: "" },
-  });
-  const [cancelParcel, { isLoading, isError, error }] =
-    useCancelParcelMutation();
-  const [
-    deleteParcel,
-    { isLoading: isDeleting, isError: isDeleteError, error: deleteError },
-  ] = useDeleteParcelMutation();
-
-  // Cancel Parcel
-  const handleCancel = async (data: z.infer<typeof cancelNoteSchema>) => {
-    try {
-      await cancelParcel({
-        id: row.original?._id,
-        note: data.note,
-      }).unwrap();
-
-      setOpen(false);
-      toast.success("Parcel canceled successfully");
-    } catch (error) {
-      console.error("Failed to cancel parcel", error);
-    }
-  };
-
-  useEffect(() => {
-    if (isError) {
-      toast.error("Failed to cancel parcel", {
-        description: (error as any)?.data?.message,
-      });
-    }
-  }, [isError, error]);
-
-  // Delete Parcel
-  const handleDelete = async (row: Row<IParcel>) => {
-    try {
-      await deleteParcel(row.original?._id).unwrap();
-      toast.success("Parcel deleted successfully");
-    } catch (error) {
-      console.error("Failed to delete parcel", error);
-    }
-  };
-
-  useEffect(() => {
-    if (isDeleteError) {
-      toast.error("Failed to delete parcel", {
-        description: (deleteError as any)?.data?.message,
-      });
-    }
-  }, [isDeleteError, deleteError]);
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <div className="flex justify-end">
-          <Button
-            size="icon"
-            variant="ghost"
-            className="shadow-none"
-            aria-label="Edit item"
-          >
-            <EllipsisIcon size={16} aria-hidden="true" />
-          </Button>
-        </div>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Link to={`/sender/${row.original?._id}/status`}>
-              <span>Show Status</span>
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                <span>Cancel</span>
-              </DropdownMenuItem>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Confirm Cancellation</DialogTitle>
-                <DialogDescription>
-                  Are you sure you want to cancel this parcel? This action
-                  cannot be undone.
-                </DialogDescription>
-              </DialogHeader>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(handleCancel)}
-                  className="space-y-4"
-                >
-                  <FormField
-                    control={form.control}
-                    name="note"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Reason</FormLabel>
-                        <FormControl>
-                          <Input {...field} placeholder="Enter reason" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <DialogFooter>
-                    <DialogClose asChild>
-                      <Button variant="outline" type="button">
-                        Don't Cancel
-                      </Button>
-                    </DialogClose>
-                    <Button type="submit" disabled={isLoading}>
-                      {isLoading ? "Cancelling..." : "Cancel Parcel"}
-                    </Button>
-                  </DialogFooter>
-                </form>
-              </Form>
-            </DialogContent>
-          </Dialog>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <DeleteConfirmation
-            trigger={
-              <DropdownMenuItem
-                className="text-destructive focus:text-destructive"
-                onSelect={(e) => e.preventDefault()}
-              >
-                <span>Delete</span>
-              </DropdownMenuItem>
-            }
-            title="Are you absolutely sure?"
-            description={`This action cannot be undone. This will permanently delete the parcel`}
-            onConfirm={() => {
-              handleDelete(row);
-            }}
-            isLoading={isDeleting}
-          />
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
   );
 }

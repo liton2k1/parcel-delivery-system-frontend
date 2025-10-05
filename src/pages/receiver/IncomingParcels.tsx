@@ -1,9 +1,7 @@
-const IncomingParcels = () => {
-  return (
-    <div>
-      <h1>This is Incoming Parcels page ! </h1>
-    </div>
-  );
-};
+import ReceiverIncomingParcelTable from "@/components/ReceiverIncomingParcelTable";
+
+function IncomingParcels() {
+  return <ReceiverIncomingParcelTable />;
+}
 
 export default IncomingParcels;
