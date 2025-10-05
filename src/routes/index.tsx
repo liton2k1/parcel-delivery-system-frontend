@@ -21,6 +21,7 @@ import { withAuth } from "@/utils/withAuth";
 import { generateRoutes } from "./generateRoutes";
 import { superAdminSidebarItems } from "./superAdminSidebarItems";
 import ParcelStatus from "@/pages/sender/ParcelStatus";
+import ViewParcelDetails from "@/pages/admin/ViewParcelDetails";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to={ADMIN_DEFAULT_ROUTE} /> },
       ...generateRoutes(adminSidebarItems),
+      { Component: ViewParcelDetails, path: ":id/details" },
     ],
   },
   {
