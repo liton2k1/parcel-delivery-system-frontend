@@ -6,9 +6,6 @@ import { useSearchParams } from "react-router";
 import { toast } from "sonner";
 import ParcelDetails from "./ParcelDetails";
 import TrackParcelHero from "./TrackParcelHero";
-// import HelpSection from "./HelpSection";
-// import ParcelDetails from "./ParcelDetails";
-// import TrackParcelHero from "./TrackParcelHero";
 
 function Track() {
   const [searchParams] = useSearchParams();
@@ -42,7 +39,6 @@ function Track() {
       .then((res) => {
         setFetchState({ isLoading: false, isError: false, errorMessage: "" });
         setData(res);
-        // Smooth scroll to parcel details after data loads
         setTimeout(() => {
           const parcelDetailsElement =
             document.getElementById("parcel-details");
@@ -74,7 +70,6 @@ function Track() {
       {!fetchState.isLoading && !fetchState.isError && data && (
         <ParcelDetails data={data} />
       )}
-      {/* <HelpSection /> */}
     </>
   );
 }
