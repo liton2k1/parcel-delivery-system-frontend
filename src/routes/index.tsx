@@ -23,6 +23,7 @@ import { superAdminSidebarItems } from "./superAdminSidebarItems";
 import ParcelStatus from "@/pages/sender/ParcelStatus";
 import ViewParcelDetails from "@/pages/admin/ViewParcelDetails";
 import TrackParcel from "@/pages/TrackParcel";
+import About from "@/pages/main/About/About";
 
 export const router = createBrowserRouter([
   {
@@ -34,8 +35,12 @@ export const router = createBrowserRouter([
         index: true,
       },
       {
+        Component: About,
+        path: "/about",
+      },
+      {
         Component: TrackParcel,
-        path: "trackparcel",
+        path: "/trackparcel",
       },
     ],
   },
