@@ -1,4 +1,4 @@
-import Logo from "@/assets/icons/Logo";
+// import Logo from "@/assets/icons/Logo";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -18,6 +18,7 @@ import { useGetMeQuery } from "@/redux/features/user/userApi";
 import { authApi, useLogoutMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { Role } from "@/types/user";
+import { Truck } from "lucide-react";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -47,7 +48,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="border-b">
+    <header className="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800">
       <div className="container mx-auto px-4 flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
@@ -113,9 +114,12 @@ export default function Navbar() {
           </Popover>
           {/* Main nav */}
           <div className="flex items-center gap-3">
-            <Link to="/" className="text-primary hover:text-primary/90">
-              <Logo />
-            </Link>
+            <div className="flex items-center gap-2">
+              <div className="bg-gradient-to-br from-[#FF2056] to-[#FF4070] rounded-lg p-2 shadow-lg shadow-[#FF2056]/20">
+                <Truck className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-bold text-white">Parcel.Com</span>
+            </div>
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">

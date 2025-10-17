@@ -1,203 +1,76 @@
-import Logo from "@/assets/icons/Logo";
+import { Truck } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="border-t">
-      <div className="mx-auto container space-y-10 px-4 py-16 lg:space-y-20">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
+    <footer className="border-t border-gray-800 bg-gray-900/50 py-12">
+      <div className="container mx-auto px-6">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <div className="flex items-center gap-3">
-              <a href="#" className="text-primary hover:text-primary/90">
-                <Logo />
-              </a>
-              <span className="text-2xl font-extrabold text-primary tracking-tight dark:text-foreground">
-                Parcel.Com
-              </span>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="bg-gradient-to-br from-[#FF2056] to-[#FF4070] rounded-lg p-2 shadow-lg shadow-[#FF2056]/20">
+                <Truck className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-bold text-white">Parcel.Com</span>
             </div>
-            <p className="mt-4 max-w-xs text-muted-foreground text-lg font-medium dark:text-muted-foreground">
-              Fast, secure, and transparent parcel delivery for everyone.
-              Experience effortless shipping with real-time tracking and
-              dedicated support.
+            <p className="text-gray-500 text-sm">
+              Fast, reliable, and secure parcel delivery worldwide.
             </p>
-            <ul className="mt-8 flex gap-6">
-              <li>
-                <a
-                  href="#"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="text-foreground/80 transition hover:text-primary dark:hover:text-primary-foreground"
-                >
-                  <span>Facebook</span>
-                </a>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-4 text-white">Services</h3>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                Express Delivery
               </li>
-              <li>
-                <a
-                  href="#"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="text-foreground/80 transition hover:text-primary"
-                >
-                  <span>Instagram</span>
-                </a>
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                International Shipping
               </li>
-              <li>
-                <a
-                  href="#"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="text-foreground/80 transition hover:text-primary"
-                >
-                  <span>Twitter</span>
-                </a>
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                Standard Delivery
+              </li>
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                Business Solutions
               </li>
             </ul>
           </div>
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
-            <div>
-              <p className="font-semibold text-primary dark:text-foreground">
-                Parcel Services
-              </p>
-              <ul className="mt-6 space-y-4 text-base">
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary dark:hover:text-primary-foreground"
-                  >
-                    Send a Parcel
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary"
-                  >
-                    Track Delivery
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary"
-                  >
-                    Delivery Options
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary"
-                  >
-                    Pricing & Quotes
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary"
-                  >
-                    Business Solutions
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold text-primary dark:text-foreground">
-                Company
-              </p>
-              <ul className="mt-6 space-y-4 text-base">
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary dark:hover:text-primary-foreground"
-                  >
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary"
-                  >
-                    Meet the Team
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary"
-                  >
-                    Careers
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold text-primary dark:text-foreground">
-                Support
-              </p>
-              <ul className="mt-6 space-y-4 text-base">
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary dark:hover:text-primary-foreground"
-                  >
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary"
-                  >
-                    FAQs
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary"
-                  >
-                    Live Chat
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold text-primary dark:text-foreground">
-                Legal
-              </p>
-              <ul className="mt-6 space-y-4 text-base">
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary dark:hover:text-primary-foreground"
-                  >
-                    Accessibility
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary"
-                  >
-                    Returns Policy
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-foreground/90 transition hover:text-primary"
-                  >
-                    Refund Policy
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div>
+            <h3 className="font-semibold mb-4 text-white">Company</h3>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                About Us
+              </li>
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                Careers
+              </li>
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                Press
+              </li>
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                Contact
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-4 text-white">Support</h3>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                Help Center
+              </li>
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                Track Parcel
+              </li>
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                Shipping Rates
+              </li>
+              <li className="hover:text-[#FF2056] transition-colors cursor-pointer">
+                Terms & Conditions
+              </li>
+            </ul>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground text-center font-medium dark:text-muted-foreground">
-          &copy; 2025 Parcel.Com || All rights reserved.
-        </p>
+        <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+          <p>© 2025 SwiftParcel. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   );
