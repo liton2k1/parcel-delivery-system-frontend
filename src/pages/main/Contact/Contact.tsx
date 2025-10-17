@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import {
   Mail,
@@ -94,38 +96,40 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="bg-primary text-primary-foreground py-16">
-        <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Get In Touch
-            </h1>
-            <p className="text-xl opacity-90">
-              Have questions? We're here to help. Reach out to our team and
-              we'll respond as soon as possible.
-            </p>
-          </div>
+      {/* 🟡 Hero Section with Gradient */}
+      <section className="relative overflow-hidden text-white pt-32 pb-24 md:pt-40 md:pb-32">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF2056] opacity-10 blur-3xl rounded-full"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FF4070] opacity-10 blur-3xl rounded-full"></div>
+          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#FF2056] opacity-5 blur-3xl rounded-full"></div>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">Get In Touch</h1>
+          <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto leading-relaxed">
+            Have questions? We're here to help. Reach out to our team and we'll
+            respond as soon as possible.
+          </p>
         </div>
       </section>
 
-      {/* Contact Info Cards */}
-      <section className="container mx-auto px-6 -mt-8 relative z-20 mb-16">
+      {/* 🟡 Contact Info Cards */}
+      <section className="container mx-auto px-6 -mt-12 relative z-20 mb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {contactInfo.map((info, idx) => (
             <Card
               key={idx}
-              className="hover:shadow-lg transition-all hover:border-primary"
+              className="border-2 hover:border-[#FF2056] transition-all transform hover:-translate-y-1"
             >
               <CardContent className="p-6 text-center">
-                <div className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <info.icon className="w-7 h-7 text-primary" />
+                <div className="bg-[#FF2056]/10 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <info.icon className="w-7 h-7 text-[#FF2056]" />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">{info.title}</h3>
                 {info.link ? (
                   <a
                     href={info.link}
-                    className="text-primary hover:underline font-medium block mb-1"
+                    className="text-[#FF2056] hover:underline font-medium block mb-1"
                   >
                     {info.primary}
                   </a>
@@ -141,10 +145,10 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Main Content - Form and Departments */}
+      {/* 🟡 Main Content - Form and Departments */}
       <section className="container mx-auto px-6 mb-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Contact Form */}
+          {/* Form */}
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
@@ -156,15 +160,15 @@ const Contact = () => {
               </CardHeader>
               <CardContent>
                 {submitted && (
-                  <Alert className="mb-6 bg-primary/10 border-primary">
-                    <Send className="h-4 w-4 text-primary" />
-                    <AlertDescription className="text-primary">
+                  <Alert className="mb-6 bg-[#FF2056]/10 border-[#FF2056]">
+                    <Send className="h-4 w-4 text-[#FF2056]" />
+                    <AlertDescription className="text-[#FF2056]">
                       Thank you for contacting us! We'll respond to your message
                       soon.
                     </AlertDescription>
                   </Alert>
                 )}
-                <div className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name">Full Name *</Label>
@@ -214,19 +218,19 @@ const Contact = () => {
                     />
                   </div>
                   <Button
-                    onClick={handleSubmit}
+                    type="submit"
                     size="lg"
-                    className="w-full md:w-auto"
+                    className="bg-gradient-to-r from-[#FF2056] to-[#FF4070] hover:from-[#FF4070] hover:to-[#FF2056] text-white font-semibold shadow-lg shadow-[#FF2056]/30"
                   >
                     <Send className="w-4 h-4 mr-2" />
                     Send Message
                   </Button>
-                </div>
+                </form>
               </CardContent>
             </Card>
           </div>
 
-          {/* Departments Sidebar */}
+          {/* Departments */}
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -239,12 +243,12 @@ const Contact = () => {
             {departments.map((dept, idx) => (
               <Card
                 key={idx}
-                className="hover:shadow-lg transition-all hover:border-primary"
+                className="hover:shadow-lg transition-all hover:border-[#FF2056]"
               >
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <dept.icon className="w-6 h-6 text-primary" />
+                    <div className="bg-[#FF2056]/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <dept.icon className="w-6 h-6 text-[#FF2056]" />
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold mb-1">{dept.title}</h3>
@@ -253,7 +257,7 @@ const Contact = () => {
                       </p>
                       <a
                         href={`mailto:${dept.email}`}
-                        className="text-sm text-primary hover:underline"
+                        className="text-sm text-[#FF2056] hover:underline"
                       >
                         {dept.email}
                       </a>
@@ -266,52 +270,30 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* FAQ Quick Links */}
-      <section className="bg-muted/50 py-16">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">
-              Looking for Quick Answers?
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              Check out our FAQ section for instant answers to common questions.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Button variant="outline" size="lg">
-                Track a Package
-              </Button>
-              <Button variant="outline" size="lg">
-                Pricing & Services
-              </Button>
-              <Button variant="outline" size="lg">
-                Shipping Guidelines
-              </Button>
-              <Button variant="outline" size="lg">
-                View FAQ
-              </Button>
-            </div>
+      {/* 🟡 FAQ Quick Links */}
+      <section className="bg-muted/50 py-16 mb-20">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold mb-4">
+            Looking for Quick Answers?
+          </h2>
+          <p className="text-muted-foreground mb-8">
+            Check out our FAQ section for instant answers to common questions.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Button variant="outline" size="lg">
+              Track a Package
+            </Button>
+            <Button variant="outline" size="lg">
+              Pricing & Services
+            </Button>
+            <Button variant="outline" size="lg">
+              Shipping Guidelines
+            </Button>
+            <Button variant="outline" size="lg">
+              View FAQ
+            </Button>
           </div>
         </div>
-      </section>
-
-      {/* Map Section (Placeholder) */}
-      <section className="container mx-auto px-6 py-20">
-        <Card className="overflow-hidden">
-          <div className="bg-muted h-96 flex items-center justify-center">
-            <div className="text-center">
-              <MapPin className="w-16 h-16 text-primary mx-auto mb-4" />
-              <p className="text-xl font-semibold mb-2">
-                Visit Our Head Office
-              </p>
-              <p className="text-muted-foreground">
-                123 Logistics Drive, New York, NY 10001
-              </p>
-              <Button variant="outline" className="mt-4">
-                Get Directions
-              </Button>
-            </div>
-          </div>
-        </Card>
       </section>
     </div>
   );

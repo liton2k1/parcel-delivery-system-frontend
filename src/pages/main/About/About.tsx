@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Package,
   Zap,
@@ -62,12 +64,21 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-primary text-primary-foreground">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary to-primary/80"></div>
-        <div className="container mx-auto px-6 py-24 relative z-10">
+      {/* ✅ Hero Section with Gradient */}
+      <section className="relative overflow-hidden text-primary-foreground pt-32 pb-24 md:pt-40 md:pb-32">
+        {/* Gradient Background */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF2056] opacity-10 dark:opacity-20 blur-3xl rounded-full"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600 opacity-10 dark:opacity-20 blur-3xl rounded-full"></div>
+          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-blue-600 opacity-5 dark:opacity-10 blur-3xl rounded-full"></div>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <Badge variant="secondary" className="mb-6 text-sm">
+            <Badge
+              variant="secondary"
+              className="mb-6 text-sm bg-white/20 text-white border-white/30 hover:bg-white/30"
+            >
               Trusted by millions worldwide
             </Badge>
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
@@ -79,13 +90,16 @@ const About = () => {
               trust.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <Button size="lg" variant="secondary" className="font-semibold">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-[#FF2056] to-[#FF4070] hover:from-[#FF4070] hover:to-[#FF2056] text-white font-semibold shadow-lg shadow-[#FF2056]/30"
+              >
                 Get Started
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="font-semibold bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10"
+                className="font-semibold bg-transparent border-white text-white hover:bg-white/10"
               >
                 Learn More
               </Button>
@@ -100,10 +114,10 @@ const About = () => {
           {stats.map((stat, idx) => (
             <Card
               key={idx}
-              className="border-2 hover:border-primary transition-all transform hover:-translate-y-1"
+              className="border-2 hover:border-[#FF2056] transition-all transform hover:-translate-y-1"
             >
               <CardContent className="p-6 text-center">
-                <stat.icon className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <stat.icon className="w-12 h-12 mx-auto mb-4 text-[#FF2056]" />
                 <div className="text-4xl font-bold mb-2">{stat.value}</div>
                 <div className="text-muted-foreground font-medium">
                   {stat.label}
@@ -158,11 +172,11 @@ const About = () => {
             {values.map((value, idx) => (
               <Card
                 key={idx}
-                className="hover:shadow-lg transition-all hover:border-primary"
+                className="hover:shadow-lg transition-all hover:border-[#FF2056]"
               >
                 <CardHeader>
-                  <div className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center mb-4">
-                    <value.icon className="w-7 h-7 text-primary" />
+                  <div className="bg-[#FF2056]/10 w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                    <value.icon className="w-7 h-7 text-[#FF2056]" />
                   </div>
                   <CardTitle className="text-xl">{value.title}</CardTitle>
                 </CardHeader>
@@ -189,10 +203,10 @@ const About = () => {
           {team.map((member, idx) => (
             <Card
               key={idx}
-              className="text-center hover:shadow-lg transition-all group hover:border-primary"
+              className="text-center hover:shadow-lg transition-all group hover:border-[#FF2056]"
             >
               <CardContent className="p-6">
-                <div className="bg-primary w-28 h-28 rounded-full flex items-center justify-center text-5xl mx-auto mb-4 transform group-hover:scale-110 transition-transform">
+                <div className="bg-[#FF2056] w-28 h-28 rounded-full flex items-center justify-center text-5xl mx-auto mb-4 transform group-hover:scale-110 transition-transform">
                   {member.image}
                 </div>
                 <CardTitle className="text-lg mb-1">{member.name}</CardTitle>
@@ -204,7 +218,7 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary text-primary-foreground py-20">
+      <section className="bg-gradient-to-r from-[#FF2056] via-[#FF4070] to-[#FF6090] text-white py-20">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold mb-6">
             Ready to Experience the Difference?
@@ -213,7 +227,10 @@ const About = () => {
             Join millions of satisfied customers who trust us with their most
             important deliveries.
           </p>
-          <Button size="lg" variant="secondary" className="font-bold text-lg">
+          <Button
+            size="lg"
+            className="bg-white text-[#FF2056] hover:bg-gray-100 font-bold text-lg"
+          >
             Start Shipping Today
           </Button>
         </div>

@@ -1,6 +1,6 @@
 import Logo from "@/assets/icons/Logo";
 import ParcelRegister from "@/assets/images/parcel-register.jpg";
-import { RegisterForm } from "@/components/modules/authentication/RegisterForm";
+import { RegisterForm } from "@/components/authentication/RegisterForm";
 import { Link } from "react-router";
 
 export default function Register() {

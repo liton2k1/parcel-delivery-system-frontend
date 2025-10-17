@@ -1,4 +1,4 @@
-import SenderParcelTable from "@/components/modules/sender/SenderParcelTable";
+import SenderParcelTable from "@/components/sender/SenderParcelTable";
 
 function MyParcels() {
   return <SenderParcelTable />;

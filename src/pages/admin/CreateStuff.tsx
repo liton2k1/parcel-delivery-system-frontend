@@ -33,7 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { registerSchema } from "@/components/modules/authentication/RegisterForm";
+import { registerSchema } from "@/components/authentication/RegisterForm";
 import { Role } from "@/types/user";
 import {
   useCreateAdminMutation,

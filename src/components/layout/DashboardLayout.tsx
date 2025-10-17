@@ -5,8 +5,8 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
-import { ModeToggle } from "./ModeToggle";
-import { AppSidebar } from "../app-sidebar";
+import { ModeToggle } from "../ModeToggle";
+import { AppSidebar } from "../AppSidebar";
 
 export default function DashboardLayout() {
   return (

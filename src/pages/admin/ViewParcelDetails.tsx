@@ -1,5 +1,4 @@
-import AdminParcelDetails from "@/components/modules/admin/AdminParcelDetails";
-
+import AdminParcelDetails from "@/components/admin/AdminParcelDetails";
 
 function ViewParcelDetails() {
   return <AdminParcelDetails />;

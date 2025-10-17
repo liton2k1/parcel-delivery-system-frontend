@@ -1,10 +1,10 @@
 import App from "@/App";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import NotFound from "@/components/NotFound";
-import HomePage from "@/pages/HomePage";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
-import Verify from "@/pages/Verify";
+import HomePage from "@/pages/main/Home/Home";
+import Login from "@/pages/auth/Login/Login";
+import Register from "@/pages/auth/Register/Register";
+import Verify from "@/pages/auth/Verify/Verify";
 import type { TRole } from "@/types";
 import { Role } from "@/types/user";
 import { createBrowserRouter, Navigate } from "react-router";
@@ -22,7 +22,7 @@ import { generateRoutes } from "./generateRoutes";
 import { superAdminSidebarItems } from "./superAdminSidebarItems";
 import ParcelStatus from "@/pages/sender/ParcelStatus";
 import ViewParcelDetails from "@/pages/admin/ViewParcelDetails";
-import TrackParcel from "@/pages/TrackParcel";
+import TrackParcel from "@/pages/main/TrackParcel/TrackParcel";
 import About from "@/pages/main/About/About";
 import Contact from "@/pages/main/Contact/Contact";
 

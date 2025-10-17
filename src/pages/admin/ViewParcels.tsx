@@ -1,4 +1,4 @@
-import AdminParcelsTable from "@/components/modules/admin/AdminParcelsTable";
+import AdminParcelsTable from "@/components/admin/AdminParcelsTable";
 
 const ViewParcels = () => {
   return (

@@ -2,8 +2,8 @@
 import Error from "@/components/Error";
 import Information from "@/components/Information";
 import Loading from "@/components/Loading";
-import OverviewCards from "@/components/modules/anlytics/OverviewCards";
-import ParcelCharts from "@/components/modules/anlytics/ParcelCharts";
+import OverviewCards from "@/components/anlytics/OverviewCards";
+import ParcelCharts from "@/components/anlytics/ParcelCharts";
 import { useGetParcelAnalyticsQuery } from "@/redux/features/parcel/parcelApi";
 
 function Analytics() {
