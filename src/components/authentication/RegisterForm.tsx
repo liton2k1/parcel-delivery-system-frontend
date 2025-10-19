@@ -125,7 +125,7 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" {...field} />
+                    <Input placeholder="Enter your name" {...field} />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your public display name.
@@ -142,7 +142,7 @@ export function RegisterForm({
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="john.doe@company.com"
+                      placeholder="Enter your email"
                       type="email"
                       {...field}
                     />
@@ -221,7 +221,11 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Address</FormLabel>
                   <FormControl>
-                    <Input placeholder="123 Main St" type="text" {...field} />
+                    <Input
+                      placeholder="Enter your address"
+                      type="text"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your address input.
@@ -237,7 +241,11 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Phone</FormLabel>
                   <FormControl>
-                    <Input placeholder="01717112233" type="text" {...field} />
+                    <Input
+                      placeholder="Enter your number"
+                      type="text"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your phone number input.

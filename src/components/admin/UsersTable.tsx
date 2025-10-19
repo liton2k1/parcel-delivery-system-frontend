@@ -30,7 +30,7 @@ import {
   Columns3Icon,
   EllipsisIcon,
   FilterIcon,
-  PlusIcon,
+  // PlusIcon,
   SearchIcon,
   XIcon,
 } from "lucide-react";
@@ -38,7 +38,6 @@ import { useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import Error from "@/components/Error";
 import Loading from "@/components/Loading";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -89,8 +88,6 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { IUser } from "@/types";
-import { getNameInitials } from "@/utils/getNameInitials";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import z from "zod";
@@ -100,8 +97,9 @@ import {
   useGetAllUsersQuery,
 } from "@/redux/features/user/userApi";
 import { getUserIsActiveStatusColor } from "@/utils/getStatusColor";
-import { CreateStuffDialog } from "@/pages/admin/CreateStuff";
-import Information from "./Information";
+// import { CreateStuffDialog } from "@/pages/admin/CreateStuff";
+import Information from "../Information";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 // schema for isActive
 const isActiveSchema = z.object({
@@ -114,16 +112,10 @@ const columns: ColumnDef<IUser>[] = [
     accessorKey: "name",
     cell: ({ row }) => {
       const name = row.original?.name;
-      const initials = getNameInitials(name);
 
       return (
-        <div className="flex items-start gap-3">
-          <Avatar className="h-8 w-8 rounded-lg grayscale">
-            <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
-          </Avatar>
-          <div className="space-y-1">
-            <div className="font-medium">{name}</div>
-          </div>
+        <div className="space-y-1">
+          <div className="font-medium">{name}</div>
         </div>
       );
     },
@@ -235,7 +227,7 @@ const columns: ColumnDef<IUser>[] = [
 
 export default function UsersTable() {
   const id = useId();
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [roleFilter, setRoleFilter] = useState<Role[]>([]);
   const [verifiedFilter, setVerifiedFilter] = useState<boolean | undefined>(
@@ -575,9 +567,8 @@ export default function UsersTable() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-
+      {/* 
       <div className="flex items-center gap-3">
-        {/* Create button */}
         <Button
           onClick={() => setOpen(true)}
           className="ml-auto"
@@ -587,7 +578,7 @@ export default function UsersTable() {
           Create Stuff
         </Button>
         <CreateStuffDialog open={open} onOpenChange={setOpen} />
-      </div>
+      </div> */}
     </div>
   );
 

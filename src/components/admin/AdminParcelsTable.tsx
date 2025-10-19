@@ -43,7 +43,6 @@ import { useForm } from "react-hook-form";
 import Error from "@/components/Error";
 import Information from "@/components/Information";
 import Loading from "@/components/Loading";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -101,7 +100,6 @@ import {
 } from "@/redux/features/parcel/parcelApi";
 import { IParcel } from "@/types";
 import { ParcelStatus, ParcelType, ShippingType } from "@/types/sender";
-import { getNameInitials } from "@/utils/getNameInitials";
 import { getStatusColor } from "@/utils/getStatusColor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
@@ -110,7 +108,6 @@ import { Link } from "react-router";
 import { toast } from "sonner";
 import z from "zod";
 import { AdminCreateParcelDialog } from "./AdminParcelModal";
-// import { AdminCreateParcelDialog } from "./AdminParcelModal";
 
 const updateStatusPersonnelSchema = z.object({
   currentStatus: z.enum(Object.values(ParcelStatus) as [string]).optional(),
@@ -130,25 +127,18 @@ const columns: ColumnDef<IParcel>[] = [
     header: "Sender",
     accessorKey: "sender",
     cell: ({ row }) => {
-      const name = row.original?.sender?.name;
-      const initials = getNameInitials(name);
-
+      const sender = row.original?.sender;
       return (
-        <div className="flex items-start gap-3">
-          <Avatar className="h-8 w-8 rounded-lg grayscale">
-            <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
-          </Avatar>
-          <div className="space-y-1">
-            <div className="font-medium">{name}</div>
-            <div className="text-sm text-muted-foreground">
-              {row.original?.pickupAddress}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              {row.original?.sender?.email}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              {row.original?.sender?.phone}
-            </div>
+        <div className="space-y-1">
+          <div className="font-medium">{sender?.name || "N/A"}</div>
+          <div className="text-sm text-muted-foreground">
+            {row.original?.pickupAddress || "-"}
+          </div>
+          <div className="text-sm text-muted-foreground">
+            {sender?.email || "-"}
+          </div>
+          <div className="text-sm text-muted-foreground">
+            {sender?.phone || "-"}
           </div>
         </div>
       );
@@ -161,24 +151,18 @@ const columns: ColumnDef<IParcel>[] = [
     header: "Receiver",
     accessorKey: "receiver",
     cell: ({ row }) => {
-      const name = row.original?.receiver?.name;
-      const initials = getNameInitials(name);
+      const receiver = row.original?.receiver;
       return (
-        <div className="flex items-start gap-3">
-          <Avatar className="h-8 w-8 rounded-lg grayscale">
-            <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
-          </Avatar>
-          <div className="space-y-1">
-            <div className="font-medium">{row.original?.receiver?.name}</div>
-            <div className="text-sm text-muted-foreground">
-              {row.original?.deliveryAddress}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              {row.original?.receiver?.email}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              {row.original?.receiver?.phone}
-            </div>
+        <div className="space-y-1">
+          <div className="font-medium">{receiver?.name || "N/A"}</div>
+          <div className="text-sm text-muted-foreground">
+            {row.original?.deliveryAddress || "-"}
+          </div>
+          <div className="text-sm text-muted-foreground">
+            {receiver?.email || "-"}
+          </div>
+          <div className="text-sm text-muted-foreground">
+            {receiver?.phone || "-"}
           </div>
         </div>
       );
@@ -342,28 +326,28 @@ const columns: ColumnDef<IParcel>[] = [
     enableSorting: true,
   },
 
-  {
-    header: "Delivery Personnel",
-    accessorKey: "deliveryPersonnel",
-    cell: ({ row }) => {
-      const deliveryPersonnel = row.getValue("deliveryPersonnel");
-      const personnelArray = Array.isArray(deliveryPersonnel)
-        ? deliveryPersonnel
-        : [];
-      return (
-        <>
-          {personnelArray.length > 0
-            ? personnelArray.map((personnel: any) => (
-                <div key={personnel.id}>{personnel.name}</div>
-              ))
-            : "-"}
-        </>
-      );
-    },
-    size: 180,
-    enableHiding: true,
-    enableSorting: true,
-  },
+  // {
+  //   header: "Delivery Personnel",
+  //   accessorKey: "deliveryPersonnel",
+  //   cell: ({ row }) => {
+  //     const deliveryPersonnel = row.getValue("deliveryPersonnel");
+  //     const personnelArray = Array.isArray(deliveryPersonnel)
+  //       ? deliveryPersonnel
+  //       : [];
+  //     return (
+  //       <>
+  //         {personnelArray.length > 0
+  //           ? personnelArray.map((personnel: any) => (
+  //               <div key={personnel.id}>{personnel.name}</div>
+  //             ))
+  //           : "-"}
+  //       </>
+  //     );
+  //   },
+  //   size: 180,
+  //   enableHiding: true,
+  //   enableSorting: true,
+  // },
   {
     header: "Created At",
     accessorKey: "createdAt",

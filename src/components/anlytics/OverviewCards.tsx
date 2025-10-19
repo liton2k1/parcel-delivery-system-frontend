@@ -1,12 +1,4 @@
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { BoxIcon, CheckCircle, Clock, Truck } from "lucide-react";
+import { Box, CheckCircle, Clock, Truck } from "lucide-react";
 
 interface StatusCount {
   _id: string;
@@ -23,8 +15,7 @@ interface OverviewCardsProps {
 }
 
 function OverviewCards({ data }: OverviewCardsProps) {
-  // Extract counts from your API data
-  const total = data?.totalParcel;
+  const total = data?.totalParcel || 0;
 
   const delivered =
     data?.totalParcelByStatus?.find(
@@ -41,78 +32,105 @@ function OverviewCards({ data }: OverviewCardsProps) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <Card className="@container/card hover:shadow-lg transition-all duration-300 border-0 shadow-sm bg-gradient-to-br from-blue-50 via-blue-50/50 to-blue-100/30 dark:from-blue-950/50 dark:via-blue-950/30 dark:to-blue-900/20 hover:scale-[1.02] hover:from-blue-100 hover:to-blue-200 dark:hover:from-blue-900 dark:hover:to-blue-800">
-        <CardHeader>
-          <CardDescription className="text-sm font-medium ">
-            Total Parcels
-          </CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            {total}
-          </CardTitle>
-          <CardAction className="p-2 rounded-lg bg-blue-100/80 dark:bg-blue-800/50 hover:bg-blue-200 dark:hover:bg-blue-700 transition-colors">
-            <BoxIcon />
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="text-muted-foreground">
-            Number of total parcels in the system{" "}
+      {/* Total Parcels Card - Indigo */}
+      <div className="group relative overflow-hidden rounded-xl border border-border bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-indigo-400/5 to-transparent dark:from-indigo-500/20 dark:via-indigo-400/10"></div>
+        <div className="relative p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex-1">
+              <p className="text-sm font-medium text-muted-foreground mb-2">
+                Total Parcels
+              </p>
+              <h3 className="text-3xl font-bold text-foreground tabular-nums">
+                {total}
+              </h3>
+            </div>
+            <div className="p-3 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300">
+              <Box className="w-6 h-6" />
+            </div>
           </div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card hover:shadow-lg transition-all duration-300 border-0 shadow-sm bg-gradient-to-br from-green-50 via-green-50/50 to-green-100/30 dark:from-green-950/50 dark:via-green-950/30 dark:to-green-900/20 hover:scale-[1.02] hover:from-green-100 hover:to-green-200 dark:hover:from-green-900 dark:hover:to-green-800">
-        <CardHeader>
-          <CardDescription className="text-sm font-medium ">
-            Delivered
-          </CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            {delivered}
-          </CardTitle>
-          <CardAction className="p-2 rounded-lg bg-green-100/80 dark:bg-green-800/50 hover:bg-green-200 dark:hover:bg-green-700 transition-colors">
-            <CheckCircle />
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="text-muted-foreground">
-            Number of parcels delivered{" "}
+          <div className="pt-4 border-t border-border/50">
+            <p className="text-sm text-muted-foreground">
+              Total parcels in system
+            </p>
           </div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card hover:shadow-lg transition-all duration-300 border-0 shadow-sm bg-gradient-to-br from-orange-50 via-orange-50/50 to-orange-100/30 dark:from-orange-950/50 dark:via-orange-950/30 dark:to-orange-900/20 hover:scale-[1.02] hover:from-orange-100 hover:to-orange-200 dark:hover:from-orange-900 dark:hover:to-orange-800">
-        <CardHeader>
-          <CardDescription className="text-sm font-medium ">
-            In-Transit
-          </CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            {inTransit}
-          </CardTitle>
-          <CardAction className="p-2 rounded-lg bg-orange-100/80 dark:bg-orange-800/50 hover:bg-orange-200 dark:hover:bg-orange-700 transition-colors">
-            <Truck />
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="text-muted-foreground">
-            Number of parcels in transit
+        </div>
+      </div>
+
+      {/* Delivered Card - Emerald */}
+      <div className="group relative overflow-hidden rounded-xl border border-border bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-emerald-400/5 to-transparent dark:from-emerald-500/20 dark:via-emerald-400/10"></div>
+        <div className="relative p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex-1">
+              <p className="text-sm font-medium text-muted-foreground mb-2">
+                Delivered
+              </p>
+              <h3 className="text-3xl font-bold text-foreground tabular-nums">
+                {delivered}
+              </h3>
+            </div>
+            <div className="p-3 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300">
+              <CheckCircle className="w-6 h-6" />
+            </div>
           </div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card hover:shadow-lg transition-all duration-300 border-0 shadow-sm bg-gradient-to-br from-purple-50 via-purple-50/50 to-purple-100/30 dark:from-purple-950/50 dark:via-purple-950/30 dark:to-purple-900/20 hover:scale-[1.02] hover:from-purple-100 hover:to-purple-200 dark:hover:from-purple-900 dark:hover:to-purple-800">
-        <CardHeader>
-          <CardDescription className="text-sm font-medium ">
-            Requested
-          </CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            {requested}
-          </CardTitle>
-          <CardAction className="p-2 rounded-lg bg-purple-100/80 dark:bg-purple-800/50 hover:bg-purple-200 dark:hover:bg-purple-700 transition-colors">
-            <Clock />
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="text-muted-foreground">
-            Number of parcels requested
+          <div className="pt-4 border-t border-border/50">
+            <p className="text-sm text-muted-foreground">
+              Successfully delivered
+            </p>
           </div>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
+
+      {/* In-Transit Card - Amber */}
+      <div className="group relative overflow-hidden rounded-xl border border-border bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-amber-400/5 to-transparent dark:from-amber-500/20 dark:via-amber-400/10"></div>
+        <div className="relative p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex-1">
+              <p className="text-sm font-medium text-muted-foreground mb-2">
+                In-Transit
+              </p>
+              <h3 className="text-3xl font-bold text-foreground tabular-nums">
+                {inTransit}
+              </h3>
+            </div>
+            <div className="p-3 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform duration-300">
+              <Truck className="w-6 h-6" />
+            </div>
+          </div>
+          <div className="pt-4 border-t border-border/50">
+            <p className="text-sm text-muted-foreground">
+              Currently in transit
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Requested Card - Rose */}
+      <div className="group relative overflow-hidden rounded-xl border border-border bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 via-rose-400/5 to-transparent dark:from-rose-500/20 dark:via-rose-400/10"></div>
+        <div className="relative p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex-1">
+              <p className="text-sm font-medium text-muted-foreground mb-2">
+                Requested
+              </p>
+              <h3 className="text-3xl font-bold text-foreground tabular-nums">
+                {requested}
+              </h3>
+            </div>
+            <div className="p-3 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 group-hover:scale-110 transition-transform duration-300">
+              <Clock className="w-6 h-6" />
+            </div>
+          </div>
+          <div className="pt-4 border-t border-border/50">
+            <p className="text-sm text-muted-foreground">
+              Pending requests
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

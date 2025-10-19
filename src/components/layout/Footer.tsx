@@ -85,7 +85,7 @@ export default function Footer() {
 
         {/* Bottom Section */}
         <div className="border-t border-gray-200 dark:border-gray-800 pt-8 text-center text-sm text-gray-600 dark:text-gray-500">
-          <p>© 2025 SwiftParcel. All rights reserved.</p>
+          <p>© 2025 Parcel.Com | All rights reserved.</p>
         </div>
       </div>
     </footer>

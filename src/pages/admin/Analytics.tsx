@@ -26,15 +26,7 @@ function Analytics() {
 
   return (
     <div className="space-y-8 p-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">
-          Analytics Dashboard
-        </h1>
-        <p className="text-muted-foreground">
-          Comprehensive overview of parcel delivery statistics and insights
-        </p>
-      </div>
-
+      <h1 className="text-3xl font-bold tracking-tight">Parcel Analytics</h1>
       <OverviewCards data={data?.data} />
       <ParcelCharts data={data?.data} />
     </div>

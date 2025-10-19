@@ -19,11 +19,11 @@ import {
 } from "lucide-react";
 import { useParams } from "react-router";
 import AdminParcelTimeLine from "./AdminParcelTimeLine";
-// import AdminParcelTimeLine from "./AdminParcelTimeLine";
 
 const AdminParcelDetails = () => {
   const { id } = useParams();
   const { data, isLoading, isError, error } = useGetParcelByIdQuery(id);
+  console.log("from id", data);
 
   if (isLoading) {
     return <Loading message="Loading details..." />;
@@ -131,9 +131,9 @@ const AdminParcelDetails = () => {
 
             {/* Address Information */}
             <Card className="p-6 shadow-lg border-0 bg-gradient-to-br from-card to-card/50 mt-6 text-sm">
-              <CardHeader>
+              {/* <CardHeader>
                 <CardTitle>Address Information</CardTitle>
-              </CardHeader>
+              </CardHeader> */}
               <CardContent className="space-y-4">
                 <div className="space-y-6">
                   {/* Sender Info */}
