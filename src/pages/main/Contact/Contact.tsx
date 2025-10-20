@@ -1,6 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
 import {
   Mail,
   Phone,
@@ -14,31 +18,84 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { sendEmail } from "@/lib/emailjs";
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
+interface EmailJSTemplateParams {
+  from_name: string;
+  from_email: string;
+  subject: string;
+  message: string;
+  source: string;
+  to_name: string;
+}
+
+interface ContactFormValues {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  source?: string;
+}
+
+const contactSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Invalid email address." }),
+  subject: z.string().min(2, { message: "Subject is required." }),
+  message: z
+    .string()
+    .min(10, { message: "Message must be at least 10 characters." }),
+  source: z.string().optional(),
+});
+
+export default function ContactForm() {
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+      source: "",
+    },
   });
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
-    setFormData({ name: "", email: "", subject: "", message: "" });
-  };
+  const [loading, setLoading] = useState(false);
+
+  async function onSubmit(values: ContactFormValues) {
+    setLoading(true);
+    try {
+      const templateParams: EmailJSTemplateParams = {
+        from_name: values.name,
+        from_email: values.email,
+        subject: values.subject,
+        message: values.message,
+        source: values.source || "Contact Form",
+        to_name: "Support Team",
+      };
+
+      const response = await sendEmail(templateParams);
+
+      if (response.status === 200) {
+        toast.success("Message sent successfully!");
+        form.reset();
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error: unknown) {
+      console.error(error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const contactInfo = [
     {
@@ -96,14 +153,13 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* 🟡 Hero Section with Gradient */}
+      {/* Hero Section */}
       <section className="relative overflow-hidden text-white pt-32 pb-24 md:pt-40 md:pb-32">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF2056] opacity-10 blur-3xl rounded-full"></div>
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FF4070] opacity-10 blur-3xl rounded-full"></div>
           <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#FF2056] opacity-5 blur-3xl rounded-full"></div>
         </div>
-
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">Get In Touch</h1>
           <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto leading-relaxed">
@@ -113,7 +169,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* 🟡 Contact Info Cards */}
+      {/* Contact Info */}
       <section className="container mx-auto px-6 -mt-12 relative z-20 mb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {contactInfo.map((info, idx) => (
@@ -145,7 +201,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* 🟡 Main Content - Form and Departments */}
+      {/* Form + Departments */}
       <section className="container mx-auto px-6 mb-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Form */}
@@ -159,26 +215,18 @@ const Contact = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {submitted && (
-                  <Alert className="mb-6 bg-[#FF2056]/10 border-[#FF2056]">
-                    <Send className="h-4 w-4 text-[#FF2056]" />
-                    <AlertDescription className="text-[#FF2056]">
-                      Thank you for contacting us! We'll respond to your message
-                      soon.
-                    </AlertDescription>
-                  </Alert>
-                )}
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name">Full Name *</Label>
                       <Input
                         id="name"
-                        placeholder="John Doe"
-                        value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
+                        placeholder="Enter your name"
+                        {...form.register("name")}
+                        disabled={loading}
                       />
                     </div>
                     <div className="space-y-2">
@@ -186,11 +234,9 @@ const Contact = () => {
                       <Input
                         id="email"
                         type="email"
-                        placeholder="john@example.com"
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({ ...formData, email: e.target.value })
-                        }
+                        placeholder="Enter your email"
+                        {...form.register("email")}
+                        disabled={loading}
                       />
                     </div>
                   </div>
@@ -199,31 +245,28 @@ const Contact = () => {
                     <Input
                       id="subject"
                       placeholder="What is this regarding?"
-                      value={formData.subject}
-                      onChange={(e) =>
-                        setFormData({ ...formData, subject: e.target.value })
-                      }
+                      {...form.register("subject")}
+                      disabled={loading}
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="message">Message *</Label>
                     <Textarea
                       id="message"
-                      placeholder="Tell us how we can help you..."
                       rows={6}
-                      value={formData.message}
-                      onChange={(e) =>
-                        setFormData({ ...formData, message: e.target.value })
-                      }
+                      placeholder="Tell us how we can help you..."
+                      {...form.register("message")}
+                      disabled={loading}
                     />
                   </div>
                   <Button
                     type="submit"
                     size="lg"
                     className="bg-gradient-to-r from-[#FF2056] to-[#FF4070] hover:from-[#FF4070] hover:to-[#FF2056] text-white font-semibold shadow-lg shadow-[#FF2056]/30"
+                    disabled={loading}
                   >
                     <Send className="w-4 h-4 mr-2" />
-                    Send Message
+                    {loading ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>
@@ -270,8 +313,8 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* 🟡 FAQ Quick Links */}
-      <section className="bg-muted/50 py-16 mb-20">
+      {/* FAQ Links */}
+      {/* <section className="bg-muted/50 py-16 mb-20">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold mb-4">
             Looking for Quick Answers?
@@ -294,9 +337,7 @@ const Contact = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
-};
-
-export default Contact;
+}
