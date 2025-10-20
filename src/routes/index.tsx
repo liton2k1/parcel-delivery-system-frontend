@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         Component: TrackParcel,
-        path: "/trackparcel",
+        path: "/track-parcel",
       },
     ],
   },

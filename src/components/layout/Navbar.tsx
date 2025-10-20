@@ -22,7 +22,7 @@ import { Truck } from "lucide-react";
 // Navigation links array
 const navigationLinks = [
   { href: "/", label: "Home", role: "PUBLIC" },
-  { href: "/trackparcel", label: "Track Parcel", role: "PUBLIC" },
+  { href: "/track-parcel", label: "Track Parcel", role: "PUBLIC" },
   { href: "/about", label: "About", role: "PUBLIC" },
   { href: "/contact", label: "Contact", role: "PUBLIC" },
   { href: "/admin", label: "Dashboard", role: Role.ADMIN },

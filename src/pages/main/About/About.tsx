@@ -9,6 +9,8 @@ import {
   Globe,
   TrendingUp,
   Heart,
+  Target,
+  Rocket,
 } from "lucide-react";
 import {
   Card,
@@ -17,7 +19,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const About = () => {
@@ -64,51 +66,52 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* ✅ Hero Section with Gradient */}
-      <section className="relative overflow-hidden text-primary-foreground pt-32 pb-24 md:pt-40 md:pb-32">
-        {/* Gradient Background */}
+      {/* ✅ Hero Section */}
+      <section className="relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
+        {/* ✨ Gradient Background with Dark Mode Support */}
         <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 transition-colors duration-300"></div>
+
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF2056] opacity-10 dark:opacity-20 blur-3xl rounded-full"></div>
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600 opacity-10 dark:opacity-20 blur-3xl rounded-full"></div>
           <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-blue-600 opacity-5 dark:opacity-10 blur-3xl rounded-full"></div>
         </div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge
-              variant="secondary"
-              className="mb-6 text-sm bg-white/20 text-white border-white/30 hover:bg-white/30"
+        <div className="container mx-auto px-6 relative z-10 text-center">
+          <Badge
+            variant="secondary"
+            className="mb-6 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 hover:bg-[#FF2056]/20 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
+          >
+            Trusted by millions worldwide
+          </Badge>
+
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+            Delivering More Than Parcels
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 leading-relaxed text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            We're on a mission to connect people and businesses across the globe
+            with reliable, lightning-fast delivery services that you can trust.
+          </p>
+
+          {/* <div className="flex gap-4 justify-center flex-wrap">
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-[#FF2056] to-[#FF4070] hover:from-[#FF4070] hover:to-[#FF2056] text-white font-semibold shadow-lg shadow-[#FF2056]/30 border-0"
             >
-              Trusted by millions worldwide
-            </Badge>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Delivering More Than Parcels
-            </h1>
-            <p className="text-xl md:text-2xl opacity-90 mb-8 leading-relaxed">
-              We're on a mission to connect people and businesses across the
-              globe with reliable, lightning-fast delivery services that you can
-              trust.
-            </p>
-            <div className="flex gap-4 justify-center flex-wrap">
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-[#FF2056] to-[#FF4070] hover:from-[#FF4070] hover:to-[#FF2056] text-white font-semibold shadow-lg shadow-[#FF2056]/30"
-              >
-                Get Started
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="font-semibold bg-transparent border-white text-white hover:bg-white/10"
-              >
-                Learn More
-              </Button>
-            </div>
-          </div>
+              Get Started
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="font-semibold bg-transparent border-gray-300 text-gray-800 hover:bg-gray-100 dark:border-white/30 dark:text-white dark:hover:bg-white/10"
+            >
+              Learn More
+            </Button>
+          </div> */}
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* ✅ Stats Section */}
       <section className="container mx-auto px-6 -mt-12 relative z-20 mb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, idx) => (
@@ -128,42 +131,10 @@ const About = () => {
         </div>
       </section>
 
-      {/* Story Section */}
-      <section className="container mx-auto px-6 mb-24">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold mb-6 text-center">Our Story</h2>
-          <Card>
-            <CardContent className="p-8 space-y-4 text-muted-foreground leading-relaxed">
-              <p>
-                Founded in 2018, our journey began with a simple observation:
-                parcel delivery was stuck in the past. Long wait times, poor
-                tracking, and inconsistent service were the norm. We knew there
-                had to be a better way.
-              </p>
-              <p>
-                Starting with a small fleet and big dreams, we leveraged
-                cutting-edge technology and customer-first thinking to
-                revolutionize the delivery experience. Today, we're proud to
-                serve millions of customers across six continents, delivering
-                everything from urgent documents to precious family heirlooms.
-              </p>
-              <p>
-                Our success isn't measured just in parcels delivered, but in
-                smiles created, businesses empowered, and connections
-                strengthened. Every package tells a story, and we're honored to
-                be part of yours.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Values Section */}
+      {/* ✅ Service Section */}
       <section className="bg-muted/50 py-20">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-4 text-center">
-            What Drives Us
-          </h2>
+          <h2 className="text-4xl font-bold mb-4 text-center">Our Services</h2>
           <p className="text-xl text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
             Our values aren't just words on a wall—they're the foundation of
             every delivery we make.
@@ -191,11 +162,56 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* ✅ Mission Section */}
+      <section className="container mx-auto px-6 my-24">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-6">Our Mission</h2>
+          <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
+            To revolutionize global parcel delivery by making it faster, safer,
+            and more sustainable. We’re not just moving packages — we’re
+            connecting people, businesses, and dreams across the world.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="hover:shadow-lg transition-all">
+              <CardHeader>
+                <div className="bg-[#FF2056]/10 w-14 h-14 rounded-full flex items-center justify-center mb-4 mx-auto">
+                  <Target className="w-7 h-7 text-[#FF2056]" />
+                </div>
+                <CardTitle className="text-xl text-center">
+                  Empower Global Connections
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base text-center leading-relaxed">
+                  We aim to make the world feel smaller by bridging distances
+                  with speed, trust, and technology.
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-lg transition-all">
+              <CardHeader>
+                <div className="bg-[#FF2056]/10 w-14 h-14 rounded-full flex items-center justify-center mb-4 mx-auto">
+                  <Rocket className="w-7 h-7 text-[#FF2056]" />
+                </div>
+                <CardTitle className="text-xl text-center">
+                  Deliver With Purpose
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base text-center leading-relaxed">
+                  Every package we deliver carries trust, emotion, and purpose —
+                  we make sure it arrives on time, every time.
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* ✅ Team Section */}
       <section className="container mx-auto px-6 py-24">
-        <h2 className="text-4xl font-bold mb-4 text-center">
-          Meet Our Leadership
-        </h2>
+        <h2 className="text-4xl font-bold mb-4 text-center">Meet Our Team</h2>
         <p className="text-xl text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
           The passionate team behind your seamless delivery experience.
         </p>
@@ -214,25 +230,6 @@ const About = () => {
               </CardContent>
             </Card>
           ))}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-[#FF2056] via-[#FF4070] to-[#FF6090] text-white py-20">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Ready to Experience the Difference?
-          </h2>
-          <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Join millions of satisfied customers who trust us with their most
-            important deliveries.
-          </p>
-          <Button
-            size="lg"
-            className="bg-white text-[#FF2056] hover:bg-gray-100 font-bold text-lg"
-          >
-            Start Shipping Today
-          </Button>
         </div>
       </section>
     </div>

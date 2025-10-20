@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { NavLink } from "react-router";
 
 const CTA = () => {
   return (
@@ -15,19 +16,23 @@ const CTA = () => {
           started in minutes.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            size="lg"
-            className="text-lg font-bold px-8 bg-gradient-to-r from-[#FF2056] to-[#FF4070] hover:from-[#FF4070] hover:to-[#FF2056] text-white border-0 shadow-xl shadow-[#FF2056]/30"
-          >
-            Create Free Account
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="text-lg font-bold px-8 bg-transparent border-2 border-gray-300 text-gray-800 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-800"
-          >
-            Contact Sales
-          </Button>
+          <NavLink to="/register">
+            <Button
+              size="lg"
+              className="text-lg font-bold px-8 bg-gradient-to-r from-[#FF2056] to-[#FF4070] hover:from-[#FF4070] hover:to-[#FF2056] text-white border-0 shadow-xl shadow-[#FF2056]/30 cursor-pointer"
+            >
+              Create Free Account
+            </Button>
+          </NavLink>
+          <NavLink to="/contact">
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-lg font-bold px-8 bg-transparent border-2 border-gray-300 text-gray-800 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+            >
+              Contact Us
+            </Button>
+          </NavLink>
         </div>
       </div>
     </section>

@@ -36,7 +36,7 @@ const Service = () => {
     },
   ];
   return (
-    <section id="services" className="container mx-auto px-6 mb-24">
+    <section id="services" className="container mx-auto px-6 my-24">
       <div className="text-center mb-16">
         <Badge className="mb-4 bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20">
           Our Services
