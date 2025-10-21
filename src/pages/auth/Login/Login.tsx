@@ -1,7 +1,8 @@
 import ParcelLogin from "@/assets/images/login1.jpg";
+import Login from "@/components/auth/Login";
 
 
-export default function Login() {
+const LoginForm = () => {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -21,3 +22,4 @@ export default function Login() {
     </div>
   );
 }
+export default LoginForm;
