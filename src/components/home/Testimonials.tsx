@@ -35,7 +35,7 @@ const Testimonials = () => {
     },
   ];
   return (
-    <section className="container mx-auto px-6 mb-24">
+    <section className="container mx-auto px-4 mb-24">
       <div className="text-center mb-16">
         <Badge className="mb-4 bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20">
           Testimonials

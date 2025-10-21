@@ -92,15 +92,15 @@ export default function Navbar() {
                     <Fragment key={index}>
                       {(link.role === "PUBLIC" ||
                         link.role === data?.data?.role) && (
-                        <NavigationMenuItem className="w-full">
-                          <NavigationMenuLink
-                            asChild
-                            className="py-2 px-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-300 w-full"
-                          >
-                            <Link to={link.href}>{link.label}</Link>
-                          </NavigationMenuLink>
-                        </NavigationMenuItem>
-                      )}
+                          <NavigationMenuItem className="w-full">
+                            <NavigationMenuLink
+                              asChild
+                              className="py-2 px-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-300 w-full"
+                            >
+                              <Link to={link.href}>{link.label}</Link>
+                            </NavigationMenuLink>
+                          </NavigationMenuItem>
+                        )}
                     </Fragment>
                   ))}
                 </NavigationMenuList>
@@ -111,10 +111,10 @@ export default function Navbar() {
           {/* Logo + Desktop Navigation */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <div className="bg-gradient-to-br from-[#FF2056] to-[#FF4070] rounded-lg p-2 shadow-lg shadow-[#FF2056]/20">
-                <Truck className="w-5 h-5 text-white" />
+              <div className="bg-gradient-to-br from-[#FF2056] to-[#FF4070] rounded-lg md:p-2 p-1 shadow-lg shadow-[#FF2056]/20">
+                <Truck className="md:w-5 w-4 md:h-5 h-4 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900 dark:text-white">
+              <span className="md:text-xl text-sm font-bold text-gray-900 dark:text-white">
                 Parcel.Com
               </span>
             </div>
@@ -125,15 +125,15 @@ export default function Navbar() {
                   <Fragment key={index}>
                     {(link.role === "PUBLIC" ||
                       link.role === data?.data?.role) && (
-                      <NavigationMenuItem>
-                        <NavigationMenuLink
-                          asChild
-                          className="text-gray-600 dark:text-gray-300 hover:text-[#FF2056] dark:hover:text-[#FF4070] py-1.5 font-medium transition-colors"
-                        >
-                          <Link to={link.href}>{link.label}</Link>
-                        </NavigationMenuLink>
-                      </NavigationMenuItem>
-                    )}
+                        <NavigationMenuItem>
+                          <NavigationMenuLink
+                            asChild
+                            className="text-gray-600 dark:text-gray-300 hover:text-[#FF2056] dark:hover:text-[#FF4070] py-1.5 font-medium transition-colors"
+                          >
+                            <Link to={link.href}>{link.label}</Link>
+                          </NavigationMenuLink>
+                        </NavigationMenuItem>
+                      )}
                   </Fragment>
                 ))}
               </NavigationMenuList>

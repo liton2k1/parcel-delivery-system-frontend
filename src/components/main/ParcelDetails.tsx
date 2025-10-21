@@ -21,7 +21,7 @@ const ParcelDetails = ({ data }: { data: IResponse<IParcelTrackData> }) => {
   return (
     <section className="py-20 relative" id="parcel-details">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-muted/30"></div>
-      <div className="relative max-w-6xl mx-auto px-4">
+      <div className="relative container mx-auto px-4">
         <div className="text-center mb-16">
           <Badge variant="secondary" className="mb-4">
             Parcel Details

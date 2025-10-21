@@ -15,7 +15,7 @@ const TrackParcelHero = ({ isLoading }: ITrackParcelProps) => {
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#FF6090] opacity-10 blur-3xl rounded-full"></div>
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-4 z-10">
+      <div className="relative mx-auto px-4 z-10">
         <div className="text-center mb-16">
           <Badge
             variant="secondary"

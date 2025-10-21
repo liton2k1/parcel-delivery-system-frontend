@@ -501,19 +501,13 @@ const Parcels = () => {
     manualFiltering: true,
 
     getCoreRowModel: getCoreRowModel(),
-    // getSortedRowModel: getSortedRowModel(),
-
-    // onSortingChange: setSorting,
-    // getPaginationRowModel: getPaginationRowModel(),
-    // onPaginationChange: setPagination,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
-    // getFilteredRowModel: getFilteredRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-    // Event handlers
+   
     onSortingChange: (updater) => {
       setSorting(updater);
-      // Reset to first page when sorting changes
+      
       setPagination((prev) => ({ ...prev, pageIndex: 0 }));
     },
     onPaginationChange: setPagination,

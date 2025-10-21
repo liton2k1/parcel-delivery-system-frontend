@@ -21,7 +21,7 @@ function Hero() {
         <div className="absolute top-1/2 left-1/2 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-blue-600 opacity-5 dark:opacity-10 blur-3xl rounded-full"></div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* LEFT SIDE */}
           <div className="space-y-6 sm:space-y-8 text-center lg:text-left">

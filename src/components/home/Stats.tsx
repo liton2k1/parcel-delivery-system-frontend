@@ -10,7 +10,7 @@ const Stats = () => {
 
   return (
     <section className="py-20 mb-24 transition-colors bg-gradient-to-r from-[#FF2056]/10 via-purple-200/20 to-blue-200/10 dark:from-[#FF2056]/20 dark:via-purple-600/20 dark:to-blue-600/10">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           {stats.map((stat, idx) => (
             <div key={idx} className="text-center">

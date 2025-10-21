@@ -75,7 +75,7 @@ const About = () => {
           <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#FF2056] opacity-5 blur-3xl rounded-full"></div>
         </div>
 
-        <div className="container mx-auto px-6 relative z-10 text-center">
+        <div className="container mx-auto px-4 relative z-10 text-center">
           <Badge
             variant="secondary"
             className="mb-6 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 hover:bg-[#FF2056]/20 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
@@ -110,7 +110,7 @@ const About = () => {
       </section>
 
       {/* ✅ Stats Section */}
-      <section className="container mx-auto px-6 -mt-12 relative z-20 mb-20">
+      <section className="container mx-auto px-4 -mt-12 relative z-20 mb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, idx) => (
             <Card
@@ -161,7 +161,7 @@ const About = () => {
       </section>
 
       {/* ✅ Mission Section */}
-      <section className="container mx-auto px-6 my-24">
+      <section className="container mx-auto px-4 my-24">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">Our Mission</h2>
           <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
@@ -208,12 +208,12 @@ const About = () => {
       </section>
 
       {/* ✅ Team Section */}
-      <section className="container mx-auto px-6 py-24">
+      <section className="container mx-auto px-4 py-24">
         <h2 className="text-4xl font-bold mb-4 text-center">Meet Our Team</h2>
         <p className="text-xl text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
           The passionate team behind your seamless delivery experience.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {team.map((member, idx) => (
             <Card
               key={idx}

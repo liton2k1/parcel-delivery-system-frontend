@@ -25,7 +25,7 @@ function Analytics() {
   }
 
   return (
-    <div className="space-y-8 p-6">
+    <div className="space-y-8">
       <h1 className="text-3xl font-bold tracking-tight">Parcel Analytics</h1>
       <OverviewCards data={data?.data} />
       <ParcelCharts data={data?.data} />

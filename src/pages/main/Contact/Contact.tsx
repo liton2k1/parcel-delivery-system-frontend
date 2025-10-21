@@ -160,7 +160,7 @@ export default function ContactForm() {
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FF4070] opacity-10 blur-3xl rounded-full"></div>
           <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#FF2056] opacity-5 blur-3xl rounded-full"></div>
         </div>
-        <div className="container mx-auto px-6 relative z-10 text-center">
+        <div className="container mx-auto px-4 relative z-10 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">Get In Touch</h1>
           <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto leading-relaxed">
             Have questions? We're here to help. Reach out to our team and we'll
@@ -170,7 +170,7 @@ export default function ContactForm() {
       </section>
 
       {/* Contact Info */}
-      <section className="container mx-auto px-6 -mt-12 relative z-20 mb-20">
+      <section className="container mx-auto px-4 -mt-12 relative z-20 mb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {contactInfo.map((info, idx) => (
             <Card
@@ -202,7 +202,7 @@ export default function ContactForm() {
       </section>
 
       {/* Form + Departments */}
-      <section className="container mx-auto px-6 mb-20">
+      <section className="container mx-auto px-4 mb-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Form */}
           <div className="lg:col-span-2">

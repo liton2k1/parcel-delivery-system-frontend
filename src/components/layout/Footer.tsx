@@ -3,7 +3,7 @@ import { Truck } from "lucide-react";
 export default function Footer() {
   return (
     <footer className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 py-12 transition-colors duration-300">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4">
         {/* Top Section */}
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}

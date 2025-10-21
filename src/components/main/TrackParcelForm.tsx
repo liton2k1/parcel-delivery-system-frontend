@@ -29,7 +29,7 @@ function TrackParcelForm({ isLoading }: ITrackParcelProps) {
   };
 
   return (
-    <Card className="max-w-2xl mx-auto p-8 shadow-xl border-0 bg-gradient-to-br from-card to-card/50">
+    <Card className="max-w-2xl mx-auto md:p-10 shadow-xl border-0 bg-gradient-to-br from-card to-card/50">
       <CardContent className="space-y-6">
         <form onSubmit={handleTrack} className="space-y-4">
           <div className="flex gap-4">
@@ -39,7 +39,7 @@ function TrackParcelForm({ isLoading }: ITrackParcelProps) {
                 placeholder="Enter tracking number (e.g., TRK-20250801-589709)"
                 value={trackingId}
                 onChange={(e) => setTrackingId(e.target.value)}
-                className="h-12 text-lg pr-10"
+                className="h-12 pr-10 md:text-lg text-sm"
                 autoFocus
               />
               {trackingId && (

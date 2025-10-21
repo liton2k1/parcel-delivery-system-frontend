@@ -10,7 +10,7 @@ const CTA = () => {
       {/* Backdrop blur */}
       <div className="absolute inset-0 backdrop-blur-3xl"></div>
 
-      <div className="container mx-auto px-6 text-center relative z-10">
+      <div className="container mx-auto px-4 text-center relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
           Ready to Ship Smarter?
         </h2>
