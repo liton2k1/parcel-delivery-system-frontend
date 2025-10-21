@@ -6,7 +6,6 @@ import { getStatusColor } from "@/utils/getStatusColor";
 import { format } from "date-fns";
 import { Package } from "lucide-react";
 import TimeLine from "./TimeLine";
-// import TimeLine from "./TimeLine";
 
 const ParcelDetails = ({ data }: { data: IResponse<IParcelTrackData> }) => {
   const {

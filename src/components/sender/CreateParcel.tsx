@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// components/CreateUserDialog.tsx
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,7 +37,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
-import { useAdminCreateParcelMutation } from "@/redux/features/parcel/parcelApi";
+import { useCreateParcelMutation } from "@/redux/features/parcel/parcelApi";
 import { IParcel, ParcelType, ShippingType } from "@/types/sender";
 import { InfoIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -54,10 +53,6 @@ const formSchema = z.object({
     .string({ error: "Coupon code must be a string" })
     .max(20, { message: "Coupon code cannot exceed 20 characters" })
     .optional(),
-  senderEmail: z
-    .email({ message: "Invalid email address format." })
-    .min(5, { message: "Email must be at least 5 characters long." })
-    .max(100, { message: "Email cannot exceed 100 characters." }),
   receiverEmail: z
     .email({ message: "Invalid email address format." })
     .min(5, { message: "Email must be at least 5 characters long." })
@@ -77,25 +72,24 @@ interface CreateParcelDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export function AdminCreateParcelDialog({
+const CreateParcel = ({
   open,
   onOpenChange,
-}: CreateParcelDialogProps) {
+}: CreateParcelDialogProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema) as any,
     defaultValues: {
-      senderEmail: "",
       receiverEmail: "",
       pickupAddress: "",
       deliveryAddress: "",
-      weight: 0.1,
+      weight: undefined,
       type: ParcelType.PACKAGE,
       shippingType: ShippingType.STANDARD,
       couponCode: "",
     },
   });
 
-  const [createParcel, { isLoading }] = useAdminCreateParcelMutation();
+  const [createParcel, { isLoading }] = useCreateParcelMutation();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -113,7 +107,7 @@ export function AdminCreateParcelDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Parcel</DialogTitle>
           <DialogDescription>
@@ -125,23 +119,6 @@ export function AdminCreateParcelDialog({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="senderEmail"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sender Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="john@example.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="receiverEmail"
               render={({ field }) => (
                 <FormItem>
@@ -149,7 +126,7 @@ export function AdminCreateParcelDialog({
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="bob@example.com"
+                      placeholder="Receiver email"
                       {...field}
                     />
                   </FormControl>
@@ -165,7 +142,7 @@ export function AdminCreateParcelDialog({
                   <FormItem>
                     <FormLabel>Pickup Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="" {...field} />
+                      <Input placeholder="Pickup address" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -191,7 +168,7 @@ export function AdminCreateParcelDialog({
                   <FormItem>
                     <FormLabel>Delivery Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="" {...field} />
+                      <Input placeholder="Delivery address" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -223,11 +200,7 @@ export function AdminCreateParcelDialog({
                       step="0.1"
                       min="0.1"
                       {...field}
-                      value={
-                        typeof field.value === "number"
-                          ? field.value
-                          : Number(field.value) || 0.1
-                      }
+                      placeholder="Weight (kg)"
                     />
                   </FormControl>
                   <FormMessage />
@@ -282,7 +255,7 @@ export function AdminCreateParcelDialog({
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="couponCode"
               render={({ field }) => (
@@ -294,7 +267,7 @@ export function AdminCreateParcelDialog({
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <DialogFooter className="flex justify-between items-center">
               {isLoading && <Spinner variant={"circle-filled"} />}
@@ -308,3 +281,4 @@ export function AdminCreateParcelDialog({
     </Dialog>
   );
 }
+export default CreateParcel;

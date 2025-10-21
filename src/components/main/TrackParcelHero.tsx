@@ -5,7 +5,7 @@ export interface ITrackParcelProps {
   isLoading: boolean;
 }
 
-export default function TrackParcelHero({ isLoading }: ITrackParcelProps) {
+const TrackParcelHero = ({ isLoading }: ITrackParcelProps) => {
   return (
     <section className="relative py-20 overflow-hidden">
       {/* Gradient Background with Blobs */}
@@ -39,3 +39,4 @@ export default function TrackParcelHero({ isLoading }: ITrackParcelProps) {
     </section>
   );
 }
+export default TrackParcelHero;

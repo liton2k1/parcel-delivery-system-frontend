@@ -12,12 +12,12 @@ import {
 } from "@/components/ui/popover";
 import { Link, useNavigate } from "react-router";
 import { Fragment } from "react/jsx-runtime";
-import { ModeToggle } from "../ModeToggle";
 import { useGetMeQuery } from "@/redux/features/user/userApi";
 import { authApi, useLogoutMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { Role } from "@/types/user";
 import { Truck } from "lucide-react";
+import ModeToggle from "../ModeToggle";
 
 // Navigation links array
 const navigationLinks = [

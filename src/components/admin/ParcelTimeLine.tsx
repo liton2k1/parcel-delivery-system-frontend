@@ -40,7 +40,7 @@ const getStatusIcon = (status: string) => {
   }
 };
 
-const AdminParcelTimeLine = ({ statusLog }: { statusLog: StatusLog[] }) => {
+const ParcelTimeLine = ({ statusLog }: { statusLog: StatusLog[] }) => {
   return (
     <div className="lg:col-span-2">
       <Card className="p-6 shadow-lg border-0 bg-gradient-to-br from-card to-card/50">
@@ -95,4 +95,4 @@ const AdminParcelTimeLine = ({ statusLog }: { statusLog: StatusLog[] }) => {
   );
 };
 
-export default AdminParcelTimeLine;
+export default ParcelTimeLine;

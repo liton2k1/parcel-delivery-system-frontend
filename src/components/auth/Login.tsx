@@ -20,10 +20,10 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
-export function LoginForm({
+const Login = ({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: React.HTMLAttributes<HTMLDivElement>) => {
   const navigate = useNavigate();
   const form = useForm({
     //! For development only
@@ -138,3 +138,4 @@ export function LoginForm({
     </div>
   );
 }
+export default Login;

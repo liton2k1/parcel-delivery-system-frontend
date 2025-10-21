@@ -51,7 +51,7 @@ interface CreateDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export function CreateStuffDialog({ open, onOpenChange }: CreateDialogProps) {
+const CreateEmployee = ({ open, onOpenChange }: CreateDialogProps) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(createStuffZodSchema),
     defaultValues: {
@@ -249,3 +249,4 @@ export function CreateStuffDialog({ open, onOpenChange }: CreateDialogProps) {
     </Dialog>
   );
 }
+export default CreateEmployee;

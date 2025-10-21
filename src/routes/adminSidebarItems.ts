@@ -1,6 +1,6 @@
 import Analytics from "@/pages/admin/Analytics";
 import Users from "@/pages/admin/Users";
-import ViewParcels from "@/pages/admin/ViewParcels";
+import ViewParcels from "@/pages/admin/Parcels";
 import type { ISidebarItem } from "@/types";
 
 export const adminSidebarItems: ISidebarItem[] = [

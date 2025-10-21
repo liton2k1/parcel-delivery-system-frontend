@@ -20,14 +20,14 @@ interface DeleteConfirmationProps {
   confirmText?: string;
 }
 
-export default function DeleteConfirmation({
+const DeleteConfirmation = ({
   trigger,
   title = "Are you absolutely sure?",
   description = "This action cannot be undone.",
   onConfirm,
   isLoading = false,
   confirmText = "Delete",
-}: DeleteConfirmationProps) {
+}: DeleteConfirmationProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
@@ -54,3 +54,4 @@ export default function DeleteConfirmation({
     </AlertDialog>
   );
 }
+export default DeleteConfirmation;

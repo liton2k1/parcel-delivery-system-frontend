@@ -1,4 +1,3 @@
-import Logo from "@/assets/icons/Logo";
 import {
   Sidebar,
   SidebarContent,
@@ -19,6 +18,7 @@ import Loading from "./Loading";
 import { useGetMeQuery } from "@/redux/features/user/userApi";
 import { getSidebarItems } from "@/utils/getSidebarItems";
 import { NavUser } from "./ui/nav-user";
+import { Truck } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: userData, isLoading, isError } = useGetMeQuery(undefined);
@@ -38,9 +38,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <Link to="/" className="flex items-center gap-2">
-          <Logo />
-          <span>NextLevel Parcel</span>
+        <Link to="/" className="flex items-center gap-2 mt-2">
+          <div className="flex items-center gap-2">
+            <div className="bg-gradient-to-br from-[#FF2056] to-[#FF4070] rounded-lg p-2 shadow-lg shadow-[#FF2056]/20">
+              <Truck className="w-5 h-5 text-white" />
+            </div>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">
+              Parcel.Com
+            </span>
+          </div>
         </Link>
       </SidebarHeader>
       <SidebarContent>

@@ -8,19 +8,10 @@ import Testimonials from "@/components/home/Testimonials";
 const Home = () => {
   return (
     <div>
-      {/* Hero Section */}
       <Hero />
-
-      {/* Services Section */}
       <Service />
-
-      {/* Stats Section */}
       <Stats />
-
-      {/* Testimonials Section */}
       <Testimonials />
-      
-      {/* CTA Section */}
       <CTA />
     </div>
   );

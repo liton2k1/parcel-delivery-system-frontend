@@ -21,7 +21,7 @@ import { withAuth } from "@/utils/withAuth";
 import { generateRoutes } from "./generateRoutes";
 import { superAdminSidebarItems } from "./superAdminSidebarItems";
 import ParcelStatus from "@/pages/sender/ParcelStatus";
-import ViewParcelDetails from "@/pages/admin/ViewParcelDetails";
+import ViewParcelDetails from "@/pages/admin/ParcelDetails";
 import TrackParcel from "@/pages/main/TrackParcel/TrackParcel";
 import About from "@/pages/main/About/About";
 import Contact from "@/pages/main/Contact/Contact";

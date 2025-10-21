@@ -5,15 +5,15 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
-import { ModeToggle } from "../ModeToggle";
 import { AppSidebar } from "../AppSidebar";
+import ModeToggle from "../ModeToggle";
 
 export default function DashboardLayout() {
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 sticky top-0 z-50 bg-[#18181B]">
           <SidebarTrigger className="-ml-1" />
           <Separator
             orientation="vertical"

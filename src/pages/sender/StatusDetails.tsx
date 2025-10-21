@@ -10,8 +10,7 @@ import { getStatusColor } from "@/utils/getStatusColor";
 import { format } from "date-fns";
 import { Home, Mail, MapPin, Package, Phone, User } from "lucide-react";
 import { useParams } from "react-router";
-import StatusTimeLine from "./StatusTimeLine";
-// import StatusTimeLine from "./StatusTimeLine";
+import StatusTimeLine from "../../components/sender/StatusTimeLine";
 const StatusDetails = () => {
   const { id } = useParams();
   const { data, isLoading, isError, error } = useGetParcelStatusLogQuery(id);
@@ -43,8 +42,7 @@ const StatusDetails = () => {
 
   return (
     <section className="py-20 relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-muted/30"></div>
-      <div className="relative max-w-6xl mx-auto px-4">
+      <div className="relative">
         <div className="text-center mb-16">
           <Badge variant="secondary" className="mb-4">
             Parcel Details

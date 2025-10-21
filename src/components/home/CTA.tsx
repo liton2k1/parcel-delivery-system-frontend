@@ -4,7 +4,10 @@ import { NavLink } from "react-router";
 const CTA = () => {
   return (
     <section className="relative overflow-hidden py-24 mb-24">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#FF2056]/10 via-purple-600/10 to-blue-600/10 dark:from-[#FF2056]/20 dark:via-purple-600/20 dark:to-blue-600/20"></div>
+      {/* Gradient overlay from bottom */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#FF2056]/20 via-purple-600/10 to-transparent dark:from-[#FF2056]/30 dark:via-purple-600/20 dark:to-transparent"></div>
+
+      {/* Backdrop blur */}
       <div className="absolute inset-0 backdrop-blur-3xl"></div>
 
       <div className="container mx-auto px-6 text-center relative z-10">

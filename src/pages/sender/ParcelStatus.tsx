@@ -1,4 +1,4 @@
-import StatusDetails from "@/components/StatusDetails";
+import StatusDetails from "@/pages/sender/StatusDetails";
 
 
 function ParcelStatus() {
