@@ -4,18 +4,18 @@ A modern, responsive, and feature-rich frontend application for the Parcel Deliv
 
 ---
 
-🌟 Features
+## 🌟 Features
 
-🔐 Secure Authentication - JWT-based login with role-based access control
-👥 Multi-Role Dashboard - Customized interfaces for Sender, Receiver, Admin
-📦 Parcel Management - Create, track, and manage parcels with real-time status updates
-📊 Interactive Analytics - Visual dashboards with charts and statistics using Recharts
-📲 OTP Verification - Secure phone-based registration with OTP validation
-📧 Email Notifications - Integrated email service using EmailJS
-🎨 Modern UI/UX - Beautiful, accessible components with shadcn/ui and Tailwind CSS
-📱 Responsive Design - Seamless experience across desktop, tablet, and mobile devices
-🔄 RTK Query - Data fetching and caching
-✅ Form Validation - Robust form handling with React Hook Form and Zod
+- **🔐 Secure Authentication** - JWT-based login with role-based access control
+- **👥 Multi-Role Dashboard** - Customized interfaces for Sender, Receiver, Admin
+- **📦 Parcel Management** - Create, track, and manage parcels with real-time status updates
+- **📊 Interactive Analytics** - Visual dashboards with charts and statistics using Recharts
+- **📲 OTP Verification** - Secure phone-based registration with OTP validation
+- **📧 Email Notifications** - Integrated email service using EmailJS
+- **🎨 Modern UI/UX** - Beautiful, accessible components with shadcn/ui and Tailwind CSS
+- **📱 Responsive Design** - Seamless experience across desktop, tablet, and mobile devices
+- **🔄 RTK Query** - Data fetching and caching
+- **✅ Form Validation** - Robust form handling with React Hook Form and Zod
 
 ---
 
