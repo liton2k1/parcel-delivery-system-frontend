@@ -1,53 +1,38 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import {
+  ComposedChart,
+  Line,
   Bar,
-  BarChart,
-  CartesianGrid,
-  LabelList,
   XAxis,
   YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
 } from "recharts";
-
-const chartConfig = {
-  created: {
-    label: "Created",
-    color: "#10b981",
-  },
-};
-
-interface ChartDataItem {
-  days: string;
-  created: number;
-}
 
 interface AnalyticsData {
   parcelCreatedInLast7Days?: number;
   parcelCreatedInLast30Days?: number;
 }
 
-interface ShipmentBarChartProps {
+interface ShipmentComposedChartProps {
   data?: AnalyticsData;
 }
 
-function ShipmentBarChart({ data }: ShipmentBarChartProps) {
-  const chartData: ChartDataItem[] = [
+export default function ShipmentComposedChart({ data }: ShipmentComposedChartProps) {
+  const chartData = [
     {
-      days: "Last 7 Days",
+      period: "Last 7 Days",
       created: data?.parcelCreatedInLast7Days || 0,
     },
     {
-      days: "Last 30 Days",
+      period: "Last 30 Days",
       created: data?.parcelCreatedInLast30Days || 0,
     },
   ];
@@ -56,66 +41,36 @@ function ShipmentBarChart({ data }: ShipmentBarChartProps) {
     <Card className="hover:shadow-lg transition-shadow duration-200 border-0 shadow-sm">
       <CardHeader className="pb-6">
         <CardTitle className="text-xl font-semibold text-foreground">
-          Shipment Volume Trends
+          Shipment Status
         </CardTitle>
-        <CardDescription className="text-muted-foreground">
-          Parcel creation comparison between recent and monthly periods
-        </CardDescription>
       </CardHeader>
       <CardContent className="pt-0">
-        <ChartContainer config={chartConfig} className="h-[300px] w-full">
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              top: 20,
-              right: 20,
-              left: 20,
-              bottom: 20,
-            }}
-          >
-            <CartesianGrid
-              vertical={false}
-              strokeDasharray="3 3"
-              stroke="var(--border)"
-              opacity={0.3}
-            />
-            <XAxis
-              dataKey="days"
-              tickLine={false}
-              tickMargin={16}
-              axisLine={false}
-              tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
-            />
-            <YAxis
-              tickLine={false}
-              tickMargin={16}
-              axisLine={false}
-              tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Bar
-              dataKey="created"
-              fill="var(--color-created)"
-              radius={[4, 4, 0, 0]}
-              barSize={40}
+        <div className="h-[320px] w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <ComposedChart
+              data={chartData}
+              margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
             >
-              <LabelList
-                position="top"
-                offset={12}
-                className="fill-foreground font-medium"
-                fontSize={12}
-                formatter={(value: number) => value?.toLocaleString()}
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+              <XAxis
+                dataKey="period"
+                tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
+                tickLine={false}
+                axisLine={false}
               />
-            </Bar>
-          </BarChart>
-        </ChartContainer>
+              <YAxis
+                tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
+                tickLine={false}
+                axisLine={false}
+              />
+              <Tooltip formatter={(value: number) => value.toLocaleString()} />
+              <Legend />
+              <Bar dataKey="created" barSize={40} fill="#10b981" radius={[6, 6, 0, 0]} />
+              <Line type="monotone" dataKey="created" stroke="#047857" strokeWidth={2} />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
       </CardContent>
     </Card>
   );
 }
-
-export default ShipmentBarChart;

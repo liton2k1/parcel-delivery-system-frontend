@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -95,11 +94,8 @@ function ShippingTypeChart({ data }: ShippingTypeChartProps) {
     <Card className="hover:shadow-lg transition-shadow duration-200 border-0 shadow-sm">
       <CardHeader className="pb-6">
         <CardTitle className="text-xl font-semibold text-foreground">
-          Shipping Method Distribution
+          Shipping Type
         </CardTitle>
-        <CardDescription className="text-muted-foreground">
-          Breakdown of parcels by shipping service type
-        </CardDescription>
       </CardHeader>
       <CardContent className="pt-0">
         <ChartContainer
