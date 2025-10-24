@@ -2,7 +2,7 @@ import config from "@/config";
 import axios, { type AxiosRequestConfig } from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: config.baseUrl,
+  baseURL: config.baseUrl || 'https://parcel-delivery-system-backend-rose.vercel.app/api/v1',
   withCredentials: true,
 });
 
