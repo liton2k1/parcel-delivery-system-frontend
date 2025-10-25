@@ -27,6 +27,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { sendEmail } from "@/lib/emailjs";
+import { Badge } from "@/components/ui/badge";
 
 interface EmailJSTemplateParams {
   from_name: string;
@@ -161,6 +162,12 @@ export default function ContactForm() {
           <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#FF2056] opacity-5 blur-3xl rounded-full"></div>
         </div>
         <div className="container mx-auto px-4 relative z-10 text-center">
+          <Badge
+            variant="secondary"
+            className="mb-6 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 hover:bg-[#FF2056]/20 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
+          >
+            We're Here to Help
+          </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6">Get In Touch</h1>
           <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto leading-relaxed">
             Have questions? We're here to help. Reach out to our team and we'll
@@ -312,32 +319,6 @@ export default function ContactForm() {
           </div>
         </div>
       </section>
-
-      {/* FAQ Links */}
-      {/* <section className="bg-muted/50 py-16 mb-20">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            Looking for Quick Answers?
-          </h2>
-          <p className="text-muted-foreground mb-8">
-            Check out our FAQ section for instant answers to common questions.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Button variant="outline" size="lg">
-              Track a Package
-            </Button>
-            <Button variant="outline" size="lg">
-              Pricing & Services
-            </Button>
-            <Button variant="outline" size="lg">
-              Shipping Guidelines
-            </Button>
-            <Button variant="outline" size="lg">
-              View FAQ
-            </Button>
-          </div>
-        </div>
-      </section> */}
     </div>
   );
 }

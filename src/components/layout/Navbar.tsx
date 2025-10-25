@@ -24,6 +24,8 @@ const navigationLinks = [
   { href: "/", label: "Home", role: "PUBLIC" },
   { href: "/track-parcel", label: "Track Parcel", role: "PUBLIC" },
   { href: "/about", label: "About", role: "PUBLIC" },
+  { href: "/features", label: "Features", role: "PUBLIC" },
+  { href: "/faq", label: "FAQ", role: "PUBLIC" },
   { href: "/contact", label: "Contact", role: "PUBLIC" },
   { href: "/admin", label: "Dashboard", role: Role.ADMIN },
   { href: "/super-admin", label: "Dashboard", role: Role.SUPER_ADMIN },
@@ -92,15 +94,15 @@ export default function Navbar() {
                     <Fragment key={index}>
                       {(link.role === "PUBLIC" ||
                         link.role === data?.data?.role) && (
-                          <NavigationMenuItem className="w-full">
-                            <NavigationMenuLink
-                              asChild
-                              className="py-2 px-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-300 w-full"
-                            >
-                              <Link to={link.href}>{link.label}</Link>
-                            </NavigationMenuLink>
-                          </NavigationMenuItem>
-                        )}
+                        <NavigationMenuItem className="w-full">
+                          <NavigationMenuLink
+                            asChild
+                            className="py-2 px-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-300 w-full"
+                          >
+                            <Link to={link.href}>{link.label}</Link>
+                          </NavigationMenuLink>
+                        </NavigationMenuItem>
+                      )}
                     </Fragment>
                   ))}
                 </NavigationMenuList>
@@ -125,15 +127,15 @@ export default function Navbar() {
                   <Fragment key={index}>
                     {(link.role === "PUBLIC" ||
                       link.role === data?.data?.role) && (
-                        <NavigationMenuItem>
-                          <NavigationMenuLink
-                            asChild
-                            className="text-gray-600 dark:text-gray-300 hover:text-[#FF2056] dark:hover:text-[#FF4070] py-1.5 font-medium transition-colors"
-                          >
-                            <Link to={link.href}>{link.label}</Link>
-                          </NavigationMenuLink>
-                        </NavigationMenuItem>
-                      )}
+                      <NavigationMenuItem>
+                        <NavigationMenuLink
+                          asChild
+                          className="text-gray-600 dark:text-gray-300 hover:text-[#FF2056] dark:hover:text-[#FF4070] py-1.5 font-medium transition-colors"
+                        >
+                          <Link to={link.href}>{link.label}</Link>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    )}
                   </Fragment>
                 ))}
               </NavigationMenuList>

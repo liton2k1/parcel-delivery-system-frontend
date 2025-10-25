@@ -25,6 +25,8 @@ import ViewParcelDetails from "@/pages/admin/ParcelDetails";
 import TrackParcel from "@/pages/main/TrackParcel/TrackParcel";
 import About from "@/pages/main/About/About";
 import Contact from "@/pages/main/Contact/Contact";
+import Features from "@/pages/main/Features/Features";
+import FAQ from "@/pages/main/FAQ/FAQ";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ export const router = createBrowserRouter([
       {
         Component: About,
         path: "/about",
+      },
+      {
+        Component: Features,
+        path: "/features",
+      },
+      {
+        Component: FAQ,
+        path: "/faq",
       },
       {
         Component: Contact,
