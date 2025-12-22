@@ -13,19 +13,19 @@ import { NavLink } from "react-router";
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32 md:pb-24 lg:pt-40 lg:pb-32">
+    <section className="relative overflow-hidden bg-linear-to-b to-secondary py-20">
       {/* Gradient Blobs */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-[#FF2056] opacity-10 dark:opacity-20 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-0 right-1/4 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-purple-600 opacity-10 dark:opacity-20 blur-3xl rounded-full"></div>
-        <div className="absolute top-1/2 left-1/2 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-blue-600 opacity-5 dark:opacity-10 blur-3xl rounded-full"></div>
+        {/* <div className="absolute bottom-0 right-1/4 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-purple-600 opacity-10 dark:opacity-20 blur-3xl rounded-full"></div>
+        <div className="absolute top-1/2 left-1/2 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-blue-600 opacity-5 dark:opacity-10 blur-3xl rounded-full"></div> */}
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-5 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* LEFT SIDE */}
           <div className="space-y-6 sm:space-y-8 text-center lg:text-left">
-            <Badge className="bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 hover:bg-[#FF2056]/20 mx-auto lg:mx-0">
+            <Badge className="text-[#FF2056] border-[#FF2056]/20 mx-auto lg:mx-0">
               ⚡ Trusted by 2M+ Customers Worldwide
             </Badge>
 
@@ -46,10 +46,7 @@ function Hero() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <NavLink to="/login">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto bg-gradient-to-r from-[#FF2056] to-[#FF4070] hover:from-[#FF4070] hover:to-[#FF2056] text-white text-base sm:text-lg font-semibold shadow-xl shadow-[#FF2056]/30 border-0 cursor-pointer"
-                >
+                <Button size="lg" className="w-full sm:w-auto cursor-pointer">
                   Start Shipping
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -58,7 +55,7 @@ function Hero() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto text-base sm:text-lg font-semibold bg-transparent border-2 border-gray-300 text-gray-800 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+                  className="w-full sm:w-auto cursor-pointer"
                 >
                   Track Parcel
                 </Button>
@@ -122,7 +119,7 @@ function Hero() {
                   </div>
                   <div>
                     <div className="font-semibold text-base sm:text-lg text-gray-800 dark:text-white">
-                      Dispatched → In-Transit → Rescheduled (if needed)
+                      Dispatched → In-Transit → Rescheduled
                     </div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       The parcel moves through our secure logistics network.
