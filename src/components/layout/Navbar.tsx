@@ -19,7 +19,6 @@ import { Role } from "@/types/user";
 import { Truck } from "lucide-react";
 import ModeToggle from "../ModeToggle";
 
-// Navigation links array
 const navigationLinks = [
   { href: "/", label: "Home", role: "PUBLIC" },
   { href: "/track-parcel", label: "Track Parcel", role: "PUBLIC" },
@@ -46,15 +45,28 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 w-full z-50 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl transition-colors duration-300">
-      <div className="container mx-auto px-4 flex h-16 items-center justify-between gap-4">
-        {/* Left side */}
-        <div className="flex items-center gap-2">
-          {/* Mobile menu trigger */}
+    <header className="fixed top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-xl transition-colors dark:border-gray-800 dark:bg-gray-900/80">
+      <div className="container mx-auto flex h-16 items-center px-5">
+        {/* Mobile Header */}
+        <div className="flex w-full items-center justify-between lg:hidden">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="rounded-full bg-gradient-to-br from-[#FF2056] to-[#FF4070] p-1">
+              <Truck className="h-5 w-5 text-white" />
+            </div>
+            <span className="font-bold text-gray-900 dark:text-white">
+              Easy Parcel
+            </span>
+          </div>
+
+          {/* Mode */}
+          <ModeToggle />
+
+          {/* Hamburger */}
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                className="group size-8 md:hidden"
+                className="group border rounded-full"
                 variant="ghost"
                 size="icon"
               >
@@ -71,33 +83,34 @@ export default function Navbar() {
                 >
                   <path
                     d="M4 12L20 12"
-                    className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
+                    className="origin-center -translate-y-[7px] transition-all duration-300 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
                   />
                   <path
                     d="M4 12H20"
-                    className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
+                    className="origin-center transition-all duration-300 group-aria-expanded:rotate-45"
                   />
                   <path
                     d="M4 12H20"
-                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
+                    className="origin-center translate-y-[7px] transition-all duration-300 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
                   />
                 </svg>
               </Button>
             </PopoverTrigger>
+
             <PopoverContent
               align="start"
-              className="w-40 p-1 md:hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg"
+              className="w-40 p-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg"
             >
               <NavigationMenu className="max-w-none *:w-full">
-                <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
+                <NavigationMenuList className="flex-col">
                   {navigationLinks.map((link, index) => (
                     <Fragment key={index}>
                       {(link.role === "PUBLIC" ||
                         link.role === data?.data?.role) && (
-                        <NavigationMenuItem className="w-full">
+                        <NavigationMenuItem>
                           <NavigationMenuLink
                             asChild
-                            className="py-2 px-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-300 w-full"
+                            className="w-full px-2 py-2 rounded-md text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
                           >
                             <Link to={link.href}>{link.label}</Link>
                           </NavigationMenuLink>
@@ -105,63 +118,76 @@ export default function Navbar() {
                       )}
                     </Fragment>
                   ))}
+                  <div className=" w-full flex flex-col gap-2">
+                    {data?.data?.email ? (
+                      <Button onClick={handleLogout} variant="outline">
+                        Logout
+                      </Button>
+                    ) : (
+                      <Button asChild variant="outline">
+                        <Link to="/login">Login</Link>
+                      </Button>
+                    )}
+                  </div>
                 </NavigationMenuList>
               </NavigationMenu>
             </PopoverContent>
           </Popover>
-
-          {/* Logo + Desktop Navigation */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <div className="bg-gradient-to-br from-[#FF2056] to-[#FF4070] rounded-lg md:p-2 p-1 shadow-lg shadow-[#FF2056]/20">
-                <Truck className="md:w-5 w-4 md:h-5 h-4 text-white" />
-              </div>
-              <span className="md:text-xl text-sm font-bold text-gray-900 dark:text-white">
-                Parcel.Com
-              </span>
-            </div>
-
-            <NavigationMenu className="max-md:hidden">
-              <NavigationMenuList className="gap-3">
-                {navigationLinks.map((link, index) => (
-                  <Fragment key={index}>
-                    {(link.role === "PUBLIC" ||
-                      link.role === data?.data?.role) && (
-                      <NavigationMenuItem>
-                        <NavigationMenuLink
-                          asChild
-                          className="text-gray-600 dark:text-gray-300 hover:text-[#FF2056] dark:hover:text-[#FF4070] py-1.5 font-medium transition-colors"
-                        >
-                          <Link to={link.href}>{link.label}</Link>
-                        </NavigationMenuLink>
-                      </NavigationMenuItem>
-                    )}
-                  </Fragment>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
         </div>
 
-        {/* Right side */}
-        <div className="flex items-center gap-2">
-          <ModeToggle />
-          {data?.data?.email ? (
-            <Button
-              onClick={handleLogout}
-              variant="outline"
-              className="text-sm border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-            >
-              Logout
-            </Button>
-          ) : (
-            <Button
-              asChild
-              className="text-sm bg-gradient-to-r from-[#FF2056] to-[#FF4070] text-white hover:opacity-90"
-            >
-              <Link to="/login">Login</Link>
-            </Button>
-          )}
+        {/* Desktop Header*/}
+        <div className="hidden w-full items-center justify-between lg:flex">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="rounded-full bg-gradient-to-br from-[#FF2056] to-[#FF4070] p-2">
+              <Truck className="h-5 w-5 text-white" />
+            </div>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">
+              Easy Parcel
+            </span>
+          </div>
+
+          {/* Nav */}
+          <NavigationMenu>
+            <NavigationMenuList className="gap-3">
+              {navigationLinks.map((link, index) => (
+                <Fragment key={index}>
+                  {(link.role === "PUBLIC" ||
+                    link.role === data?.data?.role) && (
+                    <NavigationMenuItem>
+                      <NavigationMenuLink
+                        asChild
+                        className="py-1.5 font-medium text-gray-600 hover:text-[#FF2056] dark:text-gray-300 dark:hover:text-[#FF4070]"
+                      >
+                        <Link to={link.href}>{link.label}</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  )}
+                </Fragment>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          {/* Right */}
+          <div className="flex items-center gap-2">
+            <ModeToggle />
+            {data?.data?.email ? (
+              <Button
+                onClick={handleLogout}
+                variant="outline"
+                className="rounded-full"
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button
+                asChild
+                className="bg-gradient-to-r from-[#FF2056] to-[#FF4070] rounded-full text-white"
+              >
+                <Link to="/login">Login</Link>
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </header>
