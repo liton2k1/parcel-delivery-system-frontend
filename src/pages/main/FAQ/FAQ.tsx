@@ -18,6 +18,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { NavLink } from "react-router";
+import { Button } from "@/components/ui/button";
 
 interface FAQCategory {
   icon: LucideIcon;
@@ -167,20 +169,13 @@ const FAQ = () => {
   }, {});
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
+    <div>
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
-        {/* Gradient Background */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-pink-600 opacity-10 blur-3xl rounded-full"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500 opacity-10 blur-3xl rounded-full"></div>
-          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-600 opacity-5 blur-3xl rounded-full"></div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10 text-center">
+      <section className="bg-linear-to-b from-[#FF2056]/5 to-secondary py-20">
+        <div className="container mx-auto px-5 text-center">
           <Badge
             variant="secondary"
-            className="mb-6 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 hover:bg-[#FF2056]/20 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
+            className="mb-5 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 rounded-full"
           >
             <HelpCircle className="w-4 h-4 inline mr-2" />
             We're Here to Help
@@ -193,23 +188,44 @@ const FAQ = () => {
             Find answers to common questions about our parcel delivery services,
             pricing, tracking, and more.
           </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <NavLink to="/login">
+              <Button size="lg" className="cursor-pointer">
+                Start Shipping
+              </Button>
+            </NavLink>
+            <NavLink to="/track-parcel">
+              <Button size="lg" variant="outline" className="cursor-pointer">
+                Track Parcel
+              </Button>
+            </NavLink>
+          </div>
         </div>
       </section>
 
       {/* Categories Section */}
-      <section className="container mx-auto px-4 -mt-12 relative z-20 mb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="container mx-auto px-5 mt-20">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-3">Browse Help Categories</h2>
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Find quick answers by exploring our most common support topics and
+            frequently asked questions.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {faqCategories.map((category, idx) => (
             <Card
               key={idx}
-              className="border-2 hover:border-pink-600 transition-all transform hover:-translate-y-1 cursor-pointer"
+              className="hover:border-primary transition-all transform hover:-translate-y-1 cursor-pointer shadow-none"
               onClick={() => {
                 const element = document.getElementById(category.title);
                 element?.scrollIntoView({ behavior: "smooth" });
               }}
             >
               <CardContent className="p-6 text-center">
-                <category.icon className="w-12 h-12 mx-auto mb-4 text-pink-600" />
+                <category.icon className="w-12 h-12 mx-auto mb-4 text-primary" />
                 <div className="text-xl font-bold">{category.title}</div>
               </CardContent>
             </Card>
@@ -218,8 +234,8 @@ const FAQ = () => {
       </section>
 
       {/* FAQ Sections */}
-      <section className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto">
+      <section className="container mx-auto px-5 my-20">
+        <div className="max-w-2xl mx-auto">
           {Object.keys(groupedFAQs).map((category, categoryIdx) => (
             <div key={categoryIdx} id={category} className="mb-16">
               <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white flex items-center">
@@ -230,7 +246,7 @@ const FAQ = () => {
                         (cat) => cat.title === category
                       )?.icon;
                       return Icon ? (
-                        <Icon className="w-8 h-8 text-pink-600" />
+                        <Icon className="w-8 h-8 text-primary" />
                       ) : null;
                     })()}
                   </span>
@@ -246,9 +262,9 @@ const FAQ = () => {
                   return (
                     <Card
                       key={faqIdx}
-                      className={`cursor-pointer transition-all ${
+                      className={`cursor-pointer transition-all shadow-none ${
                         isOpen
-                          ? "border-pink-600 shadow-lg"
+                          ? "border-primary shadow-none"
                           : "hover:border-gray-300"
                       }`}
                       onClick={() => toggleFAQ(globalIndex)}
@@ -259,7 +275,7 @@ const FAQ = () => {
                             {faq.question}
                           </CardTitle>
                           <ChevronDown
-                            className={`w-5 h-5 text-pink-600 transition-transform flex-shrink-0 ${
+                            className={`w-5 h-5 text-primary transition-transform flex-shrink-0 ${
                               isOpen ? "transform rotate-180" : ""
                             }`}
                           />

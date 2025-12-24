@@ -9,7 +9,6 @@ import {
   TrendingUp,
   Heart,
   Target,
-//   Rocket,
   Truck,
   MapPin,
   PhoneCall,
@@ -23,6 +22,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { NavLink } from "react-router";
+import { Button } from "@/components/ui/button";
 
 const Features = () => {
   const stats = [
@@ -81,29 +82,16 @@ const Features = () => {
       description:
         "Tailored services for businesses including bulk shipping discounts, API integration, and dedicated account managers.",
     },
-    // {
-    //   icon: Rocket,
-    //   title: "Express International",
-    //   description:
-    //     "Send parcels across borders with our international shipping service, complete with customs clearance support.",
-    // },
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
+    <div>
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
-        {/* Gradient Background with Dark Mode Support */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF2056] opacity-10 blur-3xl rounded-full"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FF4070] opacity-10 blur-3xl rounded-full"></div>
-          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#FF2056] opacity-5 blur-3xl rounded-full"></div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10 text-center">
+      <section className="bg-linear-to-b from-[#FF2056]/5 to-secondary py-20">
+        <div className="container mx-auto px-5 text-center">
           <Badge
             variant="secondary"
-            className="mb-6 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 hover:bg-[#FF2056]/20 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
+            className="mb-5 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 rounded-full"
           >
             Fast, Reliable & Secure Delivery
           </Badge>
@@ -112,21 +100,45 @@ const Features = () => {
             Parcel Delivery Made Simple
           </h1>
           <p className="text-xl md:text-2xl mb-8 leading-relaxed text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Experience hassle-free parcel delivery with real-time tracking, flexible scheduling, and nationwide coverage at competitive prices.
+            Experience hassle-free parcel delivery with real-time tracking,
+            flexible scheduling, and nationwide coverage at competitive prices.
           </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <NavLink to="/login">
+              <Button size="lg" className="cursor-pointer">
+                Start Shipping
+              </Button>
+            </NavLink>
+            <NavLink to="/track-parcel">
+              <Button size="lg" variant="outline" className="cursor-pointer">
+                Track Parcel
+              </Button>
+            </NavLink>
+          </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="container mx-auto px-4 -mt-12 relative z-20 mb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="container mx-auto px-5 mt-20">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-3">
+            Our Performance at a Glance
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Measurable results that reflect our commitment to speed,
+            reliability, and customer satisfaction.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {stats.map((stat, idx) => (
             <Card
               key={idx}
-              className="border-2 hover:border-pink-600 transition-all transform hover:-translate-y-1"
+              className="hover:border-primary transition-all transform hover:-translate-y-1 shadow-none"
             >
               <CardContent className="p-6 text-center">
-                <stat.icon className="w-12 h-12 mx-auto mb-4 text-pink-600" />
+                <stat.icon className="w-12 h-12 mx-auto mb-4 text-primary" />
                 <div className="text-4xl font-bold mb-2">{stat.value}</div>
                 <div className="text-gray-600 dark:text-gray-400 font-medium">
                   {stat.label}
@@ -138,21 +150,22 @@ const Features = () => {
       </section>
 
       {/* Features Section */}
-      <section className="bg-gray-50 dark:bg-gray-900 py-20">
-        <div className="container mx-auto px-6">
+      <section>
+        <div className="container mx-auto px-5 my-20">
           <h2 className="text-4xl font-bold mb-4 text-center">Our Features</h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-            Everything you need for a seamless parcel delivery experience, all in one place.
+            Everything you need for a seamless parcel delivery experience, all
+            in one place.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {features.map((feature, idx) => (
               <Card
                 key={idx}
-                className="hover:shadow-lg transition-all hover:border-pink-600"
+                className="shadow-none transition-all hover:border-primary"
               >
                 <CardHeader>
                   <div className="bg-pink-50 dark:bg-pink-900/20 w-14 h-14 rounded-full flex items-center justify-center mb-4">
-                    <feature.icon className="w-7 h-7 text-pink-600" />
+                    <feature.icon className="w-7 h-7 text-primary" />
                   </div>
                   <CardTitle className="text-xl">{feature.title}</CardTitle>
                 </CardHeader>

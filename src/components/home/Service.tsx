@@ -36,7 +36,7 @@ const Service = () => {
     },
   ];
   return (
-    <section id="services" className="container mx-auto px-4 my-24">
+    <div className="container mx-auto px-5 mt-24">
       <div className="text-center mb-16">
         <Badge className="mb-4 bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20">
           Our Services
@@ -50,11 +50,11 @@ const Service = () => {
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
         {services.map((service, idx) => (
           <Card
             key={idx}
-            className="group relative bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl border-gray-200 dark:border-gray-700 hover:border-[#FF2056]/50 transition-all duration-300 hover:-translate-y-2 cursor-pointer overflow-hidden"
+            className="group relative bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl border-gray-200 dark:border-gray-700 hover:border-[#FF2056]/50 transition-all duration-300 hover:-translate-y-2 cursor-pointer overflow-hidden shadow-none"
           >
             <div
               className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
@@ -75,7 +75,7 @@ const Service = () => {
           </Card>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

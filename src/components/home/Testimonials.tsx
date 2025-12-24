@@ -35,7 +35,7 @@ const Testimonials = () => {
     },
   ];
   return (
-    <section className="container mx-auto px-4 mb-24">
+    <section className="container mx-auto px-5 mt-24">
       <div className="text-center mb-16">
         <Badge className="mb-4 bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20">
           Testimonials
@@ -52,7 +52,7 @@ const Testimonials = () => {
         {testimonials.map((testimonial, idx) => (
           <Card
             key={idx}
-            className="bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl border-gray-200 dark:border-gray-700 hover:border-[#FF2056]/50 transition-all"
+            className="bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl border-gray-200 dark:border-gray-700 hover:border-[#FF2056]/50 transition-all shadow-none"
           >
             <CardHeader>
               <div className="flex gap-1 mb-4">
@@ -69,7 +69,7 @@ const Testimonials = () => {
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#FF2056] to-[#FF4070] flex items-center justify-center text-white font-bold shadow-lg shadow-[#FF2056]/30">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#FF2056] to-[#FF4070] flex items-center justify-center text-white font-bold">
                   {testimonial.avatar}
                 </div>
                 <div>

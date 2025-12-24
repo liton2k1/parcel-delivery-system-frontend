@@ -19,8 +19,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { NavLink } from "react-router";
 
 const About = () => {
   const stats = [
@@ -57,28 +58,14 @@ const About = () => {
     },
   ];
 
-  const team = [
-    { name: "Sarah Chen", role: "CEO & Founder", image: "👩‍💼" },
-    { name: "Marcus Johnson", role: "Head of Operations", image: "👨‍💼" },
-    { name: "Aisha Patel", role: "CTO", image: "👩‍💻" },
-    { name: "David Kim", role: "Customer Success", image: "👨‍🏫" },
-  ];
-
   return (
-    <div className="min-h-screen bg-background">
-      {/* ✅ Hero Section */}
-      <section className="relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
-        {/* ✨ Gradient Background with Dark Mode Support */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF2056] opacity-10 blur-3xl rounded-full"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FF4070] opacity-10 blur-3xl rounded-full"></div>
-          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#FF2056] opacity-5 blur-3xl rounded-full"></div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10 text-center">
+    <div>
+      {/* Hero Section */}
+      <section className="bg-linear-to-b from-[#FF2056]/5 to-secondary py-20">
+        <div className="container mx-auto px-5 text-center">
           <Badge
             variant="secondary"
-            className="mb-6 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 hover:bg-[#FF2056]/20 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
+            className="mb-5 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 rounded-full"
           >
             Trusted by millions worldwide
           </Badge>
@@ -91,31 +78,37 @@ const About = () => {
             with reliable, lightning-fast delivery services that you can trust.
           </p>
 
-          {/* <div className="flex gap-4 justify-center flex-wrap">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-[#FF2056] to-[#FF4070] hover:from-[#FF4070] hover:to-[#FF2056] text-white font-semibold shadow-lg shadow-[#FF2056]/30 border-0"
-            >
-              Get Started
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="font-semibold bg-transparent border-gray-300 text-gray-800 hover:bg-gray-100 dark:border-white/30 dark:text-white dark:hover:bg-white/10"
-            >
-              Learn More
-            </Button>
-          </div> */}
+          <div className="flex gap-4 justify-center flex-wrap">
+            <NavLink to="/login">
+              <Button size="lg" className="cursor-pointer">
+                Start Shipping
+              </Button>
+            </NavLink>
+            <NavLink to="/track-parcel">
+              <Button size="lg" variant="outline" className="cursor-pointer">
+                Track Parcel
+              </Button>
+            </NavLink>
+          </div>
         </div>
       </section>
 
-      {/* ✅ Stats Section */}
-      <section className="container mx-auto px-4 -mt-12 relative z-20 mb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Stats Section */}
+      <section className="container mx-auto px-5 mt-20">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-3">Trusted Worldwide</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Delivering reliable logistics solutions with proven performance and
+            global reach.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {stats.map((stat, idx) => (
             <Card
               key={idx}
-              className="border-2 hover:border-[#FF2056] transition-all transform hover:-translate-y-1"
+              className="hover:border-[#FF2056] transition-all transform hover:-translate-y-1 shadow-none"
             >
               <CardContent className="p-6 text-center">
                 <stat.icon className="w-12 h-12 mx-auto mb-4 text-[#FF2056]" />
@@ -129,9 +122,9 @@ const About = () => {
         </div>
       </section>
 
-      {/* ✅ Service Section */}
-      <section className="bg-muted/50 py-20">
-        <div className="container mx-auto px-6">
+      {/* Service Section */}
+      <section className="bg-muted/50 py-20 mt-20">
+        <div className="container mx-auto px-5">
           <h2 className="text-4xl font-bold mb-4 text-center">Our Services</h2>
           <p className="text-xl text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
             Our values aren't just words on a wall—they're the foundation of
@@ -141,7 +134,7 @@ const About = () => {
             {values.map((value, idx) => (
               <Card
                 key={idx}
-                className="hover:shadow-lg transition-all hover:border-[#FF2056]"
+                className="shadow-none transition-all hover:border-[#FF2056]"
               >
                 <CardHeader>
                   <div className="bg-[#FF2056]/10 w-14 h-14 rounded-full flex items-center justify-center mb-4">
@@ -160,9 +153,9 @@ const About = () => {
         </div>
       </section>
 
-      {/* ✅ Mission Section */}
-      <section className="container mx-auto px-4 my-24">
-        <div className="max-w-5xl mx-auto text-center">
+      {/* Mission Section */}
+      <section className="container mx-auto px-5 my-24">
+        <div className="text-center">
           <h2 className="text-4xl font-bold mb-6">Our Mission</h2>
           <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
             To revolutionize global parcel delivery by making it faster, safer,
@@ -170,7 +163,7 @@ const About = () => {
             connecting people, businesses, and dreams across the world.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="hover:shadow-lg transition-all">
+            <Card className="shadow-none">
               <CardHeader>
                 <div className="bg-[#FF2056]/10 w-14 h-14 rounded-full flex items-center justify-center mb-4 mx-auto">
                   <Target className="w-7 h-7 text-[#FF2056]" />
@@ -187,7 +180,7 @@ const About = () => {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-all">
+            <Card className="shadow-none">
               <CardHeader>
                 <div className="bg-[#FF2056]/10 w-14 h-14 rounded-full flex items-center justify-center mb-4 mx-auto">
                   <Rocket className="w-7 h-7 text-[#FF2056]" />
@@ -204,30 +197,6 @@ const About = () => {
               </CardContent>
             </Card>
           </div>
-        </div>
-      </section>
-
-      {/* ✅ Team Section */}
-      <section className="container mx-auto px-4 py-24">
-        <h2 className="text-4xl font-bold mb-4 text-center">Meet Our Team</h2>
-        <p className="text-xl text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-          The passionate team behind your seamless delivery experience.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {team.map((member, idx) => (
-            <Card
-              key={idx}
-              className="text-center hover:shadow-lg transition-all group hover:border-[#FF2056]"
-            >
-              <CardContent className="p-6">
-                <div className="bg-[#FF2056] w-28 h-28 rounded-full flex items-center justify-center text-5xl mx-auto mb-4 transform group-hover:scale-110 transition-transform">
-                  {member.image}
-                </div>
-                <CardTitle className="text-lg mb-1">{member.name}</CardTitle>
-                <CardDescription>{member.role}</CardDescription>
-              </CardContent>
-            </Card>
-          ))}
         </div>
       </section>
     </div>

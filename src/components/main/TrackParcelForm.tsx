@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useState } from "react";
 import { useSearchParams } from "react-router";
 import { ITrackParcelProps } from "./TrackParcelHero";
@@ -29,17 +29,16 @@ function TrackParcelForm({ isLoading }: ITrackParcelProps) {
   };
 
   return (
-    <Card className="max-w-2xl mx-auto md:p-10 shadow-xl border-0 bg-gradient-to-br from-card to-card/50">
+    <Card className="max-w-xl mx-auto shadow-none">
       <CardContent className="space-y-6">
         <form onSubmit={handleTrack} className="space-y-4">
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
               <Input
                 type="text"
                 placeholder="Enter tracking number (e.g., TRK-20250801-589709)"
                 value={trackingId}
                 onChange={(e) => setTrackingId(e.target.value)}
-                className="h-12 pr-10 md:text-lg text-sm"
                 autoFocus
               />
               {trackingId && (
@@ -52,17 +51,14 @@ function TrackParcelForm({ isLoading }: ITrackParcelProps) {
                 </button>
               )}
             </div>
-            <Button type="submit" disabled={isLoading} className="h-12 px-8">
-              {isLoading ? (
-                <div className="animate-spin h-5 w-5" />
-              ) : (
-                <Search className="h-5 w-5" />
-              )}
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full md:w-auto"
+            >
+              {isLoading ? "Searching..." : "Search"}
             </Button>
           </div>
-          <p className="text-sm text-muted-foreground text-center">
-            Track your parcel with our advanced tracking system
-          </p>
         </form>
       </CardContent>
     </Card>

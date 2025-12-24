@@ -7,36 +7,37 @@ export interface ITrackParcelProps {
 
 const TrackParcelHero = ({ isLoading }: ITrackParcelProps) => {
   return (
-    <section className="relative py-20 overflow-hidden">
-      {/* Gradient Background with Blobs */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF2056] opacity-20 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FF4070] opacity-20 blur-3xl rounded-full"></div>
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#FF6090] opacity-10 blur-3xl rounded-full"></div>
-      </div>
+    <div>
+      <section className="relative overflow-hidden bg-linear-to-b from-[#FF2056]/5 to-secondary py-20">
+        <div className="relative mx-auto px-5">
+          <div className="text-center">
+            <Badge
+              variant="secondary"
+              className="mb-6 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 rounded-full px-5 py-1"
+            >
+              Track Your Parcel
+            </Badge>
 
-      <div className="relative mx-auto px-4 z-10">
-        <div className="text-center mb-16">
-          <Badge
-            variant="secondary"
-            className="mb-6 bg-white/20 text-white border-white/30 hover:bg-white/30"
-          >
-            Track Your Parcel
-          </Badge>
-          <h1 className="text-5xl md:text-7xl font-black mb-8 tracking-tight">
-            Track Your
-            <span className="block bg-gradient-to-r from-[#FF2056] via-[#FF4070] to-[#FF6090] bg-clip-text text-transparent">
-              Parcel
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl mb-10 text-white/90 max-w-4xl mx-auto leading-relaxed">
-            Enter your tracking number to get real-time updates on your parcel's
-            journey
-          </p>
+            <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-gray-900 dark:text-white leading-tight">
+              Track Your <span className="text-[#FF2056]">Parcel</span>{" "}
+              Instantly
+            </h1>
+
+            <p className="text-xl md:text-2xl mb-10 leading-relaxed text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Enter your tracking number to get{" "}
+              <span className="font-semibold text-gray-900 dark:text-white">
+                real-time updates
+              </span>{" "}
+              on your parcel’s journey across Bangladesh.
+            </p>
+            <div>
+              <TrackParcelForm isLoading={isLoading} />
+            </div>
+          </div>
         </div>
-        <TrackParcelForm isLoading={isLoading} />
-      </div>
-    </section>
+      </section>
+    </div>
   );
-}
+};
+
 export default TrackParcelHero;

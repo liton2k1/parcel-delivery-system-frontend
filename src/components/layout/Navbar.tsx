@@ -45,7 +45,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-xl transition-colors dark:border-gray-800 dark:bg-gray-900/80">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-xl transition-colors dark:border-gray-800 dark:bg-gray-900/80">
       <div className="container mx-auto flex h-16 items-center px-5">
         {/* Mobile Header */}
         <div className="flex w-full items-center justify-between lg:hidden">

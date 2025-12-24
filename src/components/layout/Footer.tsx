@@ -9,11 +9,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="bg-gradient-to-br from-[#FF2056] to-[#FF4070] rounded-lg p-2 shadow-lg shadow-[#FF2056]/20">
+              <div className="bg-gradient-to-br from-[#FF2056] to-[#FF4070] rounded-full p-2">
                 <Truck className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold text-gray-900 dark:text-white">
-                Parcel.Com
+                Easy Parcel
               </span>
             </div>
             <p className="text-gray-600 dark:text-gray-500 text-sm">
@@ -85,7 +85,7 @@ export default function Footer() {
 
         {/* Bottom Section */}
         <div className="border-t border-gray-200 dark:border-gray-800 pt-8 text-center text-sm text-gray-600 dark:text-gray-500">
-          <p>© 2025 Parcel.Com | All rights reserved.</p>
+          <p>{new Date().getFullYear()} Easy Parcel | All rights reserved.</p>
         </div>
       </div>
     </footer>

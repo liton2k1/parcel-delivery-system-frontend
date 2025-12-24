@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { sendEmail } from "@/lib/emailjs";
 import { Badge } from "@/components/ui/badge";
+import { NavLink } from "react-router";
 
 interface EmailJSTemplateParams {
   from_name: string;
@@ -100,32 +101,30 @@ export default function ContactForm() {
 
   const contactInfo = [
     {
+      title: "Call Us",
+      primary: "+880 1700-123456",
+      secondary: "Available Sat–Thu, 9:00 AM – 8:00 PM",
       icon: Phone,
-      title: "Phone",
-      primary: "+1 (555) 123-4567",
-      secondary: "Mon-Fri, 8am-8pm EST",
-      link: "tel:+15551234567",
+      link: "tel:+8801700123456",
     },
     {
+      title: "Email Support",
+      primary: "support@yourcompany.com",
+      secondary: "We usually reply within 24 hours",
       icon: Mail,
-      title: "Email",
-      primary: "support@parceldelivery.com",
-      secondary: "We reply within 24 hours",
-      link: "mailto:support@parceldelivery.com",
+      link: "mailto:support@yourcompany.com",
     },
     {
+      title: "Office Address",
+      primary: "Banani, Dhaka",
+      secondary: "Road 12, House 34, Dhaka 1213",
       icon: MapPin,
-      title: "Head Office",
-      primary: "123 Logistics Drive",
-      secondary: "New York, NY 10001, USA",
-      link: "https://maps.google.com",
     },
     {
+      title: "Support Hours",
+      primary: "9:00 AM – 8:00 PM",
+      secondary: "Saturday to Thursday",
       icon: Clock,
-      title: "Business Hours",
-      primary: "Monday - Friday: 8am - 8pm",
-      secondary: "Saturday: 9am - 5pm EST",
-      link: null,
     },
   ];
 
@@ -153,52 +152,67 @@ export default function ContactForm() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div>
       {/* Hero Section */}
-      <section className="relative overflow-hidden text-white pt-32 pb-24 md:pt-40 md:pb-32">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#FF2056] opacity-10 blur-3xl rounded-full"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#FF4070] opacity-10 blur-3xl rounded-full"></div>
-          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-[#FF2056] opacity-5 blur-3xl rounded-full"></div>
-        </div>
-        <div className="container mx-auto px-4 relative z-10 text-center">
+      <section className="bg-linear-to-b from-[#FF2056]/5 to-secondary py-20">
+        <div className="container mx-auto px-5 text-center">
           <Badge
             variant="secondary"
-            className="mb-6 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 hover:bg-[#FF2056]/20 dark:bg-white/10 dark:text-white dark:border-white/20 dark:hover:bg-white/20"
+            className="mb-5 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 rounded-full"
           >
             We're Here to Help
           </Badge>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">Get In Touch</h1>
-          <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto leading-relaxed">
+
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+            Get In Touch
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 leading-relaxed text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Have questions? We're here to help. Reach out to our team and we'll
             respond as soon as possible.
           </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <NavLink to="/login">
+              <Button size="lg" className="cursor-pointer">
+                Start Shipping
+              </Button>
+            </NavLink>
+            <NavLink to="/track-parcel">
+              <Button size="lg" variant="outline" className="cursor-pointer">
+                Track Parcel
+              </Button>
+            </NavLink>
+          </div>
         </div>
       </section>
 
       {/* Contact Info */}
-      <section className="container mx-auto px-4 -mt-12 relative z-20 mb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="container mx-auto px-5 mt-20">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-3">Need Assistance ?</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Have questions or need assistance? Reach out to us through any of
+            the channels below—we’re here to help.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {contactInfo.map((info, idx) => (
             <Card
               key={idx}
-              className="border-2 hover:border-[#FF2056] transition-all transform hover:-translate-y-1"
+              className="hover:border-[#FF2056] transition-all transform hover:-translate-y-1 shadow-none"
             >
               <CardContent className="p-6 text-center">
                 <div className="bg-[#FF2056]/10 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
                   <info.icon className="w-7 h-7 text-[#FF2056]" />
                 </div>
+
                 <h3 className="font-semibold text-lg mb-2">{info.title}</h3>
-                {info.link ? (
-                  <a
-                    href={info.link}
-                    className="text-[#FF2056] hover:underline font-medium block mb-1"
-                  >
-                    {info.primary}
-                  </a>
-                ) : (
-                  <p className="font-medium mb-1">{info.primary}</p>
-                )}
+
+                <p className="text-[#FF2056] font-medium mb-1">
+                  {info.primary}
+                </p>
+
                 <p className="text-sm text-muted-foreground">
                   {info.secondary}
                 </p>
@@ -209,11 +223,11 @@ export default function ContactForm() {
       </section>
 
       {/* Form + Departments */}
-      <section className="container mx-auto px-4 mb-20">
+      <section className="container mx-auto px-4 my-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Form */}
           <div className="lg:col-span-2">
-            <Card>
+            <Card className="shadow-none">
               <CardHeader>
                 <CardTitle className="text-2xl">Send Us a Message</CardTitle>
                 <CardDescription>
@@ -266,15 +280,17 @@ export default function ContactForm() {
                       disabled={loading}
                     />
                   </div>
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="bg-gradient-to-r from-[#FF2056] to-[#FF4070] hover:from-[#FF4070] hover:to-[#FF2056] text-white font-semibold shadow-lg shadow-[#FF2056]/30"
-                    disabled={loading}
-                  >
-                    <Send className="w-4 h-4 mr-2" />
-                    {loading ? "Sending..." : "Send Message"}
-                  </Button>
+                  <div className="flex justify-end">
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="cursor-pointer"
+                      disabled={loading}
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      {loading ? "Sending..." : "Send Message"}
+                    </Button>
+                  </div>
                 </form>
               </CardContent>
             </Card>
@@ -282,7 +298,7 @@ export default function ContactForm() {
 
           {/* Departments */}
           <div className="space-y-6">
-            <Card>
+            <Card className="shadow-none">
               <CardHeader>
                 <CardTitle>Contact Departments</CardTitle>
                 <CardDescription>
@@ -293,7 +309,7 @@ export default function ContactForm() {
             {departments.map((dept, idx) => (
               <Card
                 key={idx}
-                className="hover:shadow-lg transition-all hover:border-[#FF2056]"
+                className="shadow-none transition-all hover:border-[#FF2056]"
               >
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
@@ -305,12 +321,7 @@ export default function ContactForm() {
                       <p className="text-sm text-muted-foreground mb-2">
                         {dept.description}
                       </p>
-                      <a
-                        href={`mailto:${dept.email}`}
-                        className="text-sm text-[#FF2056] hover:underline"
-                      >
-                        {dept.email}
-                      </a>
+                      <p className="text-sm text-[#FF2056]">{dept.email}</p>
                     </div>
                   </div>
                 </CardContent>

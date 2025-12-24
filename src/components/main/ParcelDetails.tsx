@@ -19,11 +19,13 @@ const ParcelDetails = ({ data }: { data: IResponse<IParcelTrackData> }) => {
   } = data.data || {};
 
   return (
-    <section className="py-20 relative" id="parcel-details">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-muted/30"></div>
-      <div className="relative container mx-auto px-4">
+    <section className="py-20" id="parcel-details">
+      <div className="container mx-auto px-5">
         <div className="text-center mb-16">
-          <Badge variant="secondary" className="mb-4">
+          <Badge
+            variant="secondary"
+            className="mb-6 text-sm bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20 rounded-full px-5 py-1"
+          >
             Parcel Details
           </Badge>
           <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">
@@ -34,7 +36,7 @@ const ParcelDetails = ({ data }: { data: IResponse<IParcelTrackData> }) => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Parcel Info Card */}
           <div className="lg:col-span-1">
-            <Card className="p-6 shadow-lg border-0 bg-gradient-to-br from-card to-card/50">
+            <Card className="shadow-none bg-gradient-to-br from-card to-card/50">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Package className="w-6 h-6 text-primary" />
@@ -77,7 +79,7 @@ const ParcelDetails = ({ data }: { data: IResponse<IParcelTrackData> }) => {
             </Card>
 
             {/* Address Information */}
-            <Card className="p-6 shadow-lg border-0 bg-gradient-to-br from-card to-card/50 mt-6 text-sm">
+            <Card className="shadow-none bg-gradient-to-br from-card to-card/50 mt-6 text-sm">
               <CardHeader>
                 <CardTitle>Address Information</CardTitle>
               </CardHeader>
