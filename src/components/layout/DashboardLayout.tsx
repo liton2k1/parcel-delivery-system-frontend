@@ -105,9 +105,9 @@ export default function DashboardLayout() {
                 {/* Logout */}
                 <DropdownMenuItem
                   onClick={handleLogout}
-                  className="cursor-pointer text-red-600 focus:text-red-600 flex items-center gap-2"
+                  className="cursor-pointer text-red-600 flex items-center gap-2"
                 >
-                  <LogOut className="h-4 w-4" />
+                  <LogOut className="h-4 w-4 text-red-600" />
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>

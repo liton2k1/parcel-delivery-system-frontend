@@ -17,16 +17,9 @@ interface OverviewCardsProps {
 
 function OverviewCards({ data }: OverviewCardsProps) {
   const total = data?.totalParcel || 0;
-
-  const delivered =
-    data?.totalParcelByStatus?.find((item) => item._id === "Delivered")
-      ?.count || 0;
-  const inTransit =
-    data?.totalParcelByStatus?.find((item) => item._id === "In-Transit")
-      ?.count || 0;
-  const requested =
-    data?.totalParcelByStatus?.find((item) => item._id === "Requested")
-      ?.count || 0;
+  const delivered = data?.totalParcelByStatus?.find((item) => item._id === "Delivered")?.count || 0;
+  const inTransit = data?.totalParcelByStatus?.find((item) => item._id === "In-Transit")?.count || 0;
+  const requested = data?.totalParcelByStatus?.find((item) => item._id === "Requested")?.count || 0;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -36,7 +29,9 @@ function OverviewCards({ data }: OverviewCardsProps) {
           <CardTitle className="text-sm font-medium text-indigo-900 dark:text-indigo-100">
             Total Parcels
           </CardTitle>
-          <Box className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+          <div className="p-2 rounded-full bg-indigo-200 dark:bg-indigo-700">
+            <Box className="h-5 w-5 text-indigo-600 dark:text-indigo-100" />
+          </div>
         </CardHeader>
         <CardContent>
           <div className="text-3xl font-bold text-indigo-900 dark:text-indigo-100 tabular-nums">
@@ -54,7 +49,9 @@ function OverviewCards({ data }: OverviewCardsProps) {
           <CardTitle className="text-sm font-medium text-emerald-900 dark:text-emerald-100">
             Delivered
           </CardTitle>
-          <CheckCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+          <div className="p-2 rounded-full bg-emerald-200 dark:bg-emerald-700">
+            <CheckCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-100" />
+          </div>
         </CardHeader>
         <CardContent>
           <div className="text-3xl font-bold text-emerald-900 dark:text-emerald-100 tabular-nums">
@@ -72,7 +69,9 @@ function OverviewCards({ data }: OverviewCardsProps) {
           <CardTitle className="text-sm font-medium text-amber-900 dark:text-amber-100">
             In-Transit
           </CardTitle>
-          <Truck className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+          <div className="p-2 rounded-full bg-amber-200 dark:bg-amber-700">
+            <Truck className="h-5 w-5 text-amber-600 dark:text-amber-100" />
+          </div>
         </CardHeader>
         <CardContent>
           <div className="text-3xl font-bold text-amber-900 dark:text-amber-100 tabular-nums">
@@ -90,7 +89,9 @@ function OverviewCards({ data }: OverviewCardsProps) {
           <CardTitle className="text-sm font-medium text-rose-900 dark:text-rose-100">
             Requested
           </CardTitle>
-          <Clock className="h-5 w-5 text-rose-600 dark:text-rose-400" />
+          <div className="p-2 rounded-full bg-rose-200 dark:bg-rose-700">
+            <Clock className="h-5 w-5 text-rose-600 dark:text-rose-100" />
+          </div>
         </CardHeader>
         <CardContent>
           <div className="text-3xl font-bold text-rose-900 dark:text-rose-100 tabular-nums">

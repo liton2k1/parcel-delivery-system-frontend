@@ -268,15 +268,18 @@ const CancelledParcels = () => {
   }
 
   return (
-    <div className="space-y-10">
+    <div className="container mx-auto p-0 space-y-5">
       {/* Stats Cards */}
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {/* Total Cancelled Parcels */}
         <Card className="shadow-none bg-gradient-to-br from-red-50 to-red-100 dark:from-red-950 dark:to-red-900 border-red-200 dark:border-red-800">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-medium text-red-900 dark:text-red-100">
               Total Cancelled Parcels
             </CardTitle>
-            <PackageX className="h-5 w-5 text-red-600 dark:text-red-400" />
+            <div className="p-2 rounded-full bg-red-200 dark:bg-red-700">
+              <PackageX className="h-5 w-5 text-red-600 dark:text-red-100" />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-red-900 dark:text-red-100">
@@ -288,12 +291,15 @@ const CancelledParcels = () => {
           </CardContent>
         </Card>
 
+        {/* Lost Revenue */}
         <Card className="shadow-none bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-medium text-orange-900 dark:text-orange-100">
               Lost Revenue
             </CardTitle>
-            <Banknote className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+            <div className="p-2 rounded-full bg-orange-200 dark:bg-orange-700">
+              <Banknote className="h-5 w-5 text-orange-600 dark:text-orange-100" />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-900 dark:text-orange-100">
@@ -308,12 +314,15 @@ const CancelledParcels = () => {
           </CardContent>
         </Card>
 
+        {/* Affected Customers */}
         <Card className="shadow-none bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-950 dark:to-amber-900 border-amber-200 dark:border-amber-800">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-medium text-amber-900 dark:text-amber-100">
               Affected Customers
             </CardTitle>
-            <Users className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+            <div className="p-2 rounded-full bg-amber-200 dark:bg-amber-700">
+              <Users className="h-5 w-5 text-amber-600 dark:text-amber-100" />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-amber-900 dark:text-amber-100">
@@ -325,12 +334,15 @@ const CancelledParcels = () => {
           </CardContent>
         </Card>
 
+        {/* Avg. Cancelled Value */}
         <Card className="shadow-none bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-950 dark:to-yellow-900 border-yellow-200 dark:border-yellow-800">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-medium text-yellow-900 dark:text-yellow-100">
               Avg. Cancelled Value
             </CardTitle>
-            <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+            <div className="p-2 rounded-full bg-yellow-200 dark:bg-yellow-700">
+              <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-100" />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-yellow-900 dark:text-yellow-100">

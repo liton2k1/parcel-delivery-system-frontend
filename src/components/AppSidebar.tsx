@@ -27,46 +27,38 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
-  const data = {
-    navMain: getSidebarItems(userData?.data?.role),
-  };
+  const navMain = getSidebarItems(userData?.data?.role);
 
   return (
     <Sidebar {...props}>
       <SidebarHeader>
         <Link to="/" className="flex items-center gap-2 mt-2">
-          <div className="flex items-center gap-2">
-            <div className="bg-primary rounded-full p-2">
-              <Truck className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-gray-900 dark:text-white">
-              Easy Parcel
-            </span>
+          <div className="bg-primary rounded-full p-2">
+            <Truck className="w-5 h-5 text-white" />
           </div>
+          <span className="text-xl font-bold">Easy Parcel</span>
         </Link>
       </SidebarHeader>
 
       <SidebarContent>
-        {data.navMain.map((group, groupIndex) => (
-          <SidebarGroup key={groupIndex}>
+        {navMain.map((group) => (
+          <SidebarGroup key={group.title}>
             <SidebarGroupContent>
               <SidebarMenu>
                 {group.items.map((item) => {
-                  const itemPath = `/admin/${item.url}`;
-                  const isActive = location.pathname === itemPath;
-                  const Icon = item.icon;
+                  const isActive = location.pathname.endsWith(item.url);
 
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
                         <Link
-                          to={itemPath}
+                          to={item.url}
                           className={`flex items-center gap-3 w-full px-3 py-2 rounded-md transition-colors ${
                             isActive &&
                             "bg-primary text-white hover:!bg-primary hover:!text-white"
                           }`}
                         >
-                          {Icon && <Icon className="w-4 h-4" />}
+                          {item.icon && <item.icon className="w-4 h-4" />}
                           <span>{item.title}</span>
                         </Link>
                       </SidebarMenuButton>

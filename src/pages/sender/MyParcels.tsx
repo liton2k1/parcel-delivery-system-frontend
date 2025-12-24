@@ -613,7 +613,7 @@ const MyParcel = () => {
                         <div
                           className={cn(
                             header.column.getCanSort() &&
-                            "flex h-full cursor-pointer items-center justify-between gap-2 select-none"
+                              "flex h-full cursor-pointer items-center justify-between gap-2 select-none"
                           )}
                           onClick={header.column.getToggleSortingHandler()}
                           onKeyDown={(e) => {
@@ -731,8 +731,8 @@ const MyParcel = () => {
               {Math.min(
                 Math.max(
                   table.getState().pagination.pageIndex *
-                  table.getState().pagination.pageSize +
-                  table.getState().pagination.pageSize,
+                    table.getState().pagination.pageSize +
+                    table.getState().pagination.pageSize,
                   0
                 ),
                 table.getRowCount()
@@ -807,7 +807,7 @@ const MyParcel = () => {
       </div>
     </div>
   );
-}
+};
 
 function RowActions({ row }: { row: Row<IParcel> }) {
   const [open, setOpen] = useState(false);
@@ -957,4 +957,4 @@ function RowActions({ row }: { row: Row<IParcel> }) {
     </DropdownMenu>
   );
 }
-export default MyParcel
+export default MyParcel;

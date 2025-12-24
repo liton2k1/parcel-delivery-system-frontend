@@ -42,7 +42,7 @@ const getStatusIcon = (status: string) => {
 const StatusTimeLine = ({ statusLog }: { statusLog: StatusLog[] }) => {
   return (
     <div className="lg:col-span-2">
-      <Card className="p-6 shadow-lg border-0 bg-gradient-to-br from-card to-card/50">
+      <Card className="shadow-none bg-gradient-to-br from-card to-card/50">
         <CardHeader>
           <CardTitle>Tracking Timeline</CardTitle>
         </CardHeader>

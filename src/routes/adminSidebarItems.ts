@@ -1,4 +1,3 @@
-// adminSidebarItems.tsx
 import Analytics from "@/pages/admin/Analytics";
 import Users from "@/pages/admin/Users";
 import ViewParcels from "@/pages/admin/Parcels";
@@ -38,7 +37,7 @@ export const adminSidebarItems: ISidebarItem[] = [
       },
       {
         title: "Cancelled Parcels",
-        url: "cancelled-parcels",
+        url: "cancelled-parcel",
         component: CancelledParcel,
         icon: PackageX,
       },
