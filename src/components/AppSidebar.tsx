@@ -4,7 +4,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -12,7 +11,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import * as React from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import Error from "./Error";
 import Loading from "./Loading";
 import { useGetMeQuery } from "@/redux/features/user/userApi";
@@ -22,14 +21,10 @@ import { Truck } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: userData, isLoading, isError } = useGetMeQuery(undefined);
+  const location = useLocation();
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <Error />;
-  }
+  if (isLoading) return <Loading />;
+  if (isError) return <Error />;
 
   const data = {
     navMain: getSidebarItems(userData?.data?.role),
@@ -40,33 +35,47 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <Link to="/" className="flex items-center gap-2 mt-2">
           <div className="flex items-center gap-2">
-            <div className="bg-gradient-to-br from-[#FF2056] to-[#FF4070] rounded-lg p-2 shadow-lg shadow-[#FF2056]/20">
+            <div className="bg-primary rounded-full p-2">
               <Truck className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold text-gray-900 dark:text-white">
-              Parcel.Com
+              Easy Parcel
             </span>
           </div>
         </Link>
       </SidebarHeader>
+
       <SidebarContent>
-        {data.navMain.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+        {data.navMain.map((group, groupIndex) => (
+          <SidebarGroup key={groupIndex}>
             <SidebarGroupContent>
               <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link to={item.url}>{item.title}</Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {group.items.map((item) => {
+                  const itemPath = `/admin/${item.url}`;
+                  const isActive = location.pathname === itemPath;
+
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild>
+                        <Link
+                          to={itemPath}
+                          className={`block w-full px-3 py-2 rounded-md transition-colors ${
+                            isActive &&
+                            "bg-primary text-white hover:!bg-primary hover:!text-white"
+                          }`}
+                        >
+                          {item.title}
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
       </SidebarContent>
+
       <SidebarRail />
       <SidebarFooter>
         <NavUser user={userData?.data} />

@@ -22,7 +22,7 @@ export interface IMeta {
 }
 
 export interface ISidebarItem {
-  title: string;
+  title?: string;
   items: {
     title: string;
     url: string;

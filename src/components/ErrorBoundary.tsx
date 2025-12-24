@@ -28,7 +28,7 @@ class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Log error to console for debugging
-    console.error("Error caught by boundary:", error, errorInfo);
+    // console.error("Error caught by boundary:", error, errorInfo);
 
     // Update state with error details
     this.setState({
@@ -47,23 +47,23 @@ class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="min-h-screen bg-background flex items-center justify-center p-4">
           <div className="relative max-w-md mx-auto">
-            <Card className="p-8 shadow-xl border-0 bg-gradient-to-br from-card to-card/50">
-              <CardHeader className="text-center mb-8">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-red-100 text-red-600 rounded-full mb-6">
+            <Card className="bg-gradient-to-br from-card to-card/50 shadow-none">
+              <CardHeader className="text-center">
+                <div className="inline-flex items-center justify-center w-20 h-20 mx-auto bg-red-100 text-primary rounded-full mb-6">
                   <AlertTriangle className="w-10 h-10" />
                 </div>
-                <CardTitle className="text-3xl font-black tracking-tight">
-                  Oops! Something went wrong
+                <CardTitle className="text-2xl font-black tracking-tight">
+                  Something went wrong !
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center space-y-6">
-                <p className="text-lg text-muted-foreground">
-                  We encountered an unexpected error. Don't worry, our team has
-                  been notified.
+                <p className="text-muted-foreground">
+                  We encountered an unexpected error. Don't worry, we will fix
+                  it soon.
                 </p>
 
                 {process.env.NODE_ENV === "development" && this.state.error && (
-                  <details className="text-left">
+                  <details className="text-center">
                     <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
                       Error Details (Development)
                     </summary>
@@ -81,20 +81,11 @@ class ErrorBoundary extends Component<Props, State> {
                 )}
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button
-                    onClick={this.handleReload}
-                    size="lg"
-                    className="text-lg px-8 py-6"
-                  >
+                  <Button onClick={this.handleReload} size="lg">
                     <RefreshCw className="w-5 h-5 mr-2" />
                     Reload Page
                   </Button>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="text-lg px-8 py-6"
-                  >
+                  <Button asChild size="lg" variant="outline">
                     <Link to="/" className="flex items-center gap-2">
                       <Home className="w-5 h-5" />
                       Go Home

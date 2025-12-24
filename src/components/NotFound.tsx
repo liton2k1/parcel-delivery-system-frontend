@@ -1,16 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { SendToBackIcon } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 
 export default function NotFound() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-[60vh] flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="text-center space-y-6 max-w-md mx-auto px-4">
         {/* 404 Visual */}
         <div className="space-y-4">
-          <div className="text-6xl font-bold text-muted-foreground">404</div>
+          <div className="text-6xl font-bold text-primary">404</div>
         </div>
 
         {/* Error Message */}
@@ -29,7 +29,7 @@ export default function NotFound() {
             onClick={() => navigate("/")}
             className="flex items-center gap-2"
           >
-            <SendToBackIcon className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4" />
             Back to Home
           </Button>
         </div>
