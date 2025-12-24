@@ -1,9 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
@@ -91,8 +86,8 @@ function ShippingTypeChart({ data }: ShippingTypeChartProps) {
   ].filter((item) => item.count > 0);
 
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-200 border-0 shadow-sm">
-      <CardHeader className="pb-6">
+    <Card className="shadow-none">
+      <CardHeader>
         <CardTitle className="text-xl font-semibold text-foreground">
           Shipping Type
         </CardTitle>

@@ -10,7 +10,7 @@ function Analytics() {
   const { data, isLoading, isError, error } =
     useGetParcelAnalyticsQuery(undefined);
 
-  console.log(data);
+  // console.log(data);
 
   if (isLoading) {
     return <Loading message="Loading analytics data..." />;

@@ -1,9 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ComposedChart,
   Line,
@@ -25,7 +20,9 @@ interface ShipmentComposedChartProps {
   data?: AnalyticsData;
 }
 
-export default function ShipmentComposedChart({ data }: ShipmentComposedChartProps) {
+export default function ShipmentComposedChart({
+  data,
+}: ShipmentComposedChartProps) {
   const chartData = [
     {
       period: "Last 7 Days",
@@ -38,8 +35,8 @@ export default function ShipmentComposedChart({ data }: ShipmentComposedChartPro
   ];
 
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-200 border-0 shadow-sm">
-      <CardHeader className="pb-6">
+    <Card className="shadow-none">
+      <CardHeader>
         <CardTitle className="text-xl font-semibold text-foreground">
           Shipment Status
         </CardTitle>
@@ -51,7 +48,11 @@ export default function ShipmentComposedChart({ data }: ShipmentComposedChartPro
               data={chartData}
               margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="var(--border)"
+                opacity={0.3}
+              />
               <XAxis
                 dataKey="period"
                 tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
@@ -65,8 +66,18 @@ export default function ShipmentComposedChart({ data }: ShipmentComposedChartPro
               />
               <Tooltip formatter={(value: number) => value.toLocaleString()} />
               <Legend />
-              <Bar dataKey="created" barSize={40} fill="#10b981" radius={[6, 6, 0, 0]} />
-              <Line type="monotone" dataKey="created" stroke="#047857" strokeWidth={2} />
+              <Bar
+                dataKey="created"
+                barSize={40}
+                fill="#10b981"
+                radius={[6, 6, 0, 0]}
+              />
+              <Line
+                type="monotone"
+                dataKey="created"
+                stroke="#047857"
+                strokeWidth={2}
+              />
             </ComposedChart>
           </ResponsiveContainer>
         </div>
