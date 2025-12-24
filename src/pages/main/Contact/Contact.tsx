@@ -109,7 +109,7 @@ export default function ContactForm() {
     },
     {
       title: "Email Support",
-      primary: "support@yourcompany.com",
+      primary: "litonmia2k1@gmail.com",
       secondary: "We usually reply within 24 hours",
       icon: Mail,
       link: "mailto:support@yourcompany.com",
@@ -134,20 +134,17 @@ export default function ContactForm() {
       title: "Customer Support",
       description:
         "Get help with tracking, delivery issues, or general inquiries.",
-      email: "support@parceldelivery.com",
     },
     {
       icon: FileText,
       title: "Business Inquiries",
       description:
         "Partnership opportunities, bulk shipping, and corporate accounts.",
-      email: "business@parceldelivery.com",
     },
     {
       icon: MessageSquare,
       title: "Feedback",
       description: "Share your experience and help us improve our services.",
-      email: "feedback@parceldelivery.com",
     },
   ];
 
@@ -321,7 +318,6 @@ export default function ContactForm() {
                       <p className="text-sm text-muted-foreground mb-2">
                         {dept.description}
                       </p>
-                      <p className="text-sm text-[#FF2056]">{dept.email}</p>
                     </div>
                   </div>
                 </CardContent>

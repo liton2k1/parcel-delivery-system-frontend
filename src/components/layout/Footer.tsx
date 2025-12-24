@@ -48,6 +48,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <a href="/privacy-policy" className={linkClass}>
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
                 <a href="/faq" className={linkClass}>
                   FAQ
                 </a>

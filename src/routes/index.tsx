@@ -27,6 +27,7 @@ import About from "@/pages/main/About/About";
 import Contact from "@/pages/main/Contact/Contact";
 import Features from "@/pages/main/Features/Features";
 import FAQ from "@/pages/main/FAQ/FAQ";
+import PrivacyPolicy from "@/pages/main/PrivacyPolicy/PrivacyPolicy";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
       {
         Component: TrackParcel,
         path: "/track-parcel",
+      },
+      {
+        Component: PrivacyPolicy,
+        path: "/privacy-policy",
       },
     ],
   },
