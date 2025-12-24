@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import type { Role } from "./user";
+import { LucideIcon } from "lucide-react";
 
 export type { ILogin, ISendOtp, IVerifyOtp } from "./auth";
 export type { IParcelTrackData, IStatusLog } from "./parcel";
@@ -27,6 +28,7 @@ export interface ISidebarItem {
     title: string;
     url: string;
     component: ComponentType;
+    icon?: LucideIcon;
   }[];
 }
 

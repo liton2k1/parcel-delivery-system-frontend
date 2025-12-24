@@ -15,9 +15,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-// import { authApi, useLogoutMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks";
-// import { getNameInitials } from "@/utils/getNameInitials";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { authApi, useLogoutMutation } from "@/redux/features/auth/authApi";
@@ -59,9 +57,9 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg grayscale">
+              <Avatar className="h-8 w-8 rounded-full grayscale">
                 <AvatarImage src={user?.avatar} alt={user?.name} />
-                <AvatarFallback className="rounded-lg">
+                <AvatarFallback className="rounded-full">
                   {getNameInitials(user?.name)}
                 </AvatarFallback>
               </Avatar>
@@ -82,9 +80,11 @@ export function NavUser({
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
+                <Avatar className="h-8 w-8 rounded-full">
                   <AvatarImage src={user?.avatar} alt={user?.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-full">
+                    {getNameInitials(user?.name)}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user?.name}</span>
@@ -94,7 +94,6 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>
               <IconLogout />

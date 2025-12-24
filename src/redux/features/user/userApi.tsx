@@ -73,6 +73,6 @@ export const {
   useGetMeQuery,
   useCreateAdminMutation,
   useCreateDeliveryPersonnelMutation,
-  useGetUserByIdQuery,
+  useUpdateUserByIdMutation,
   useBlockUserByIdMutation,
 } = userApi;

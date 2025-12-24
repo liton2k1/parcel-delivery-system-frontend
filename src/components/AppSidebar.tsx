@@ -1,3 +1,4 @@
+// AppSidebar.tsx
 import {
   Sidebar,
   SidebarContent,
@@ -53,18 +54,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {group.items.map((item) => {
                   const itemPath = `/admin/${item.url}`;
                   const isActive = location.pathname === itemPath;
+                  const Icon = item.icon;
 
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
                         <Link
                           to={itemPath}
-                          className={`block w-full px-3 py-2 rounded-md transition-colors ${
+                          className={`flex items-center gap-3 w-full px-3 py-2 rounded-md transition-colors ${
                             isActive &&
                             "bg-primary text-white hover:!bg-primary hover:!text-white"
                           }`}
                         >
-                          {item.title}
+                          {Icon && <Icon className="w-4 h-4" />}
+                          <span>{item.title}</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
