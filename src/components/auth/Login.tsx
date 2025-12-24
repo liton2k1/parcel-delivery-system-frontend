@@ -25,35 +25,44 @@ const Login = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
   const navigate = useNavigate();
-  const form = useForm({
-    //! For development only
+  const form = useForm<ILogin>({
     defaultValues: {
       email: "litonmia2k1@gmail.com",
       password: "12345678@Lm",
     },
   });
   const [login, { isLoading }] = useLoginMutation();
+
+  // Auto-fill based on role
+  const handleAutoFill = (role: "ADMIN" | "SENDER" | "RECEIVER") => {
+    if (role === "ADMIN") {
+      form.setValue("email", "litonmia2k1@gmail.com");
+      form.setValue("password", "12345678@Lm");
+    } else if (role === "SENDER") {
+      form.setValue("email", "sender@gmail.com");
+      form.setValue("password", "12345678@Lm");
+    } else if (role === "RECEIVER") {
+      form.setValue("email", "receiver@gmail.com");
+      form.setValue("password", "12345678@Lm");
+    }
+  };
+
   const onSubmit: SubmitHandler<ILogin> = async (data) => {
     try {
       const res = await login(data).unwrap();
 
       const role = res?.data?.user?.role?.toUpperCase();
-      // console.log("User role:", role);
       if (role === "ADMIN" || role === "SUPER_ADMIN") {
-        // console.log("User is an admin");
         toast.success("Logged in successfully");
         navigate(ADMIN_DEFAULT_ROUTE, { replace: true });
         return;
       } else if (role === "SENDER") {
-        // console.log("User is a sender");
         toast.success("Logged in successfully");
         navigate(SENDER_DEFAULT_ROUTE, { replace: true });
         return;
       } else if (role === "RECEIVER") {
-        // console.log("User is a receiver");
         toast.success("Logged in successfully");
         navigate(RECEIVER_DEFAULT_ROUTE, { replace: true });
-        // console.log("Navigated to receiver dashboard");
         return;
       } else {
         toast.success("Logged in successfully");
@@ -66,11 +75,9 @@ const Login = ({
       if (error?.data?.message === "User does not exist") {
         toast.error("User Not Found");
       }
-
       if (error?.data?.message === "Password does not match") {
         toast.error("Invalid Credentials");
       }
-
       if (error?.data?.message === "User is not verified") {
         toast.error("Your account is not verified");
         navigate("/verify", { state: { email: data.email } });
@@ -83,6 +90,20 @@ const Login = ({
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Login to your account</h1>
       </div>
+
+      {/* Role Auto-Fill Buttons */}
+      <div className="flex gap-2 justify-center">
+        <Button variant="outline" size="sm" onClick={() => handleAutoFill("ADMIN")}>
+          Admin
+        </Button>
+        <Button variant="outline" size="sm" onClick={() => handleAutoFill("SENDER")}>
+          Sender
+        </Button>
+        <Button variant="outline" size="sm" onClick={() => handleAutoFill("RECEIVER")}>
+          Receiver
+        </Button>
+      </div>
+
       <div className="grid gap-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -129,6 +150,7 @@ const Login = ({
           </form>
         </Form>
       </div>
+
       <div className="text-center text-sm">
         Don&apos;t have an account?{" "}
         <Link to="/register" replace className="underline underline-offset-4">
@@ -137,5 +159,5 @@ const Login = ({
       </div>
     </div>
   );
-}
+};
 export default Login;
