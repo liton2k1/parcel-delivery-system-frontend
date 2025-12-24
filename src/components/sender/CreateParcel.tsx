@@ -107,7 +107,7 @@ const CreateParcel = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] overflow-scroll">
         <DialogHeader>
           <DialogTitle>Create Parcel</DialogTitle>
           <DialogDescription>

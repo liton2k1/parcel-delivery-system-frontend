@@ -8,7 +8,6 @@ const MyParcels = lazy(() => import("@/pages/sender/MyParcels"));
 
 export const senderSidebarItems: ISidebarItem[] = [
   {
-    title: "Parcels",
     items: [
       {
         title: "Parcels Analytics",
