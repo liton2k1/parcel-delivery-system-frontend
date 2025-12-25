@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import map from "../../../public/bangladash-map.svg";
 import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
 
 const Area = () => {
   return (
@@ -19,7 +20,15 @@ const Area = () => {
           {/* Text Content */}
           <div className="flex justify-center items-center">
             <div>
-              <h1 className="text-2xl text-justify font-semibold">
+              <div className="text-center mb-5">
+                <Badge
+                  variant="secondary"
+                  className="bg-primary/10 text-primary border border-primary/20 rounded-full"
+                >
+                  Coverage Area
+                </Badge>
+              </div>
+              <h1 className="text-2xl text-center font-semibold">
                 Nationwide Logistics Coverage
               </h1>
               <p className="text-lg mt-4 text-justify">

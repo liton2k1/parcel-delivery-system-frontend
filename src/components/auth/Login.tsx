@@ -93,13 +93,25 @@ const Login = ({
 
       {/* Role Auto-Fill Buttons */}
       <div className="flex gap-2 justify-center">
-        <Button variant="outline" size="sm" onClick={() => handleAutoFill("ADMIN")}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => handleAutoFill("ADMIN")}
+        >
           Admin
         </Button>
-        <Button variant="outline" size="sm" onClick={() => handleAutoFill("SENDER")}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => handleAutoFill("SENDER")}
+        >
           Sender
         </Button>
-        <Button variant="outline" size="sm" onClick={() => handleAutoFill("RECEIVER")}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => handleAutoFill("RECEIVER")}
+        >
           Receiver
         </Button>
       </div>
@@ -115,7 +127,7 @@ const Login = ({
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="john@example.com"
+                      placeholder="Email"
                       {...field}
                       value={field.value || ""}
                     />

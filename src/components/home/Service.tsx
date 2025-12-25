@@ -38,13 +38,18 @@ const Service = () => {
   return (
     <div className="container mx-auto px-5 mt-24">
       <div className="text-center mb-16">
-        <Badge className="mb-4 bg-[#FF2056]/10 text-[#FF2056] border-[#FF2056]/20">
-          Our Services
-        </Badge>
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
-          Delivery Solutions for Every Need
+        <div className="text-center mb-5">
+          <Badge
+            variant="secondary"
+            className="bg-primary/10 text-primary border border-primary/20 rounded-full"
+          >
+            Our Services
+          </Badge>
+        </div>
+        <h2 className="text-4xl font-bold text-center mb-3">
+          Delivery Solutions
         </h2>
-        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <p className="text-center text-muted-foreground mb-12">
           From express deliveries to international shipping, we've got you
           covered
         </p>

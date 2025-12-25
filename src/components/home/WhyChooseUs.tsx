@@ -1,8 +1,6 @@
 import { Clock, MapPin, Headphones } from "lucide-react";
-
-const images = {
-  warehouse: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
-};
+import img from "../../assets/parcel/parcel (6).jpg";
+import { Badge } from "../ui/badge";
 
 const features = [
   {
@@ -29,9 +27,14 @@ export default function WhyChooseUs() {
       <div className="container mx-auto px-5">
         {/* HEADER */}
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="text-sm font-semibold text-primary mb-2">
-            WHY EASY PARCEL
-          </p>
+          <div className="text-center mb-5">
+            <Badge
+              variant="secondary"
+              className="bg-primary/10 text-primary border border-primary/20 rounded-full"
+            >
+              Why Easy Parcel
+            </Badge>
+          </div>
           <h2 className="text-3xl lg:text-4xl font-bold mb-4">
             Why You Choose Us
           </h2>
@@ -46,9 +49,9 @@ export default function WhyChooseUs() {
           {/* LEFT IMAGE */}
           <div className="relative">
             <img
-              src={images.warehouse}
+              src={img}
               alt="Courier delivery"
-              className="rounded-xl shadow-md w-full"
+              className="rounded-xl w-full"
             />
           </div>
 
